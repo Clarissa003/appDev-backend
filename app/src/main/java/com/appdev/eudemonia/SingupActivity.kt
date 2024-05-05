@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
+import java.security.MessageDigest
 
 class SignupActivity : AppCompatActivity() {
     private lateinit var emailEditText: EditText
@@ -70,6 +71,10 @@ class SignupActivity : AppCompatActivity() {
     }
 
     private fun addUserToFirestore(user: HashMap<String, String>) {
+        // Hash the password before adding the user to Firestore
+        val hashedPassword = hashPassword(user["password"]!!)
+        user["password"] = hashedPassword
+
         // Add user to Firestore
         firestore.collection("User")
             .add(user)
@@ -81,5 +86,12 @@ class SignupActivity : AppCompatActivity() {
                 // Handle failure
                 Toast.makeText(this, "Failed to register user: ${e.message}", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun hashPassword(password: String): String {
+        val bytes = password.toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        return digest.fold("", { str, it -> str + "%02x".format(it) })
     }
 }
