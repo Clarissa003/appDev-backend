@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
+import java.security.MessageDigest
 
 class LoginActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
@@ -37,10 +38,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun login(email: String, password: String) {
-        usersCollection.document(email).get().addOnSuccessListener { documentSnapshot ->
-            if (documentSnapshot.exists()) {
-                val user = documentSnapshot.data
+    private fun login(username: String, password: String) {
+        usersCollection.whereEqualTo("name", username).get().addOnSuccessListener { querySnapshot ->
+            if (!querySnapshot.isEmpty) {
+                val userDocument = querySnapshot.documents[0]
+                val user = userDocument.data
                 if (user != null) {
                     val hashedPasswordFromDB = user["password"] as? String // Retrieve hashed password from database
                     if (hashedPasswordFromDB != null) {
@@ -51,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                             // Proceed to next activity or do whatever you want
                         } else {
                             // Passwords don't match
-                            Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Incorrect username or password", Toast.LENGTH_SHORT).show()
                         }
                     } else {
                         // Password field not found in user document
@@ -67,10 +69,14 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_SHORT).show()
         }
     }
-
+    
     private fun hashPassword(password: String): String {
-        return password.hashCode().toString()
+        val bytes = password.toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        return digest.fold("", { str, it -> str + "%02x".format(it) })
     }
+
 
 
 
