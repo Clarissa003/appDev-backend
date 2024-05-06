@@ -1,12 +1,13 @@
 package com.appdev.eudemonia
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.FirebaseApp
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.FirebaseFirestore
 import java.security.MessageDigest
 
@@ -24,9 +25,6 @@ class SignupActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signup)
 
         // Initialize Firebase Auth if not already initialized
-        if (FirebaseApp.getApps(this).isEmpty()) {
-            FirebaseApp.initializeApp(this)
-        }
         auth = FirebaseAuth.getInstance()
 
         // Initialize Firestore
@@ -50,48 +48,90 @@ class SignupActivity : AppCompatActivity() {
             if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
                 if (password == confirmPassword) {
                     // Passwords match
-                    // Create a user object
-                    val user = hashMapOf(
-                        "email" to email,
-                        "name" to username,
-                        "password" to password
-                    )
+                    // Create user with email and password
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                // Sign in success, update UI with the signed-in user's information
+                                val user = auth.currentUser
+                                val profileUpdates = UserProfileChangeRequest.Builder()
+                                    .setDisplayName(username)
+                                    .build()
 
-                    // Add user to Firestore
-                    addUserToFirestore(user)
+                                user?.updateProfile(profileUpdates)
+                                    ?.addOnCompleteListener { profileTask ->
+                                        if (profileTask.isSuccessful) {
+                                            // Add user to Firestore
+                                            addUserToFirestore(user!!.uid, email, username, password)
+                                            // Show success message
+                                            Toast.makeText(
+                                                applicationContext,
+                                                "User registered successfully",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                            // Clear input fields
+                                            emailEditText.text.clear()
+                                            usernameEditText.text.clear()
+                                            passwordEditText.text.clear()
+                                            confirmPasswordEditText.text.clear()
+                                        } else {
+                                            Toast.makeText(
+                                                applicationContext,
+                                                "Failed to update user profile",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
+                                    }
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(
+                                    applicationContext, "Authentication failed.",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
                 } else {
                     // Passwords don't match, show error message
                     confirmPasswordEditText.error = "Passwords do not match"
                 }
             } else {
                 // Fields are empty, show error message
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun addUserToFirestore(user: HashMap<String, String>) {
-        // Hash the password before adding the user to Firestore
-        val hashedPassword = hashPassword(user["password"]!!)
-        user["password"] = hashedPassword
+    private fun addUserToFirestore(userId: String, email: String, username: String, password: String) {
+        // Hash the password
+        val hashedPassword = hashString(password)
+
+        // Create user object
+        val user = hashMapOf(
+            "email" to email,
+            "name" to username,
+            "password" to hashedPassword
+        )
 
         // Add user to Firestore
-        firestore.collection("User")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
-                // Handle success
-                Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show()
+        firestore.collection("users")
+            .document(userId)
+            .set(user)
+            .addOnSuccessListener {
+                // User added successfully to Firestore
             }
             .addOnFailureListener { e ->
-                // Handle failure
-                Toast.makeText(this, "Failed to register user: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this,
+                    "Failed to register user in Firestore: ${e.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
     }
 
-    private fun hashPassword(password: String): String {
-        val bytes = password.toByteArray()
-        val md = MessageDigest.getInstance("SHA-256")
-        val digest = md.digest(bytes)
-        return digest.fold("", { str, it -> str + "%02x".format(it) })
+    // Function to hash the password using SHA-256
+    private fun hashString(input: String): String {
+        val bytes = MessageDigest.getInstance("SHA-256").digest(input.toByteArray())
+        return bytes.joinToString(separator = "") { "%02x".format(it) }
     }
+
 }
