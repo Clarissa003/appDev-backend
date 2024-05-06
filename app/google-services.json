@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "702980907901",
+    "project_id": "eudemonia-c9eac",
+    "storage_bucket": "eudemonia-c9eac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:702980907901:android:21c98e7d261f9daaff6214",
+        "android_client_info": {
+          "package_name": "com.appdev.eudemonia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCx73uwHCXCkjt_Ey9jJilVx_uATZcbevM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
