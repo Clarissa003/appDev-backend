@@ -39,3 +39,5 @@ proguard/
 /.gradle/
 /captures/
 /local.properties
+
+.DS_Store

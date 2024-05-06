@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="greenUltraDark">#7d9a6d</color>
+    <color name="greenDark">#92b47f</color>
+    <color name="green">#a8cf91</color>
+    <color name="greenLight">#b7d6a2</color>
+    <color name="greenUltraLight">#c6ddb3</color>
+
+
+    <color name="yellowUltraDark">#FFD000</color>
+    <color name="yellowDark">#F9DC5C</color>
+    <color name="yellow">#FAE588</color>
+    <color name="yellowLight">#FCEFB4</color>
+    <color name="yellowUltraLight">#FDF8E1</color>
+
+    <color name="orangeUltraDark">#FD9A4D</color>
+    <color name="orangeDark">#FCB274</color>
+    <color name="orange">#FBCA9A</color>
+    <color name="orangeLight">#FCDFAA</color>
+    <color name="orangeUltraLight">#FCF3B9</color>
+
+
+    <color name="coralUltraDark">#EC5353</color>
+    <color name="coralDark">#EE7272</color>
+    <color name="coral">#F09191</color>
+    <color name="coralLight">#F2B0B0</color>
+    <color name="coralUltraLight">#F3CFCE</color>
+
+
+    <color name="purpleUltraDark">#8170CC</color>
+    <color name="purpleDark">#9C8FE5</color>
+    <color name="purple">#B0A8F6</color>
+    <color name="purpleLight">#CBC7F8</color>
+    <color name="purpleUltraLight">#E6E6FA</color>
+
 </resources>
