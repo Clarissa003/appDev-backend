@@ -16,6 +16,7 @@
         android:layout_marginTop="184dp"
         android:text="Eudemonia"
         android:textSize="45sp"
+        android:fontFamily="@font/gallient"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

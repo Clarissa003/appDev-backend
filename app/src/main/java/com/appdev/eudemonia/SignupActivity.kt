@@ -1,9 +1,11 @@
 package com.appdev.eudemonia
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -98,6 +100,12 @@ class SignupActivity : AppCompatActivity() {
                 // Fields are empty, show error message
                 Toast.makeText(applicationContext, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
+        }
+        val textViewLoginRedirect: TextView = findViewById(R.id.textViewLoginRedirect)
+        textViewLoginRedirect.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+            finish() // Finish the current activity if you don't want it to stay in the back stack
         }
     }
 
