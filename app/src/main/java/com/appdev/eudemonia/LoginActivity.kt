@@ -1,19 +1,21 @@
 package com.appdev.eudemonia
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import java.security.MessageDigest
-
 class LoginActivity : AppCompatActivity() {
     private val auth = FirebaseAuth.getInstance()
 
     private lateinit var editTextUsername: EditText
     private lateinit var editTextPassword: EditText
     private lateinit var buttonLogin: Button
+    private lateinit var textViewRegisterRedirect: TextView // Add this line
 
     private val firestore = FirebaseFirestore.getInstance()
     private val usersCollection = firestore.collection("User")
@@ -25,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         editTextUsername = findViewById(R.id.editTextUsername)
         editTextPassword = findViewById(R.id.editTextPassword)
         buttonLogin = findViewById(R.id.buttonLogin)
+        textViewRegisterRedirect = findViewById(R.id.textViewRegisterRedirect) // Initialize the TextView
 
         buttonLogin.setOnClickListener {
             val username = editTextUsername.text.toString()
@@ -36,7 +39,14 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please enter username and password", Toast.LENGTH_SHORT).show()
             }
         }
+
+        // Set OnClickListener to the "Don't have an account? Sign up here." text view
+        textViewRegisterRedirect.setOnClickListener {
+            // Navigate to the signup activity
+            startActivity(Intent(this, SignupActivity::class.java))
+        }
     }
+
 
     private fun login(username: String, password: String) {
         usersCollection.whereEqualTo("name", username).get().addOnSuccessListener { querySnapshot ->
