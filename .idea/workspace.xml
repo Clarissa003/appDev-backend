@@ -86,7 +86,8 @@
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/alici/OneDrive/Escritorio/Period4&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.google.gct.login2.settings.GoogleLoginApplicationSettingsConfigurableProvider&quot;
-
+  }
+  }
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Android App.app.executor": "Run",
@@ -99,6 +100,7 @@
     "git-widget-placeholder": "resetPassword",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/alici/OneDrive/Escritorio/Period3/appDev-backend",
+    "last_opened_file_path": "C:/Users/alici/OneDrive/Escritorio/Period4/appDev-backend",
     "settings.editor.selected.configurable": "com.google.gct.login2.settings.GoogleLoginApplicationSettingsConfigurableProvider"
 
   }
