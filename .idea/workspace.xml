@@ -65,17 +65,16 @@
     <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
-  &quot;customColor&quot;: &quot;&quot;,
-  &quot;associatedIndex&quot;: 3
-}</component>
+    &quot;customColor&quot;: &quot;&quot;,
+    &quot;associatedIndex&quot;: 3
+    }</component>
   <component name="ProjectId" id="2g1AGvBC2BywaSyeb1MgAKpTe8C" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-
   <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
+    &quot;keyToString&quot;: {
     &quot;Android App.app.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
@@ -83,28 +82,12 @@
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;resetPassword&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/alici/OneDrive/Escritorio/Period4&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alici/OneDrive/Escritorio/Period4/appDev-backend&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;com.google.gct.login2.settings.GoogleLoginApplicationSettingsConfigurableProvider&quot;
-  }
-  }
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Android App.app.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.cidr.known.project.marker": "true",
-    "RunOnceActivity.readMode.enableVisualFormatting": "true",
-    "cf.first.check.clang-format": "false",
-    "cidr.known.project.marker": "true",
-    "git-widget-placeholder": "resetPassword",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/alici/OneDrive/Escritorio/Period3/appDev-backend",
-    "last_opened_file_path": "C:/Users/alici/OneDrive/Escritorio/Period4/appDev-backend",
-    "settings.editor.selected.configurable": "com.google.gct.login2.settings.GoogleLoginApplicationSettingsConfigurableProvider"
-
-  }
-}</component>
+    }
+    }</component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App">
       <module name="Eudemonia.app.main" />
@@ -119,70 +102,53 @@
       <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
       <option name="ACTIVITY_EXTRA_FLAGS" value="" />
       <option name="MODE" value="default_activity" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
-      <option name="INSPECTION_WITHOUT_ACTIVITY_RESTART" value="false" />
-      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <option name="DEBUGGER_TYPE" value="Java" />
-      <Auto>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Auto>
-      <Hybrid>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Hybrid>
-      <Java>
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Java>
-      <Native>
-        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
-        <option name="SHOW_STATIC_VARS" value="true" />
-        <option name="WORKING_DIR" value="" />
-        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
-        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
-        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
-        <option name="DEBUG_SANDBOX_SDK" value="false" />
-      </Native>
-      <Profilers>
-        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
-        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
-        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
-        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
-      </Profilers>
-      <option name="DEEP_LINK" value="" />
-      <option name="ACTIVITY_CLASS" value="" />
-      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
-      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <option name="TARGET_SELECTED" value="false" />
+      <option name="USE_HARDWARE_ACCELERATION" value="true" />
+      <option name="USE_INSTRUMENTATION_RUNNER" value="false" />
+      <option name="LOGCAT_FILTERS" value="" />
+      <option name="USE_LATEST_PLATFORM_TOOLS" value="true" />
+      <option name="GRADLE_BUILD_BEFORE_RUN" value="true" />
+      <option name="INSTALL_FLAGS" value="" />
+      <option name="PACKAGE" value="com.appdev.eudemonia" />
+      <option name="RUN_AFTER_BUILD" value="true" />
+      <option name="COMMAND_LINE_ARGS" value="" />
+      <option name="DISABLE_EXPLICIT_API_REQUIREMENT" value="false" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="VALIDATE_ACTIVITY" value="true" />
       <method v="2">
-        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+        <option name="arguments" />
+        <option name="envs" />
       </method>
     </configuration>
   </component>
-  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="3235061d-6c5e-401c-b5fe-939146201cc6" name="Changes" comment="" />
-      <created>1714854617890</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1714854617890</updated>
-    </task>
-    <servers />
+    <task active="true" id="Compile" summary="compilation failed" />
   </component>
+  <component name="TestHistoryProjectService">
+    <test name="LoginFragmentTest" status="COMPLETED" count="1" duration="77" timestamp="1647085300120" />
+    <test name="SignUpFragmentTest" status="COMPLETED" count="1" duration="39" timestamp="1647085339962" />
+    <test name="ResetPasswordFragmentTest" status="COMPLETED" count="1" duration="34" timestamp="1647085344144" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="3664" y="177" width="1920" height="1080" extended-state="6" />
+    <layout>
+      <window_info>
+        <content url="null" />
+        <option name="myToolbar">
+          <toolbar name="Main Toolbar" visible="false" />
+          <toolbar name="Run" visible="false" />
+          <toolbar name="Tool Run Actions" visible="false" />
+        </option>
+      </window_info>
+      <window_info>
+        <content url="null" />
+        <option name="myToolbar">
+          <toolbar name="Main Toolbar" visible="false" />
+          <toolbar name="Run" visible="false" />
+          <toolbar name="Tool Run Actions" visible="false" />
+        </option>
+      </window_info>
+    </layout>
+  </component>
+  <component name="TypeScriptCompilerToolWindowManagerState" />
 </project>
