@@ -43,6 +43,9 @@ class ResetPasswordActivity : AppCompatActivity() {
                         baseContext, "Password reset email sent.",
                         Toast.LENGTH_SHORT
                     ).show()
+                    // After sending the reset email, update the password
+                    val newPassword = "YourNewPasswordHere"
+                    updatePassword(newPassword)
                 } else {
                     Log.e(TAG, "Failed to send reset email.", task.exception)
                     Toast.makeText(
@@ -74,6 +77,6 @@ class ResetPasswordActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "com.appdev.eudemonia.ResetPasswordActivity"
+        private const val TAG = "ResetPasswordActivity"
     }
 }
