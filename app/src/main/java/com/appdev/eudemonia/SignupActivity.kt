@@ -2,7 +2,6 @@ package com.appdev.eudemonia
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -109,15 +108,16 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun addUserToFirestore(userId: String, email: String, username: String, password: String) {
-        // Hash the password
-        val hashedPassword = hashString(password)
-
+    private fun addUserToFirestore(
+        userId: String,
+        email: String,
+        username: String,
+        password: String
+    ) {
         // Create user object
         val user = hashMapOf(
             "email" to email,
-            "name" to username,
-            "password" to hashedPassword
+            "name" to username
         )
 
         // Add user to Firestore
