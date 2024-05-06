@@ -51,13 +51,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-<<<<<<< HEAD
         <option value="layoutResourceFile" />
         <option value="resourceFile" />
-=======
         <option value="Kotlin Class" />
         <option value="Kotlin File" />
->>>>>>> dev
       </list>
     </option>
   </component>
@@ -104,11 +101,7 @@
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "resetPassword",
     "kotlin-language-version-configured": "true",
-<<<<<<< HEAD
     "last_opened_file_path": "C:/Users/alici/OneDrive/Escritorio/Period3/appDev-backend",
-=======
-    "last_opened_file_path": "C:/Users/alici/OneDrive/Escritorio/Period4/appDev-backend",
->>>>>>> dev
     "settings.editor.selected.configurable": "com.google.gct.login2.settings.GoogleLoginApplicationSettingsConfigurableProvider"
 
   }
