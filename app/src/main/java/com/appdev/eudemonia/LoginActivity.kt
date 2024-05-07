@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var textViewForgotPassword: TextView
 
     private val firestore = FirebaseFirestore.getInstance()
-    private val usersCollection = firestore.collection("User")
+    private val usersCollection = firestore.collection("users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
