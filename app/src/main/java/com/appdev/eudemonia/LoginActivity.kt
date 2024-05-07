@@ -21,7 +21,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var textViewForgotPassword: TextView
 
     private val firestore = FirebaseFirestore.getInstance()
-    private val usersCollection = firestore.collection("users")
+    private val usersCollection = firestore.collection("User")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +54,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun login(username: String, password: String) {
-        usersCollection.whereEqualTo("username", username).get().addOnSuccessListener { querySnapshot ->
+        usersCollection.whereEqualTo("name", username).get().addOnSuccessListener { querySnapshot ->
             if (!querySnapshot.isEmpty) {
                 val userDocument = querySnapshot.documents[0]
                 val user = userDocument.data
