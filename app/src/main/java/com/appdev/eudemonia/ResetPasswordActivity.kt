@@ -1,5 +1,6 @@
 package com.appdev.eudemonia
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -31,6 +32,14 @@ class ResetPasswordActivity : AppCompatActivity() {
             } else {
                 resetPassword(email)
             }
+        }
+
+        binding.textViewLoginRedirect.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+
+        binding.textViewRegisterRedirect.setOnClickListener {
+            startActivity(Intent(this, SignupActivity::class.java))
         }
     }
 
