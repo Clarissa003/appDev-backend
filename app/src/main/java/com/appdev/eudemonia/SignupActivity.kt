@@ -63,18 +63,16 @@ class SignupActivity : AppCompatActivity() {
                                     ?.addOnCompleteListener { profileTask ->
                                         if (profileTask.isSuccessful) {
                                             // Add user to Firestore
-                                            addUserToFirestore(user!!.uid, email, username, password)
+                                            addUserToFirestore(user!!.uid, email, username)
                                             // Show success message
                                             Toast.makeText(
                                                 applicationContext,
                                                 "User registered successfully",
                                                 Toast.LENGTH_SHORT
                                             ).show()
-                                            // Clear input fields
-                                            emailEditText.text.clear()
-                                            usernameEditText.text.clear()
-                                            passwordEditText.text.clear()
-                                            confirmPasswordEditText.text.clear()
+                                            // Navigate to login activity
+                                            startActivity(Intent(this, LoginActivity::class.java))
+                                            finish() // Finish the current activity
                                         } else {
                                             Toast.makeText(
                                                 applicationContext,
@@ -108,20 +106,15 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    private fun addUserToFirestore(
-        userId: String,
-        email: String,
-        username: String,
-        password: String
-    ) {
+    private fun addUserToFirestore(userId: String, email: String, username: String) {
         // Create user object
         val user = hashMapOf(
             "email" to email,
-            "name" to username
+            "username" to username
         )
 
         // Add user to Firestore
-        firestore.collection("users")
+        firestore.collection("User")
             .document(userId)
             .set(user)
             .addOnSuccessListener {
@@ -135,11 +128,4 @@ class SignupActivity : AppCompatActivity() {
                 ).show()
             }
     }
-
-    // Function to hash the password using SHA-256
-    private fun hashString(input: String): String {
-        val bytes = MessageDigest.getInstance("SHA-256").digest(input.toByteArray())
-        return bytes.joinToString(separator = "") { "%02x".format(it) }
-    }
-
 }
