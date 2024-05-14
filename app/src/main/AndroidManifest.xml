@@ -35,6 +35,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- ProfileActivity -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true"
+            android:label="Profile Activity"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".ResetPasswordActivity"
             android:exported="true"
@@ -48,5 +54,6 @@
             android:label="Login Activity"
             android:theme="@style/Theme.AppCompat" />
     </application>
+    
 
 </manifest>
