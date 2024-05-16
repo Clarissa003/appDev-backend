@@ -18,7 +18,7 @@ import retrofit2.Response
 class GuidedJournalActivity : AppCompatActivity() {
     private lateinit var openAIInterface: OpenAIInterface
     private lateinit var retrofit: Retrofit
-    //private val apiKey = "apiKey"
+    private val apiKey = "sk-proj-b4lKnQOYx34pCjHrL54QT3BlbkFJA6UtrCDB6JyqJDc0NHOT"
     private lateinit var binding: ActivityGuidedJournalBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
