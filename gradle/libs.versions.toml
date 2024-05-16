@@ -12,6 +12,7 @@ constraintlayout = "2.1.4"
 appcompat = "1.6.1"
 firebaseFirestoreKtx = "25.0.0"
 firebaseAuthKtx = "23.0.0"
+composePreviewRenderer = "0.0.1-alpha01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,7 @@ androidx-constraintlayout = { group = "androidx.constraintlayout", name = "const
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
+compose-preview-renderer = { group = "com.android.tools.compose", name = "compose-preview-renderer", version.ref = "composePreviewRenderer" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
