@@ -1,11 +1,16 @@
 package com.appdev.eudemonia
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.storage.FirebaseStorage
 
 class ProfileActivity : AppCompatActivity() {
@@ -14,8 +19,8 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var profileName: TextView
     private lateinit var profileDisplayData: TextView
 
-    private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,51 +30,73 @@ class ProfileActivity : AppCompatActivity() {
         profileName = findViewById(R.id.profileName)
         profileDisplayData = findViewById(R.id.profileDisplayData)
 
-        val userId = intent.getStringExtra("userId")
-        if (userId != null) {
-            loadUserProfile(userId)
-        } else {
-            profileDisplayData.text = "Error: User ID is null"
+        loadUserProfile()
+
+        profilePicture.setOnClickListener {
+            selectImage()
         }
     }
 
-    private fun loadUserProfile(userId: String) {
-        firestore.collection("User").document(userId).get()
-            .addOnSuccessListener { document ->
-                val email = document.getString("email") ?: "No Email"
-                val profileId = document.getString("profileId")
+    private fun loadUserProfile() {
+        val currentUser = auth.currentUser
+        if (currentUser != null) {
+            val profilePicUrl = currentUser.photoUrl
+            profilePicUrl?.let { url ->
+                Glide.with(this)
+                    .load(url)
+                    .into(profilePicture)
+            }
+            profileName.text = currentUser.displayName ?: "No Username"
+        } else {
+            // Handle user not signed in
+        }
+    }
 
-                profileDisplayData.text = email
+    private fun selectImage() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        pickImage.launch(intent)
+    }
 
-                profileId?.let {
-                    firestore.collection("Profile").document(it).get()
-                        .addOnSuccessListener { profileDoc ->
-                            val username = profileDoc.getString("username") ?: "No Username"
-                            profileName.text = username
-
-                            val profilePicPath = profileDoc.getString("profilePic")
-                            profilePicPath?.let { path ->
-                                loadProfilePicture(path)
-                            }
-                        }
+    private val pickImage =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.data?.let { uri ->
+                    uploadImage(uri)
                 }
             }
-            .addOnFailureListener { exception ->
-                // Handle any errors here
-                profileDisplayData.text = "Error fetching data"
-            }
-    }
+        }
 
-    private fun loadProfilePicture(profilePicPath: String) {
-        val storageRef = storage.getReference(profilePicPath)
-        storageRef.downloadUrl.addOnSuccessListener { uri ->
-            Glide.with(this)
-                .load(uri)
-                .into(profilePicture)
-        }.addOnFailureListener {
-            // Handle any errors here
-            profilePicture.setImageResource(R.drawable.default_profile_picture)
+    private fun uploadImage(imageUri: Uri) {
+        val userId = auth.currentUser?.uid
+        userId?.let { uid ->
+            val storageRef = storage.reference
+            val imageRef = storageRef.child("profile_pictures/$uid")
+
+            imageRef.putFile(imageUri)
+                .addOnSuccessListener { taskSnapshot ->
+                    // Image uploaded successfully, now get the download URL
+                    imageRef.downloadUrl.addOnSuccessListener { uri ->
+                        // Update FirebaseUser with the new photo URL
+                        val user = auth.currentUser
+                        user?.updateProfile(UserProfileChangeRequest.Builder().setPhotoUri(uri).build())
+                            ?.addOnSuccessListener {
+                                // Profile image URL updated successfully
+                                // Reload the profile with the new image
+                                loadUserProfile()
+                                Toast.makeText(this, "Profile image updated successfully", Toast.LENGTH_SHORT).show()
+                            }
+                            ?.addOnFailureListener { exception ->
+                                // Handle failed update
+                                Toast.makeText(this, "Failed to update profile image: ${exception.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    // Handle failed image upload
+                    Toast.makeText(this, "Failed to upload image: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
         }
     }
-}
 
+}
