@@ -1,16 +1,17 @@
 package com.appdev.eudemonia
 
-import CompletionRequest
-import CompletionResponse
+
+import HuggingFaceRequest
+import HuggingFaceResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header
 import retrofit2.http.POST
 
-interface OpenAIInterface {
-    @POST("completions")
+interface HuggingFaceInterface {
+    @POST("gpt2")
     fun getCompletion(
         @Header("Authorization") apiKey: String,
-        @Body request: CompletionRequest
-    ): Call<CompletionResponse>
+        @Body request: HuggingFaceRequest
+    ): Call<HuggingFaceResponse>
 }
