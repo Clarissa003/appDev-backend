@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.appdev.eudemonia">
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -47,6 +48,13 @@
             android:exported="true"
             android:label="Login Activity"
             android:theme="@style/Theme.AppCompat" />
+        <!-- UnguidedJournalActivity -->
+        <activity
+            android:name=".UnguidedJournalActivity"
+            android:exported="true"
+            android:label="Unguided Journal"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
     </application>
 
 </manifest>
