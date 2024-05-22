@@ -22,7 +22,7 @@ class GuidedJournalActivity : AppCompatActivity() {
     private fun generatePrompt() {
         // You'll need to replace "YOUR_API_KEY" with your actual Hugging Face API key
         val apiKey = "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"
-        val inputs = "Generate a concise prompt question for daily journaling that focuses on reflection and self-growth" // You can modify this as per your needs
+        val inputs = "Reflect on your experiences from today and write about one thing you learned or discovered"
 
         // Call the Hugging Face API service to get the generated prompt
         HuggingFaceService().getGeneratedPrompt(apiKey, inputs) { prompt ->
