@@ -1,3 +1,7 @@
+package com.appdev.eudemonia
+
+import com.google.gson.annotations.SerializedName
+
 // OpenAIModels.kt
 
 data class HuggingFaceRequest(
@@ -5,6 +9,6 @@ data class HuggingFaceRequest(
 )
 
 data class HuggingFaceResponse(
-    val generated_text: String
+    @SerializedName("generated_text")
+    val generatedText: String
 )
-

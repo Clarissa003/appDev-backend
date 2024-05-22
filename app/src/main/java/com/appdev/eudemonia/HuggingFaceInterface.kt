@@ -1,8 +1,5 @@
 package com.appdev.eudemonia
 
-
-import HuggingFaceRequest
-import HuggingFaceResponse
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -13,5 +10,5 @@ interface HuggingFaceInterface {
     fun getCompletion(
         @Header("Authorization") apiKey: String,
         @Body request: HuggingFaceRequest
-    ): Call<HuggingFaceResponse>
+    ): Call<List<HuggingFaceResponse>>
 }

@@ -1,71 +1,33 @@
 package com.appdev.eudemonia
-
-import HuggingFaceRequest
-import HuggingFaceResponse
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import com.appdev.eudemonia.databinding.ActivityGuidedJournalBinding
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 class GuidedJournalActivity : AppCompatActivity() {
-    private lateinit var huggingFaceInterface: HuggingFaceInterface
-    private lateinit var retrofit: Retrofit
-    private val apiKey = "Bearer " // Replace with your actual API key
+
     private lateinit var binding: ActivityGuidedJournalBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_guided_journal)
+        binding = ActivityGuidedJournalBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // Initialize Retrofit instance
-        retrofit = Retrofit.Builder()
-            .baseUrl("https://api-inference.huggingface.co/models/openai-community/") // Ensure the base URL ends with /
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-        huggingFaceInterface = retrofit.create(HuggingFaceInterface::class.java)
-
+        // Set click listener for the Generate Prompt button
         binding.generatePromptButton.setOnClickListener {
             generatePrompt()
         }
     }
 
     private fun generatePrompt() {
-        val journalingPrompt = "Dear Journal, \n\n"
-        val call = huggingFaceInterface.getCompletion(
-            apiKey,
-            HuggingFaceRequest(inputs = journalingPrompt)
-        )
-        call.enqueue(object : Callback<HuggingFaceResponse> {
-            override fun onResponse(
-                call: Call<HuggingFaceResponse>,
-                response: Response<HuggingFaceResponse>
-            ) {
-                if (response.isSuccessful) {
-                    val completion = response.body()?.generated_text
-                    binding.displayPrompt.text = completion ?: "No response from API"
-                } else {
-                    showError(response.message())
-                }
-            }
+        // You'll need to replace "YOUR_API_KEY" with your actual Hugging Face API key
+        val apiKey = "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"
+        val inputs = "Generate a concise prompt question for daily journaling that focuses on reflection and self-growth" // You can modify this as per your needs
 
-            override fun onFailure(call: Call<HuggingFaceResponse>, t: Throwable) {
-                showFailure(t.message)
-            }
-        })
-    }
-
-    private fun showError(message: String?) {
-        Toast.makeText(this, "Error occurred while fetching prompt: $message", Toast.LENGTH_SHORT).show()
-    }
-
-    private fun showFailure(message: String?) {
-        Toast.makeText(this, "Failed to fetch prompt: $message", Toast.LENGTH_SHORT).show()
+        // Call the Hugging Face API service to get the generated prompt
+        HuggingFaceService().getGeneratedPrompt(apiKey, inputs) { prompt ->
+            // Update the UI with the generated prompt
+            binding.displayPrompt.text = prompt
+        }
     }
 }
