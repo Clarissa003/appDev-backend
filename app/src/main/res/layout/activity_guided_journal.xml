@@ -13,7 +13,7 @@
         <TextView
             android:id="@+id/displayPrompt"
             android:layout_width="350dp"
-            android:layout_height="48dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginTop="44dp"
             android:background="@color/greenUltraDark"
@@ -21,6 +21,7 @@
             android:minHeight="48dp"
             android:paddingLeft="10dp"
             android:text="Some very deep question?"
+            android:textColor="#212121"
             android:textStyle="italic"
             app:fontFamily="@font/altone"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -52,7 +53,8 @@
             android:layout_marginBottom="24dp"
             android:src="@drawable/ic_share"
             app:layout_constraintBottom_toBottomOf="@+id/enterAnswer"
-            tools:layout_editor_absoluteX="228dp" />
+            tools:layout_editor_absoluteX="228dp"
+            tools:ignore="MissingConstraints" />
         <Button
             android:id="@+id/generatePromptButton"
             android:layout_width="wrap_content"

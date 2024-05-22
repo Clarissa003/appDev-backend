@@ -49,7 +49,7 @@
             android:exported="true"
             android:label="Login Activity"
             android:theme="@style/Theme.AppCompat" />
-        <!-- GuidedJournalActivity -->
+        <!-- com.appdev.eudemonia.GuidedJournalActivity -->
         <activity
             android:name=".GuidedJournalActivity"
             android:exported="true"
