@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.appdev.eudemonia">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -25,13 +30,23 @@
             </intent-filter>
         </activity>-->
         <!-- SignupActivity - set as launcher activity -->
+
         <activity
             android:name=".SignupActivity"
             android:exported="true"
             android:label="Signup Activity"
             android:theme="@style/Theme.AppCompat">
-
+          <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
         </activity>
+        <!-- ProfileActivity -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true"
+            android:label="Profile Activity"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".ResetPasswordActivity"
             android:exported="true"
@@ -50,11 +65,26 @@
             android:exported="true"
             android:label="Moods Activity"
             android:theme="@style/Theme.AppCompat">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+        <!-- HabitsActivity -->
+        <activity
+            android:name=".HabitsActivity"
+            android:exported="true"
+            android:label="Habits Activity"
+            android:theme="@style/Theme.AppCompat">
+        <!-- UnguidedJournalActivity -->
+        <activity
+            android:name=".UnguidedJournalActivity"
+            android:exported="true"
+            android:label="Unguided Journal"
+            android:theme="@style/Theme.AppCompat">
+        <!-- com.appdev.eudemonia.GuidedJournalActivity -->
+        <activity
+            android:name=".GuidedJournalActivity"
+            android:exported="true"
+            android:label="Guided Journal Activity"
+            android:theme="@style/Theme.AppCompat">
         </activity>
     </application>
+    
 
 </manifest>

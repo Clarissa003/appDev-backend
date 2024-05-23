@@ -56,7 +56,6 @@ class LoginActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     val user = auth.currentUser
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    // TODO: Update UI
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(
