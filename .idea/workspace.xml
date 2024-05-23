@@ -5,6 +5,7 @@
       <config />
     </shared>
     <layouts>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_habits.xml">
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_guided_journal.xml">
         <config>
           <theme>@style/Theme.AppCompat</theme>
@@ -30,6 +31,7 @@
           <theme>@style/Theme.AppCompat</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_single_habit.xml">
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_unguided_journal.xml">
         <config>
           <theme>@style/Theme.AppCompat</theme>
@@ -44,6 +46,8 @@
     <list default="true" id="3235061d-6c5e-401c-b5fe-939146201cc6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_single_habit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_single_habit.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
@@ -166,6 +170,7 @@
   <component name="RunManager" selected="Android App.ProfileActivity">
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Android App.HabitsActivity.executor&quot;: &quot;Run&quot;,
     &quot;Android App.GuidedJournalActivity.executor&quot;: &quot;Run&quot;,
     &quot;Android App.LoginActivity.executor&quot;: &quot;Run&quot;,
     &quot;Android App.UnguidedJournalActivity.executor&quot;: &quot;Run&quot;,
@@ -184,6 +189,8 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
 }</component>
+  <component name="RunManager" selected="Android App.HabitsActivity">
+    <configuration name="HabitsActivity" type="AndroidRunConfigurationType" factoryName="Android App" temporary="true">
   <component name="RunManager" selected="Android App.UnguidedJournalActivity">
     <configuration name="LoginActivity" type="AndroidRunConfigurationType" factoryName="Android App" temporary="true">
   <component name="RecentsManager">
@@ -223,6 +230,7 @@
         <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
       </Profilers>
       <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY_CLASS" value="com.appdev.eudemonia.HabitsActivity" />
       <option name="ACTIVITY_CLASS" value="com.appdev.eudemonia.LoginActivity" />
       <option name="ACTIVITY_CLASS" value="com.appdev.eudemonia.GuidedJournalActivity" />
       <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
@@ -313,6 +321,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Android App.HabitsActivity" />
         <item itemvalue="Android App.ProfileActivity" />
         <item itemvalue="Android App.UnguidedJournalActivity" />
         <item itemvalue="Android App.GuidedJournalActivity" />

@@ -59,6 +59,12 @@
             android:exported="true"
             android:label="Login Activity"
             android:theme="@style/Theme.AppCompat" />
+        <!-- HabitsActivity -->
+        <activity
+            android:name=".HabitsActivity"
+            android:exported="true"
+            android:label="Habits Activity"
+            android:theme="@style/Theme.AppCompat">
         <!-- UnguidedJournalActivity -->
         <activity
             android:name=".UnguidedJournalActivity"
@@ -71,11 +77,6 @@
             android:exported="true"
             android:label="Guided Journal Activity"
             android:theme="@style/Theme.AppCompat">
-            <!-- Set this activity as the launcher for testing -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
     
