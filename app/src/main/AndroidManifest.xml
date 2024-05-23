@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.appdev.eudemonia">
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.INTERNET" />
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.appdev.eudemonia">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+            android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat"
-        tools:targetApi="31">
+            android:allowBackup="true"
+            android:dataExtractionRules="@xml/data_extraction_rules"
+            android:fullBackupContent="@xml/backup_rules"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.AppCompat"
+            tools:targetApi="31">
+
         <!-- MainActivity -->
-        <!--<activity
+        <!--
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
@@ -28,56 +29,64 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>-->
-        <!-- SignupActivity - set as launcher activity -->
+        </activity>
+        -->
 
+        <!-- SignupActivity - set as launcher activity -->
         <activity
-            android:name=".SignupActivity"
-            android:exported="true"
-            android:label="Signup Activity"
-            android:theme="@style/Theme.AppCompat">
-          <!-- <intent-filter>
+                android:name=".SignupActivity"
+                android:exported="true"
+                android:label="Signup Activity"
+                android:theme="@style/Theme.AppCompat">
+            <!--
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>-->
+            </intent-filter>
+            -->
         </activity>
+
         <!-- ProfileActivity -->
         <activity
-            android:name=".ProfileActivity"
-            android:exported="true"
-            android:label="Profile Activity"
-            android:theme="@style/Theme.AppCompat" />
+                android:name=".ProfileActivity"
+                android:exported="true"
+                android:label="Profile Activity"
+                android:theme="@style/Theme.AppCompat" />
+
+        <!-- ResetPasswordActivity -->
         <activity
-            android:name=".ResetPasswordActivity"
-            android:exported="true"
-            android:label="Reset Password Activity"
-            android:theme="@style/Theme.AppCompat">
-        </activity>
+                android:name=".ResetPasswordActivity"
+                android:exported="true"
+                android:label="Reset Password Activity"
+                android:theme="@style/Theme.AppCompat" />
+
         <!-- LoginActivity -->
         <activity
-            android:name=".LoginActivity"
-            android:exported="true"
-            android:label="Login Activity"
-            android:theme="@style/Theme.AppCompat" />
+                android:name=".LoginActivity"
+                android:exported="true"
+                android:label="Login Activity"
+                android:theme="@style/Theme.AppCompat" />
+
         <!-- UnguidedJournalActivity -->
         <activity
-            android:name=".UnguidedJournalActivity"
-            android:exported="true"
-            android:label="Unguided Journal"
-            android:theme="@style/Theme.AppCompat">
-        <!-- com.appdev.eudemonia.GuidedJournalActivity -->
+                android:name=".UnguidedJournalActivity"
+                android:exported="true"
+                android:label="Unguided Journal"
+                android:theme="@style/Theme.AppCompat" />
+
+        <!-- GuidedJournalActivity -->
         <activity
-            android:name=".GuidedJournalActivity"
-            android:exported="true"
-            android:label="Guided Journal Activity"
-            android:theme="@style/Theme.AppCompat">
+                android:name=".GuidedJournalActivity"
+                android:exported="true"
+                android:label="Guided Journal Activity"
+                android:theme="@style/Theme.AppCompat">
             <!-- Set this activity as the launcher for testing -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
-    
 
 </manifest>
