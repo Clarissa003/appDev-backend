@@ -44,7 +44,7 @@
             app:layout_constraintHorizontal_bias="0.437"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/displayPrompt" />
+            app:layout_constraintTop_toBottomOf="@+id/generatePromptButton" />
 
         <ImageView
             android:id="@+id/shareIcon"
