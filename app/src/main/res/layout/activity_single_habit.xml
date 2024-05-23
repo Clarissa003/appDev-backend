@@ -5,22 +5,20 @@
     android:layout_height="wrap_content"
     android:background="@drawable/gradient_background">
 
-    <TextView
-        android:id="@+id/habitNameTextView"
+    <EditText
+        android:id="@+id/habitNameEditText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="placeholder"
+        android:hint="Enter Habit Name"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:fontFamily="@font/Altone"
+        android:fontFamily="@font/altone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/habitCheckBox"
-        app:layout_constraintHorizontal_bias="0"
-        app:layout_constraintWidth_default="percent"
-        app:layout_constraintWidth_percent="0.8"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"/>
+
 
     <CheckBox
         android:id="@+id/habitCheckBox"

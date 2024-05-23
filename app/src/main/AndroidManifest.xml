@@ -47,6 +47,13 @@
             android:exported="true"
             android:label="Login Activity"
             android:theme="@style/Theme.AppCompat" />
+        <!-- HabitsActivity -->
+        <activity
+            android:name=".HabitsActivity"
+            android:exported="true"
+            android:label="Habits Activity"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
     </application>
 
 </manifest>
