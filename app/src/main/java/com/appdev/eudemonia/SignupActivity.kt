@@ -27,7 +27,6 @@ class SignupActivity : AppCompatActivity() {
 
         // Initialize Firebase Auth if not already initialized
         auth = FirebaseAuth.getInstance()
-
         // Initialize Firestore
         firestore = FirebaseFirestore.getInstance()
 
@@ -83,8 +82,9 @@ class SignupActivity : AppCompatActivity() {
                                     }
                             } else {
                                 // If sign in fails, display a message to the user.
+                                val exceptionMessage = task.exception?.message
                                 Toast.makeText(
-                                    applicationContext, "Authentication failed.",
+                                    applicationContext, "Authentication failed: $exceptionMessage",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -98,6 +98,7 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
+
         val textViewLoginRedirect: TextView = findViewById(R.id.textViewLoginRedirect)
         textViewLoginRedirect.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
@@ -129,3 +130,4 @@ class SignupActivity : AppCompatActivity() {
             }
     }
 }
+
