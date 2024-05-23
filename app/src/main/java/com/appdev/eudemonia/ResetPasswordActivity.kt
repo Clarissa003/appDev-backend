@@ -2,12 +2,10 @@ package com.appdev.eudemonia
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appdev.eudemonia.databinding.ActivityResetPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 class ResetPasswordActivity : AppCompatActivity() {
 
@@ -30,7 +28,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             } else {
-                resetPassword(email)
+                sendResetPasswordEmail(email)
             }
         }
 
@@ -43,49 +41,21 @@ class ResetPasswordActivity : AppCompatActivity() {
         }
     }
 
-    private fun resetPassword(email: String) {
+    private fun sendResetPasswordEmail(email: String) {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d(TAG, "Email sent.")
-                    Toast.makeText(
-                        baseContext, "Password reset email sent.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    // After sending the reset email, update the password
-                    val newPassword = "YourNewPasswordHere"
-                    updatePassword(newPassword)
+                    Toast.makeText(this, "Reset email sent", Toast.LENGTH_LONG).show()
+                    startActivity(Intent(this, LoginActivity::class.java))
+                    finish() // Finish the current activity
                 } else {
-                    Log.e(TAG, "Failed to send reset email.", task.exception)
-                    Toast.makeText(
-                        baseContext, "Failed to send reset email. ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this, "Failed to send reset email", Toast.LENGTH_LONG).show()
                 }
             }
-    }
-
-    private fun updatePassword(newPassword: String) {
-        val user: FirebaseUser? = auth.currentUser
-        user?.updatePassword(newPassword)
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "Password updated successfully")
-                    Toast.makeText(
-                        baseContext, "Password updated successfully.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                } else {
-                    Log.e(TAG, "Failed to update password", task.exception)
-                    Toast.makeText(
-                        baseContext, "Failed to update password. ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+            .addOnFailureListener { exception ->
+                Toast.makeText(
+                    this@ResetPasswordActivity, "Error Occurred", Toast.LENGTH_LONG
+                ).show()
             }
-    }
-
-    companion object {
-        private const val TAG = "ResetPasswordActivity"
     }
 }
