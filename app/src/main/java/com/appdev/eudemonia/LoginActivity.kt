@@ -54,11 +54,9 @@ class LoginActivity : AppCompatActivity() {
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
+                    val user = auth.currentUser
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    // Navigate to UnguidedJournalActivity
-                    val intent = Intent(this, UnguidedJournalActivity::class.java)
-                    startActivity(intent)
-                    finish() // Close LoginActivity
+                    // TODO: Update UI
                 } else {
                     // If sign in fails, display a message to the user.
                     Toast.makeText(
