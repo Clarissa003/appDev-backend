@@ -1,6 +1,8 @@
 package com.appdev.eudemonia
 
+import android.content.Intent
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appdev.eudemonia.databinding.ActivityGuidedJournalBinding
@@ -31,6 +33,26 @@ class GuidedJournalActivity : AppCompatActivity() {
         // Set click listener for the Save Entry button
         binding.saveButton.setOnClickListener {
             saveJournalEntry()
+        }
+
+        // Redirect to the unguided journal page
+        findViewById<TextView>(R.id.buttonUnguidedJournal).setOnClickListener {
+            startActivity(Intent(this, UnguidedJournalActivity::class.java))
+        }
+
+        // Redirect to the guided journal page
+        findViewById<TextView>(R.id.buttonGuidedJournal).setOnClickListener {
+            startActivity(Intent(this, GuidedJournalActivity::class.java))
+        }
+
+        // Redirect to the moods page
+        findViewById<TextView>(R.id.buttonMoods).setOnClickListener {
+            startActivity(Intent(this, MoodsActivity::class.java))
+        }
+
+        // Redirect to the habits page
+        findViewById<TextView>(R.id.buttonHabits).setOnClickListener {
+            startActivity(Intent(this, HabitsActivity::class.java))
         }
     }
 

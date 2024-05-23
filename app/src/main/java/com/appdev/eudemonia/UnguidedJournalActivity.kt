@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appdev.eudemonia.LoginActivity
@@ -40,6 +41,26 @@ class UnguidedJournalActivity : AppCompatActivity() {
 
         saveButton.setOnClickListener {
             saveJournalEntry()
+        }
+
+        // Redirect to the unguided journal page
+        findViewById<Button>(R.id.buttonUnguidedJournal).setOnClickListener {
+            startActivity(Intent(this, UnguidedJournalActivity::class.java))
+        }
+
+        // Redirect to the guided journal page
+        findViewById<Button>(R.id.buttonGuidedJournal).setOnClickListener {
+            startActivity(Intent(this, GuidedJournalActivity::class.java))
+        }
+
+        // Redirect to the moods page
+        findViewById<Button>(R.id.buttonMoods).setOnClickListener {
+            startActivity(Intent(this, MoodsActivity::class.java))
+        }
+
+        // Redirect to the habits page
+        findViewById<Button>(R.id.buttonHabits).setOnClickListener {
+            startActivity(Intent(this, HabitsActivity::class.java))
         }
     }
 

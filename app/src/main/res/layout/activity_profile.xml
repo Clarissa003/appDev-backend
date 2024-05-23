@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/greenUltraLight">
 
+    <!-- Profile Picture -->
     <ImageView
         android:id="@+id/profilePicture"
         android:layout_width="150dp"
@@ -17,6 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Profile Name -->
     <TextView
         android:id="@+id/profileName"
         android:layout_width="wrap_content"
@@ -30,7 +32,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
 
-
+    <!-- Profile Display Data -->
     <TextView
         android:id="@+id/profileDisplayData"
         android:layout_width="wrap_content"
@@ -44,5 +46,42 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileName" />
+
+    <!-- Buttons -->
+    <Button
+        android:id="@+id/buttonUnguidedJournal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to unguided journal page"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileDisplayData"/>
+
+    <Button
+        android:id="@+id/buttonGuidedJournal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to guided journal page"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileDisplayData"/>
+
+    <Button
+        android:id="@+id/buttonMoods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to moods"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonUnguidedJournal"/>
+
+    <Button
+        android:id="@+id/buttonHabits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to habits"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonGuidedJournal"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

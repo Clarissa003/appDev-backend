@@ -37,7 +37,8 @@
             android:hint="Enter answer..."
             android:minHeight="250dp"
             android:paddingLeft="10dp"
-            android:textColor="#808080"
+            android:textColor="#000000"
+            android:textColorHint="#808080"
             android:textStyle="italic"
             app:fontFamily="@font/altone"
             app:layout_constraintEnd_toEndOf="parent"
@@ -76,6 +77,43 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/shareIcon" />
+
+        <!-- Buttons -->
+        <Button
+            android:id="@+id/buttonUnguidedJournal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go to unguided journal page"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/saveButton"/>
+
+        <Button
+            android:id="@+id/buttonGuidedJournal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go to guided journal page"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonUnguidedJournal"/>
+
+        <Button
+            android:id="@+id/buttonMoods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go to moods"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/saveButton"/>
+
+        <Button
+            android:id="@+id/buttonHabits"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Go to habits"
+            android:layout_marginTop="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/buttonMoods"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
