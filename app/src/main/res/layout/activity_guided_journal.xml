@@ -31,7 +31,7 @@
         <EditText
             android:id="@+id/enterAnswer"
             android:layout_width="350dp"
-            android:layout_height="614dp"
+            android:layout_height="514dp"
             android:layout_marginTop="4dp"
             android:gravity="top"
             android:hint="Enter answer..."
@@ -104,7 +104,7 @@
             android:text="Go to moods"
             android:layout_marginTop="16dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/saveButton"/>
+            app:layout_constraintTop_toBottomOf="@+id/buttonGuidedJournal"/>
 
         <Button
             android:id="@+id/buttonHabits"
@@ -113,7 +113,7 @@
             android:text="Go to habits"
             android:layout_marginTop="16dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonMoods"/>
+            app:layout_constraintTop_toBottomOf="@+id/saveButton"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

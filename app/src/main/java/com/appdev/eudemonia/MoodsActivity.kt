@@ -52,6 +52,12 @@ class MoodsActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.buttonHabits).setOnClickListener {
             startActivity(Intent(this, HabitsActivity::class.java))
         }
+
+        // Redirect to the profile page
+        findViewById<TextView>(R.id.buttonProfile).setOnClickListener {
+            startActivity(Intent(this, ProfileActivity::class.java))
+        }
+
     }
 
     private fun saveMoodToDb(moodName: String) {
