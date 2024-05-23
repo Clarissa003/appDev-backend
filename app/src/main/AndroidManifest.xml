@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.appdev.eudemonia">
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -28,6 +30,7 @@
             </intent-filter>
         </activity>-->
         <!-- SignupActivity - set as launcher activity -->
+
         <activity
             android:name=".SignupActivity"
             android:exported="true"
@@ -38,10 +41,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>-->
         </activity>
+        <!-- ProfileActivity -->
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="true"
+            android:label="Profile Activity"
+            android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".ResetPasswordActivity"
             android:exported="true"
-            android:label="@string/app_name"
+            android:label="Reset Password Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
         <!-- LoginActivity -->
@@ -69,5 +78,6 @@
             </intent-filter>
         </activity>
     </application>
+    
 
 </manifest>

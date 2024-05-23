@@ -120,6 +120,26 @@ class SignupActivity : AppCompatActivity() {
             .set(user)
             .addOnSuccessListener {
                 // User added successfully to Firestore
+
+                val profile = hashMapOf(
+                    "userId" to userId,
+                    "username" to username,
+                    "profilePic" to null
+                )
+
+                firestore.collection("Profile")
+                    .document(userId)
+                    .set(profile)
+                    .addOnSuccessListener {
+                        // User and profile added successfully to Firestore
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(
+                            this,
+                            "Failed to register user profile in Firestore: ${e.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
             }
             .addOnFailureListener { e ->
                 Toast.makeText(
