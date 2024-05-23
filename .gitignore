@@ -33,6 +33,7 @@ proguard/
 *.iml
 *.iws
 *.ipr
+workspace.xml
 
 # User-specific files
 /.gradle
