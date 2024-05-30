@@ -49,39 +49,64 @@
 
     <!-- Buttons -->
     <Button
+        android:id="@+id/buttonMoods"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/greenUltraDark"
+        android:fontFamily="@font/gontserratMedium"
+        android:text="Moods"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileDisplayData" />
+
+    <Button
         android:id="@+id/buttonUnguidedJournal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to unguided journal page"
+        android:layout_marginStart="88dp"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@color/greenUltraDark"
+        android:fontFamily="@font/gontserratMedium"
+        android:text="Unguided journal"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profileDisplayData"/>
+        app:layout_constraintTop_toBottomOf="@+id/profileDisplayData" />
 
     <Button
         android:id="@+id/buttonGuidedJournal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to guided journal page"
         android:layout_marginTop="16dp"
+        android:backgroundTint="@color/greenUltraDark"
+        android:fontFamily="@font/gontserratMedium"
+        android:text="Guided journal"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonHabits"/>
-
-    <Button
-        android:id="@+id/buttonMoods"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to moods"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonUnguidedJournal"/>
+        app:layout_constraintTop_toBottomOf="@+id/profileDisplayData" />
 
     <Button
         android:id="@+id/buttonHabits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go to habits"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="108dp"
+        android:backgroundTint="@color/greenUltraDark"
+        android:fontFamily="@font/gontserratMedium"
+        android:text="Habits"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/profileDisplayData"/>
+        app:layout_constraintTop_toBottomOf="@+id/buttonUnguidedJournal" />
+
+    <Button
+        android:id="@+id/buttonProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/greenUltraDark"
+        android:fontFamily="@font/gontserratMedium"
+        android:text="Profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.321"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonUnguidedJournal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
