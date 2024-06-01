@@ -1,0 +1,96 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/gradient_background">
+
+    <TextView
+        android:id="@+id/textViewEudemonia"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="184dp"
+        android:layout_marginBottom="50dp"
+        android:fontFamily="@font/gallient"
+        android:text="Eudemonia"
+        android:textColor="#000000"
+        android:textSize="45sp"
+        android:textStyle="bold"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Receive Crisis Notifications"
+            android:textSize="18sp"
+            android:textColor="@color/black" />
+
+        <Switch
+            android:id="@+id/toggleCrisisNotifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Receive Affirmation Notifications"
+            android:textSize="18sp"
+            android:textColor="@color/black" />
+
+        <Switch
+            android:id="@+id/toggleAffirmationNotifications"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:textColor="@color/white"
+        android:background="@color/greenUltraDark"
+        android:layout_marginTop="120dp"
+        android:textAllCaps="false"
+        android:padding="12dp" />
+
+    <Button
+        android:id="@+id/buttonDeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Account"
+        android:textColor="@color/white"
+        android:background="@color/greenUltraDark"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:padding="12dp" />
+
+    <Button
+        android:id="@+id/buttonResetData"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Reset Data"
+        android:textColor="@color/white"
+        android:background="@color/greenUltraDark"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:padding="12dp" />
+
+</LinearLayout>
