@@ -6,6 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/gradient_background"
             tools:context=".FriendsActivity">
 
         <SearchView
@@ -18,12 +19,13 @@
                 android:queryHint="Search..."
                 android:textStyle="italic"
                 app:fontFamily="@font/altone"
-                android:textColor="@color/black"
+                android:textColor="@color/gray"
                 android:textColorHint="@color/gray"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5" />
+
 
         <ListView
                 android:id="@+id/idFriends"
@@ -31,8 +33,8 @@
                 android:layout_height="0dp"
                 android:textStyle="italic"
                 app:fontFamily="@font/altone"
-                android:textColor="gray"
-                android:textColorHint="@color/gray"
+                android:textColor="@color/gray"
+                android:textColorHint="#@color/gray"
                 app:layout_constraintTop_toBottomOf="@+id/idSearch"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

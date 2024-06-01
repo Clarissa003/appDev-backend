@@ -20,8 +20,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Friend Name"
+            android:textColor="@color/gray"
+            android:fontFamily="@font/altone"
             android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:layout_gravity="center_vertical"/>
-
+            android:layout_gravity="center_vertical" />
 </LinearLayout>

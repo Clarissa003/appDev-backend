@@ -2,6 +2,8 @@ package com.appdev.eudemonia;
 
 import android.os.Bundle;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -21,7 +23,6 @@ public class FriendsActivity extends AppCompatActivity {
         List<Friend> friends = new ArrayList<>();
         friends.add(new Friend("John Doe", R.drawable.default_profile_picture));
         friends.add(new Friend("Jane Smith", R.drawable.default_profile_picture));
-        // Add more friends as needed
 
         FriendsAdapter adapter = new FriendsAdapter(this, friends);
         listView.setAdapter(adapter);
