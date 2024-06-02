@@ -16,14 +16,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginTop="44dp"
-            android:background="@color/greenUltraDark"
+            android:background="@color/greenDark"
             android:gravity="center_vertical"
             android:minHeight="48dp"
             android:paddingLeft="10dp"
             android:text="Some very deep question?"
-            android:textColor="#212121"
-            android:textStyle="italic"
-            app:fontFamily="@font/altone"
+            android:textColor="@color/white"
+            app:fontFamily="@font/gontserratRegular"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -60,9 +59,12 @@
             android:id="@+id/generatePromptButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Generate Prompt"
-            app:layout_constraintTop_toBottomOf="@+id/displayPrompt"
-            app:layout_constraintStart_toStartOf="@+id/displayPrompt" />
+            android:backgroundTint="@color/greenUltraDark"
+            android:fontFamily="@font/gontserratMedium"
+            android:text="Generate prompt"
+            android:textAllCaps="false"
+            app:layout_constraintStart_toStartOf="@+id/displayPrompt"
+            app:layout_constraintTop_toBottomOf="@+id/displayPrompt" />
         <Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
@@ -70,15 +72,15 @@
             android:layout_marginStart="5dp"
             android:layout_marginBottom="24dp"
             android:backgroundTint="@color/greenUltraDark"
-            android:fontFamily="@font/altone"
             android:text="Save"
-            app:fontFamily="@font/altone"
+            android:fontFamily="@font/gontserratRegular"
+            android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="@+id/enterAnswer"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/shareIcon" />
 
-        <!-- Buttons -->
+        <!-- Buttons
         <Button
             android:id="@+id/buttonUnguidedJournal"
             android:layout_width="wrap_content"
@@ -115,5 +117,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/saveButton"/>
 
+-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
