@@ -68,6 +68,16 @@
             android:contentDescription="sad_description"/>
     </LinearLayout>
 
+    <!-- RecyclerView for displaying moods -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/moodRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/moodImagesLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
     <!-- Buttons
     <Button
         android:id="@+id/buttonMoods"

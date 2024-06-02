@@ -127,6 +127,17 @@
                     android:onClick="onMoodButtonClick"
                     android:contentDescription="sad_description"/>
             </LinearLayout>
+
+            <!-- RecyclerView for displaying moods -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/moodRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Habits Layout -->
