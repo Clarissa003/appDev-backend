@@ -3,7 +3,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:background="@color/greenUltraLight">
 
     <ImageView
             android:id="@+id/profile_image"
@@ -21,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="Friend Name"
             android:textColor="@color/gray"
-            android:fontFamily="@font/altone"
+            android:fontFamily="@font/gontserratRegular"
             android:textSize="16sp"
             android:layout_gravity="center_vertical" />
 </LinearLayout>
