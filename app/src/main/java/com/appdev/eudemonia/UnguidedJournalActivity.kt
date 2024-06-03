@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
 
-class UnguidedJournalActivity : AppCompatActivity() {
+class UnguidedJournalActivity : BaseActivity() {
 
     private lateinit var editText: EditText
     private lateinit var saveButton: Button

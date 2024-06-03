@@ -10,7 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
 
-class GuidedJournalActivity : AppCompatActivity() {
+class GuidedJournalActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGuidedJournalBinding
     private lateinit var firestore: FirebaseFirestore

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class MoodsActivity : AppCompatActivity() {
+class MoodsActivity : BaseActivity() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var mAuth: FirebaseAuth
