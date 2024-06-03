@@ -1,0 +1,176 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Calendar Layout -->
+        <RelativeLayout
+            android:id="@+id/idRLContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/idTVHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Select a day"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/altone"/>
+
+            <TextView
+                android:id="@+id/idTVSelectedDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/idTVHeading"
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="Date"
+                android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/altone"/>
+
+            <Button
+                android:id="@+id/idBtnPickDate"
+                android:layout_width="121dp"
+                android:layout_height="48dp"
+                android:layout_below="@id/idTVSelectedDate"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:background="@color/greenDark"
+                android:fontFamily="@font/altone"
+                android:text="Pick Date"
+                android:textAllCaps="false"
+                android:textColor="#4E342E"
+                android:textSize="15sp" />
+        </RelativeLayout>
+
+        <!-- Moods Layout -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/moodImagesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:id="@+id/happyButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/happy"
+                    android:layout_margin="10dp"
+                    android:scaleType="fitCenter"
+                    android:onClick="onMoodButtonClick"
+                    android:contentDescription="happy_description"/>
+
+                <ImageView
+                    android:id="@+id/contentButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/content"
+                    android:layout_margin="10dp"
+                    android:scaleType="fitCenter"
+                    android:onClick="onMoodButtonClick"
+                    android:contentDescription="content_description"/>
+
+                <ImageView
+                    android:id="@+id/neutralButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/neutral"
+                    android:layout_margin="10dp"
+                    android:scaleType="fitCenter"
+                    android:onClick="onMoodButtonClick"
+                    android:contentDescription="neutral_description"/>
+
+                <ImageView
+                    android:id="@+id/unhappyButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/unhappy"
+                    android:layout_margin="10dp"
+                    android:scaleType="fitCenter"
+                    android:onClick="onMoodButtonClick"
+                    android:contentDescription="unhappy_description"/>
+
+                <ImageView
+                    android:id="@+id/sadButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/sad"
+                    android:layout_margin="10dp"
+                    android:scaleType="fitCenter"
+                    android:onClick="onMoodButtonClick"
+                    android:contentDescription="sad_description"/>
+            </LinearLayout>
+
+            <!-- RecyclerView for displaying moods -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/moodRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Habits Layout -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/habitRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/buttonAddHabit"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/buttonAddHabit"
+                android:layout_width="134dp"
+                android:layout_height="48dp"
+                android:text="Add Habit"
+                android:textColor="#000000"
+                android:backgroundTint="@color/greenultradark"
+                android:fontFamily="@font/altone"
+                android:layout_marginBottom="32dp"
+                android:textAllCaps="false"
+                android:stateListAnimator="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</ScrollView>

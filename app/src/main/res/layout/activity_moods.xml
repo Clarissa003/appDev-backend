@@ -67,6 +67,4 @@
             android:onClick="onMoodButtonClick"
             android:contentDescription="sad_description"/>
     </LinearLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
