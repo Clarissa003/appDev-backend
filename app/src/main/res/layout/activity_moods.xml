@@ -68,53 +68,5 @@
             android:contentDescription="sad_description"/>
     </LinearLayout>
 
-    <!-- Buttons -->
-    <Button
-        android:id="@+id/buttonMoods"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to moods"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/moodImagesLayout" />
-
-    <Button
-        android:id="@+id/buttonUnguidedJournal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to unguided journal page"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonMoods" />
-
-    <Button
-        android:id="@+id/buttonGuidedJournal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to guided journal page"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonHabits" />
-
-    <Button
-        android:id="@+id/buttonHabits"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to habits"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUnguidedJournal" />
-
-    <Button
-        android:id="@+id/buttonProfile"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to Profile Page"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonUnguidedJournal" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
