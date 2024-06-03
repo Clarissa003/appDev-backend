@@ -59,7 +59,7 @@ class GuidedJournalActivity : BaseActivity() {
     private fun generatePrompt() {
         // You'll need to replace "YOUR_API_KEY" with your actual Hugging Face API key
         val apiKey = "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"
-        val inputs = "Reflect on your experiences from today and write about one thing you learned or discovered"
+        val inputs = "Write about one positive thing that happened today."
 
         // Call the Hugging Face API service to get the generated prompt
         HuggingFaceService().getGeneratedPrompt(apiKey, inputs) { prompt ->
