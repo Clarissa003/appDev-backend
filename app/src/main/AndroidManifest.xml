@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.appdev.eudemonia">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.appdev.eudemonia">
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
+        android:enableOnBackInvokedCallback="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -17,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
+      
         <!-- MainActivity -->
         <!--<activity
             android:name=".MainActivity"
@@ -28,65 +30,85 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>-->
-        <!-- SignupActivity - set as launcher activity -->
 
+        <!-- SignupActivity - set as launcher activity -->
         <activity
-            android:name=".SignupActivity"
-            android:exported="true"
-            android:label="Signup Activity"
-            android:theme="@style/Theme.AppCompat">
-          <intent-filter>
+                android:name=".SignupActivity"
+                android:exported="true"
+                android:label="Signup Activity"
+                android:theme="@style/Theme.AppCompat">
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <!-- ProfileActivity -->
         <activity
-            android:name=".ProfileActivity"
-            android:exported="true"
-            android:label="Profile Activity"
-            android:theme="@style/Theme.AppCompat" />
+                android:name=".ProfileActivity"
+                android:exported="true"
+                android:label="Profile Activity"
+                android:theme="@style/Theme.AppCompat" />
+
         <activity
-            android:name=".ResetPasswordActivity"
-            android:exported="true"
-            android:label="Reset Password Activity"
-            android:theme="@style/Theme.AppCompat">
+                android:name=".ResetPasswordActivity"
+                android:exported="true"
+                android:label="Reset Password Activity"
+                android:theme="@style/Theme.AppCompat">
         </activity>
+
         <!-- LoginActivity -->
         <activity
-            android:name=".LoginActivity"
-            android:exported="true"
-            android:label="Login Activity"
-            android:theme="@style/Theme.AppCompat">
+                android:name=".LoginActivity"
+                android:exported="true"
+                android:label="Login Activity"
+                android:theme="@style/Theme.AppCompat">
         </activity>
+
         <activity
-            android:name=".MoodsActivity"
-            android:exported="true"
-            android:label="Moods Activity"
-            android:theme="@style/Theme.AppCompat">
+                android:name=".MoodsActivity"
+                android:exported="true"
+                android:label="Moods Activity"
+                android:theme="@style/Theme.AppCompat">
         </activity>
+
         <!-- HabitsActivity -->
         <activity
-            android:name=".HabitsActivity"
-            android:exported="true"
-            android:label="Habits Activity"
-            android:theme="@style/Theme.AppCompat">
+                android:name=".HabitsActivity"
+                android:exported="true"
+                android:label="Habits Activity"
+                android:theme="@style/Theme.AppCompat">
         </activity>
+
         <!-- UnguidedJournalActivity -->
         <activity
-            android:name=".UnguidedJournalActivity"
-            android:exported="true"
-            android:label="Unguided Journal"
-            android:theme="@style/Theme.AppCompat">
+                android:name=".UnguidedJournalActivity"
+                android:exported="true"
+                android:label="Unguided Journal"
+                android:theme="@style/Theme.AppCompat">
         </activity>
-        <!-- com.appdev.eudemonia.GuidedJournalActivity -->
+
+        <!-- GuidedJournalActivity -->
         <activity
-            android:name=".GuidedJournalActivity"
+                android:name=".GuidedJournalActivity"
+                android:exported="true"
+                android:label="Guided Journal Activity"
+                android:theme="@style/Theme.AppCompat">
+        </activity>
+
+        <!-- FriendsActivity -->
+        <activity
+                android:name=".FriendsActivity"
+                android:exported="true"
+                android:label="Friends Activity"
+                android:theme="@style/Theme.AppCompat">
+        </activity>
+        <activity
+            android:name=".HomeActivity"
             android:exported="true"
-            android:label="Guided Journal Activity"
+            android:label="Home Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
     </application>
-    
 
 </manifest>
