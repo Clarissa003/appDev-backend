@@ -53,7 +53,8 @@ open class BaseActivity : AppCompatActivity() {
                 return true
             }
 
-            R.id.chat -> {
+            R.id.friends -> {
+                startActivity(Intent(this, FriendsActivity::class.java))
                 return true
             }
 
