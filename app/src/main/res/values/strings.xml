@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Eudemonia</string>
+    <string name="channel_name">Affirmation Channel</string>
+    <string name="channel_description">Channel for daily affirmations</string>
 </resources>
