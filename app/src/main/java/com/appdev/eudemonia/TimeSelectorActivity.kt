@@ -1,9 +1,10 @@
 package com.appdev.eudemonia
 
-import android.app.AlarmManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
+import android.app.TimePickerDialog
+import android.widget.Toast
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -12,80 +13,139 @@ import android.widget.Button
 import android.widget.TimePicker
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
+import androidx.work.*
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.auth.FirebaseAuth
 import java.util.*
+import java.util.concurrent.TimeUnit
+import com.google.firebase.auth.FirebaseAuth
+
 
 class TimeSelectorActivity : AppCompatActivity() {
 
-    private lateinit var firestore: FirebaseFirestore
-    private lateinit var auth: FirebaseAuth
+    private lateinit var timePicker: TimePicker
+    private lateinit var setTimeButton: Button
+    private val CHANNEL_ID = "affirmation_channel"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification_picker)
 
-        firestore = FirebaseFirestore.getInstance()
-        auth = FirebaseAuth.getInstance()
+        timePicker = findViewById(R.id.timePicker)
+        setTimeButton = findViewById(R.id.button_set_time)
 
-        val timePicker = findViewById<TimePicker>(R.id.timePicker)
-        val buttonSetTime = findViewById<Button>(R.id.button_set_time)
+        createNotificationChannel()
 
-        buttonSetTime.setOnClickListener {
+        setTimeButton.setOnClickListener {
             val hour = timePicker.hour
             val minute = timePicker.minute
-
-            fetchAndScheduleNotification(hour, minute)
+            scheduleNotification(hour, minute)
+            val timeString = String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
+            Toast.makeText(this@TimeSelectorActivity, "Notification set for $timeString", Toast.LENGTH_SHORT).show()
         }
 
-        // Create the notification channel
-        createNotificationChannel()
+
     }
 
-    private fun fetchAndScheduleNotification(hour: Int, minute: Int) {
-        firestore.collection("Affirmations").get()
-            .addOnSuccessListener { result ->
-                val Affirmations = result.documents.map { it.getString("text") ?: "" }
-                val randomAffirmation = Affirmations.randomOrNull()
-
-                scheduleNotification(hour, minute, randomAffirmation)
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Daily Affirmation"
+            val descriptionText = "Channel for daily affirmation notifications"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
             }
-            .addOnFailureListener { exception ->
-                // Handle error
-            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
     }
 
-    private fun scheduleNotification(hour: Int, minute: Int, affirmation: String?) {
-        val calendar = Calendar.getInstance().apply {
+    private fun scheduleNotification(hour: Int, minute: Int) {
+        val currentTime = Calendar.getInstance()
+        val notificationTime = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, hour)
             set(Calendar.MINUTE, minute)
             set(Calendar.SECOND, 0)
         }
 
-        val intent = Intent(this, NotificationReceiver::class.java).apply {
-            putExtra("affirmation", affirmation)
+        if (notificationTime.before(currentTime)) {
+            notificationTime.add(Calendar.DAY_OF_MONTH, 1)
         }
-        val pendingIntent = PendingIntent.getBroadcast(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
-        val alarmManager = getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        alarmManager.setInexactRepeating(
-            AlarmManager.RTC_WAKEUP,
-            calendar.timeInMillis,
-            AlarmManager.INTERVAL_DAY,
-            pendingIntent
+        val delay = notificationTime.timeInMillis - currentTime.timeInMillis
+        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .addTag("daily_affirmation")
+            .build()
+
+        WorkManager.getInstance(this).enqueueUniqueWork(
+            "daily_affirmation_work",
+            ExistingWorkPolicy.REPLACE,
+            workRequest
         )
     }
+}
+class NotificationWorker(context: Context, params: WorkerParameters) :
+    Worker(context, params) {
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = getString(R.string.channel_name)
-            val descriptionText = getString(R.string.channel_description)
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel("affirmation_channel", name, importance).apply {
-                description = descriptionText
-            }
-            val notificationManager: NotificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
+    private val CHANNEL_ID = "affirmation_channel"
+    private val firestore = FirebaseFirestore.getInstance()
+
+    override fun doWork(): Result {
+        fetchRandomAffirmation { affirmation ->
+            sendNotification(affirmation)
+            scheduleNextNotification()
         }
+        return Result.success()
+    }
+
+    private fun fetchRandomAffirmation(callback: (String) -> Unit) {
+        firestore.collection("Affirmations")
+            .get()
+            .addOnSuccessListener { result ->
+                val affirmations = result.documents.mapNotNull { it.getString("text") }
+                val randomAffirmation = affirmations.randomOrNull() ?: "Stay positive!"
+                callback(randomAffirmation)
+            }
+            .addOnFailureListener {
+                callback("Stay positive!")
+            }
+    }
+
+    private fun sendNotification(affirmation: String) {
+        val intent = Intent(applicationContext, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val requestCode = System.currentTimeMillis().toInt()
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(applicationContext, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+
+        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Daily Affirmation")
+            .setContentText(affirmation)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(1001, builder.build())
+    }
+
+    private fun scheduleNextNotification() {
+        val currentTime = Calendar.getInstance()
+        val nextNotificationTime = Calendar.getInstance().apply {
+            add(Calendar.DAY_OF_MONTH, 1)
+        }
+        val delay = nextNotificationTime.timeInMillis - currentTime.timeInMillis
+        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
+            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+            .addTag("daily_affirmation")
+            .build()
+
+        WorkManager.getInstance(applicationContext).enqueueUniqueWork(
+            "daily_affirmation_work",
+            ExistingWorkPolicy.REPLACE,
+            workRequest
+        )
     }
 }
