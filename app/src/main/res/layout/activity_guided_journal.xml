@@ -21,7 +21,7 @@
             android:minHeight="48dp"
             android:paddingLeft="10dp"
             android:text="Some very deep question?"
-            android:textColor="@color/white"
+            android:textColor="#4E342E"
             app:fontFamily="@font/gontserratRegular"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
