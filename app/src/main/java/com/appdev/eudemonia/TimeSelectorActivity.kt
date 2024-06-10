@@ -17,8 +17,8 @@ import androidx.work.*
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 import java.util.concurrent.TimeUnit
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-
 
 class TimeSelectorActivity : AppCompatActivity() {
 
@@ -38,12 +38,10 @@ class TimeSelectorActivity : AppCompatActivity() {
         setTimeButton.setOnClickListener {
             val hour = timePicker.hour
             val minute = timePicker.minute
-            scheduleNotification(hour, minute)
+            scheduleDailyNotification(hour, minute)
             val timeString = String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
-            Toast.makeText(this@TimeSelectorActivity, "Notification set for $timeString", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@TimeSelectorActivity, "Notification set for $timeString daily", Toast.LENGTH_SHORT).show()
         }
-
-
     }
 
     private fun createNotificationChannel() {
@@ -60,7 +58,7 @@ class TimeSelectorActivity : AppCompatActivity() {
         }
     }
 
-    private fun scheduleNotification(hour: Int, minute: Int) {
+    private fun scheduleDailyNotification(hour: Int, minute: Int) {
         val currentTime = Calendar.getInstance()
         val notificationTime = Calendar.getInstance().apply {
             set(Calendar.HOUR_OF_DAY, hour)
@@ -72,19 +70,20 @@ class TimeSelectorActivity : AppCompatActivity() {
             notificationTime.add(Calendar.DAY_OF_MONTH, 1)
         }
 
-        val delay = notificationTime.timeInMillis - currentTime.timeInMillis
-        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+        val initialDelay = notificationTime.timeInMillis - currentTime.timeInMillis
+        val dailyWorkRequest: WorkRequest = PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
+            .setInitialDelay(initialDelay, TimeUnit.MILLISECONDS)
             .addTag("daily_affirmation")
             .build()
 
-        WorkManager.getInstance(this).enqueueUniqueWork(
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
             "daily_affirmation_work",
-            ExistingWorkPolicy.REPLACE,
-            workRequest
+            ExistingPeriodicWorkPolicy.REPLACE,
+            dailyWorkRequest as PeriodicWorkRequest
         )
     }
 }
+
 class NotificationWorker(context: Context, params: WorkerParameters) :
     Worker(context, params) {
 
@@ -94,7 +93,6 @@ class NotificationWorker(context: Context, params: WorkerParameters) :
     override fun doWork(): Result {
         fetchRandomAffirmation { affirmation ->
             sendNotification(affirmation)
-            scheduleNextNotification()
         }
         return Result.success()
     }
@@ -103,7 +101,7 @@ class NotificationWorker(context: Context, params: WorkerParameters) :
         firestore.collection("Affirmations")
             .get()
             .addOnSuccessListener { result ->
-                val affirmations = result.documents.mapNotNull { it.getString("text") }
+                val affirmations = result.documents.mapNotNull { it.getString("Affirmation") }
                 val randomAffirmation = affirmations.randomOrNull() ?: "Stay positive!"
                 callback(randomAffirmation)
             }
@@ -117,7 +115,10 @@ class NotificationWorker(context: Context, params: WorkerParameters) :
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val requestCode = System.currentTimeMillis().toInt()
-        val pendingIntent: PendingIntent = PendingIntent.getActivity(applicationContext, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            applicationContext, requestCode, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
 
         val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -129,23 +130,5 @@ class NotificationWorker(context: Context, params: WorkerParameters) :
 
         val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.notify(1001, builder.build())
-    }
-
-    private fun scheduleNextNotification() {
-        val currentTime = Calendar.getInstance()
-        val nextNotificationTime = Calendar.getInstance().apply {
-            add(Calendar.DAY_OF_MONTH, 1)
-        }
-        val delay = nextNotificationTime.timeInMillis - currentTime.timeInMillis
-        val workRequest = OneTimeWorkRequestBuilder<NotificationWorker>()
-            .setInitialDelay(delay, TimeUnit.MILLISECONDS)
-            .addTag("daily_affirmation")
-            .build()
-
-        WorkManager.getInstance(applicationContext).enqueueUniqueWork(
-            "daily_affirmation_work",
-            ExistingWorkPolicy.REPLACE,
-            workRequest
-        )
     }
 }
