@@ -1,8 +1,12 @@
 package com.appdev.eudemonia
 
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -11,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.dynamiclinks.DynamicLink
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.storage.FirebaseStorage
 
 class ProfileActivity : BaseActivity() {
@@ -18,6 +24,7 @@ class ProfileActivity : BaseActivity() {
     private lateinit var profilePicture: ImageView
     private lateinit var profileName: TextView
     private lateinit var profileDisplayData: TextView
+    private lateinit var shareButton: ImageButton
 
     private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -28,12 +35,15 @@ class ProfileActivity : BaseActivity() {
 
         profilePicture = findViewById(R.id.profilePicture)
         profileName = findViewById(R.id.profileName)
-        profileDisplayData = findViewById(R.id.profileDisplayData)
+        profileDisplayData = findViewById(R.id.profileBio)
 
         loadUserProfile()
 
         profilePicture.setOnClickListener {
             selectImage()
+        }
+        shareButton.setOnClickListener {
+            generateFriendLink()
         }
 
     }
@@ -98,5 +108,32 @@ class ProfileActivity : BaseActivity() {
                     Toast.makeText(this, "Failed to upload image: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
         }
+
+
     }
+    private fun generateFriendLink() {
+        val userId = auth.currentUser?.uid
+        userId?.let { uid ->
+            val dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
+                .setLink(Uri.parse("https://www.yourapp.com/addfriend?uid=$uid"))
+                .setDomainUriPrefix("https://yourapp.page.link")
+                .setAndroidParameters(
+                    DynamicLink.AndroidParameters.Builder(packageName)
+                        .build()
+                )
+                .buildDynamicLink()
+
+            val dynamicLinkUri = dynamicLink.uri
+            copyLinkToClipboard(dynamicLinkUri.toString())
+        }
+    }
+
+    private fun copyLinkToClipboard(link: String) {
+        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText("Friend Link", link)
+        clipboard.setPrimaryClip(clip)
+        Toast.makeText(this, "Link copied to clipboard!", Toast.LENGTH_SHORT).show()
+    }
+
+
 }
