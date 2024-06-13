@@ -97,42 +97,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3235061d-6c5e-401c-b5fe-939146201cc6" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/Friend.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/FriendsActivity.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/FriendsAdapter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/Friend.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/FriendsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/FriendsActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/FriendsAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/FriendsAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/ProfileActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/ProfileActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratBlack.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratBlackItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratExtraBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratExtraBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratExtraLight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratExtraLightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratLight.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratLightItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratMedium.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratMediumItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratRegular.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratSemiBold.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratSemiBoldItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratThin.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/font/gontserratThinItalic.ttf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_chat.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_chat.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_friends.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_friends.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_friends_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_friends_list.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_guided_journal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_guided_journal.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_notification_picker.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_notification_picker.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_reset_password.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_reset_password.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_signup.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_signup.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_unguided_journal.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_unguided_journal.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -261,7 +231,7 @@
       <recent name="com.appdev.eudemonia" />
     </key>
   </component>
-  <component name="RunManager" selected="Android App.ProfileActivity (1)">
+  <component name="RunManager" selected="Android App.Unnamed">
     <configuration name="GuidedJournalActivity" type="AndroidRunConfigurationType" factoryName="Android App" temporary="true">
       <module name="Eudemonia.app.main" />
       <option name="DEPLOY" value="true" />

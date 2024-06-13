@@ -36,6 +36,7 @@ class ProfileActivity : BaseActivity() {
         profilePicture = findViewById(R.id.profilePicture)
         profileName = findViewById(R.id.profileName)
         profileDisplayData = findViewById(R.id.profileBio)
+        shareButton = findViewById(R.id.shareButton)
 
         loadUserProfile()
 
