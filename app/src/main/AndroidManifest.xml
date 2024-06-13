@@ -28,7 +28,7 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>-->
+        </activity> -->
         <!-- SignupActivity - set as launcher activity -->
 
         <activity
@@ -87,6 +87,17 @@
             android:label="Guided Journal Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
+        <activity
+            android:name=".HomeActivity"
+            android:exported="true"
+            android:label="Home Activity"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
+        <activity
+            android:name=".BaseActivity"
+            android:exported="true"
+            android:label="Base Activity"
+            android:theme="@style/Theme.AppCompat" />
     </application>
     
 

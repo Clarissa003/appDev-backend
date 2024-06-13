@@ -36,7 +36,7 @@ class ProfileActivity : BaseActivity() {
             selectImage()
         }
 
-        // Redirect to the unguided journal page
+        /* Redirect to the unguided journal page
         findViewById<TextView>(R.id.buttonUnguidedJournal).setOnClickListener {
             startActivity(Intent(this, UnguidedJournalActivity::class.java))
         }
@@ -54,7 +54,7 @@ class ProfileActivity : BaseActivity() {
         // Redirect to the habits page
         findViewById<TextView>(R.id.buttonHabits).setOnClickListener {
             startActivity(Intent(this, HabitsActivity::class.java))
-        }
+        }*/
     }
 
     private fun loadUserProfile() {

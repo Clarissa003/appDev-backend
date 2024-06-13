@@ -33,7 +33,7 @@ class MoodsActivity : BaseActivity() {
         unhappyButton.setOnClickListener { saveMoodToDb("unhappy") }
         sadButton.setOnClickListener { saveMoodToDb("sad") }
 
-        // Redirect to the unguided journal page
+        /* Redirect to the unguided journal page
         findViewById<TextView>(R.id.buttonUnguidedJournal).setOnClickListener {
             startActivity(Intent(this, UnguidedJournalActivity::class.java))
         }
@@ -56,7 +56,7 @@ class MoodsActivity : BaseActivity() {
         // Redirect to the profile page
         findViewById<TextView>(R.id.buttonProfile).setOnClickListener {
             startActivity(Intent(this, ProfileActivity::class.java))
-        }
+        } */
 
     }
 
