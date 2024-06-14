@@ -2,6 +2,7 @@ package com.appdev.eudemonia
 
 import android.app.DatePickerDialog
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -26,14 +27,13 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var calendar: Calendar
     private val currentUserEmail = Firebase.auth.currentUser?.email
 
-
     private lateinit var habitRecyclerView: RecyclerView
     private lateinit var habitAdapter: HabitAdapter
     private val habitList = mutableListOf<Habit>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+        setContentView(R.layout.activity_home) // Ensure this is your consolidated layout file
 
         db = FirebaseFirestore.getInstance()
         mAuth = FirebaseAuth.getInstance()
@@ -47,8 +47,6 @@ class HomeActivity : AppCompatActivity() {
         pickDateButton.setOnClickListener {
             showDatePicker()
         }
-
-
 
         // Moods setup
         val happyButton: ImageView = findViewById(R.id.happyButton)
@@ -66,15 +64,19 @@ class HomeActivity : AppCompatActivity() {
         // Habits setup
         habitRecyclerView = findViewById(R.id.habitRecyclerView)
         habitRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        // Call fetchHabits() before setting up the adapter
+        habitList.clear() // Clear the list before fetching habits
+        fetchHabits() // Fetch habits before setting up RecyclerView adapter
+
         habitAdapter = HabitAdapter(habitList)
         habitRecyclerView.adapter = habitAdapter
+
 
         val buttonAddHabit: Button = findViewById(R.id.buttonAddHabit)
         buttonAddHabit.setOnClickListener {
             showAddHabitDialog()
         }
-
-        fetchHabits()
     }
 
     private fun updateLabel() {
@@ -155,21 +157,48 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun fetchHabits() {
-        val selectedDate = selectedDateTextView.text.toString()
-
-        db.collection("Habit")
-            .whereEqualTo("dateAdded", selectedDate)
-            .get()
-            .addOnSuccessListener { documents ->
-                habitList.clear()
-                for (document in documents) {
-                    val habit = document.toObject(Habit::class.java)
-                    habitList.add(habit)
-                }
-                habitAdapter.notifyDataSetChanged()
+        Log.d("HomeActivity", "MartijnchHabits() called")
+        try{
+            Log.d("HomeActivity", "fetchHabits() called")
+            val selectedDate = selectedDateTextView.text.toString()
+            Log.d("HomeActivity", "Selected Date: $selectedDate")
+            currentUserEmail?.let { email ->
+                db.collection("User")
+                    .whereEqualTo("email", email)
+                    .get()
+                    .addOnSuccessListener { documents ->
+                        if (documents.isEmpty) {
+                            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                            return@addOnSuccessListener
+                        }
+                        val userId = documents.first().id
+                        Log.d("HomeActivity", "User ID: $userId")
+                        db.collection("Habit")
+                            .whereEqualTo("userId", userId)
+                            .whereEqualTo("dateAdded", selectedDate) // Filter by selected date
+                            .get()
+                            .addOnSuccessListener { result ->
+                                habitList.clear()
+                                for (document in result) {
+                                    val habit = document.toObject(Habit::class.java)
+                                    habitList.add(habit)
+                                }
+                                habitAdapter.notifyDataSetChanged()
+                                Log.d("HomeActivity", "Habits fetched: ${habitList.size}")
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Error fetching habits: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Log.e("HomeActivity", "Error fetching habits: ${e.message}", e)
+                            }
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(this, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
+                        Log.e("HomeActivity", "Error fetching user: ${e.message}", e)
+                    }
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error fetching habits: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
+        } catch (e: Exception) {
+            Log.e("HomeActivity", "Exception in fetchHabits(): ${e.message}", e)
+        }
     }
+
 }
