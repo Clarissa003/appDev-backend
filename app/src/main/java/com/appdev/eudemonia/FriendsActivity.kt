@@ -2,34 +2,55 @@ package com.appdev.eudemonia
 
 import android.os.Bundle
 import android.widget.ListView
+import android.widget.SearchView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FriendsActivity : BaseActivity() {
+class FriendsActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var listView: ListView
     private lateinit var adapter: FriendsAdapter
+    private lateinit var searchView: SearchView
     private val users = mutableListOf<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friends)
 
+        // Initialize Firebase instances
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
+        // Initialize views
         listView = findViewById(R.id.idFriends)
+        searchView = findViewById(R.id.idSearch)
+
+        // Initialize adapter
         adapter = FriendsAdapter(this, users)
         listView.adapter = adapter
 
+        // Load users from Firestore
         loadUsers()
+
+        // Set up SearchView listener
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                filterUsers(newText)
+                return true
+            }
+        })
     }
 
     private fun loadUsers() {
-        db.collection("Profile") // Adjust this to match your Firestore collection name
+        db.collection("Profile")
             .get()
             .addOnSuccessListener { documents ->
                 users.clear()
@@ -47,6 +68,17 @@ class FriendsActivity : BaseActivity() {
             }
     }
 
+    private fun filterUsers(query: String?) {
+        val filteredUsers = if (query.isNullOrEmpty()) {
+            users
+        } else {
+            users.filter { it.username.contains(query, ignoreCase = true) }
+        }
+        adapter.clear()
+        adapter.addAll(filteredUsers)
+        adapter.notifyDataSetChanged()
+    }
+
     fun addFriend(user: User) {
         val currentUser = auth.currentUser
         currentUser?.let { currentUser ->
@@ -61,7 +93,6 @@ class FriendsActivity : BaseActivity() {
             friendsRef.collection("userFriends").document(user.userId).set(friendData)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Added ${user.username} as friend!", Toast.LENGTH_SHORT).show()
-                    // Optionally update UI or handle further actions
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Failed to add friend: ${e.message}", Toast.LENGTH_SHORT).show()

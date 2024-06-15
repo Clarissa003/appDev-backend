@@ -24,20 +24,17 @@ class FriendsAdapter(context: Context, users: List<User>) : ArrayAdapter<User>(c
         val friendName = view.findViewById<TextView>(R.id.friend_name)
         val addButton = view.findViewById<Button>(R.id.add_button)
 
-        user?.let {
-            friendName.text = it.username
-            profileImage?.let { imageView ->
-                if (it.profilePicUrl != null) {
-                    Glide.with(context).load(it.profilePicUrl).into(imageView)
-                } else {
-                    imageView.setImageResource(R.drawable.default_profile_picture)
-                }
+        user?.let { user ->
+            friendName.text = user.username
+            if (user.profilePicUrl != null) {
+                Glide.with(context).load(user.profilePicUrl).into(profileImage)
+            } else {
+                profileImage.setImageResource(R.drawable.default_profile_picture)
             }
 
-            addButton?.setOnClickListener {
-                val friend = getItem(position) // Get the User object at this position
-                if (friend != null && context is FriendsActivity) {
-                    (context as FriendsActivity).addFriend(friend)
+            addButton.setOnClickListener {
+                if (context is FriendsActivity) {
+                    (context as FriendsActivity).addFriend(user)
                 }
             }
         }
