@@ -8,18 +8,36 @@ import androidx.appcompat.app.AppCompatActivity
 import com.appdev.eudemonia.databinding.ActivityGuidedJournalBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class GuidedJournalActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGuidedJournalBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGuidedJournalBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        // Initialize Firestore and FirebaseAuth
+        firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+
+        // Set click listener for the Generate Prompt button
+        binding.generatePromptButton.setOnClickListener {
+            generatePrompt()
+        }
+
+        // Set click listener for the Save Entry button
+        binding.saveButton.setOnClickListener {
+            saveJournalEntry()
+        }
+
     }
 
     private fun generatePrompt() {
@@ -39,9 +57,11 @@ class GuidedJournalActivity : BaseActivity() {
         val userId = auth.currentUser?.uid
 
         if (content.isNotEmpty() && userId != null) {
+            val currentDate = dateFormat.format(Date())
+
             val journalEntry = hashMapOf(
                 "content" to content,
-                "date" to Date(),
+                "date" to currentDate,
                 "userId" to userId
             )
 
