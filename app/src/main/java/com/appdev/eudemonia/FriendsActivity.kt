@@ -16,6 +16,7 @@ class FriendsActivity : AppCompatActivity() {
     private lateinit var adapter: FriendsAdapter
     private lateinit var searchView: SearchView
     private val users = mutableListOf<User>()
+    private val displayedUsers = mutableListOf<User>() // To keep track of displayed users
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +30,8 @@ class FriendsActivity : AppCompatActivity() {
         listView = findViewById(R.id.idFriends)
         searchView = findViewById(R.id.idSearch)
 
-        // Initialize adapter
-        adapter = FriendsAdapter(this, users)
+        // Initialize adapter with the displayedUsers list
+        adapter = FriendsAdapter(this, displayedUsers)
         listView.adapter = adapter
 
         // Load users from Firestore
@@ -61,7 +62,7 @@ class FriendsActivity : AppCompatActivity() {
                     val user = User(userId, username, profilePicUrl)
                     users.add(user)
                 }
-                adapter.notifyDataSetChanged()
+                // We don't notify the adapter here because we only want to display users when searched
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Failed to load users: ${e.message}", Toast.LENGTH_SHORT).show()
@@ -69,13 +70,11 @@ class FriendsActivity : AppCompatActivity() {
     }
 
     private fun filterUsers(query: String?) {
-        val filteredUsers = if (query.isNullOrEmpty()) {
-            users
-        } else {
-            users.filter { it.username.contains(query, ignoreCase = true) }
+        displayedUsers.clear()
+        if (!query.isNullOrEmpty()) {
+            val filteredUsers = users.filter { it.username.contains(query, ignoreCase = true) }
+            displayedUsers.addAll(filteredUsers)
         }
-        adapter.clear()
-        adapter.addAll(filteredUsers)
         adapter.notifyDataSetChanged()
     }
 
