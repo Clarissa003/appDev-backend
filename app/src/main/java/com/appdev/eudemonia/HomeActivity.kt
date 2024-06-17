@@ -31,9 +31,15 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var habitAdapter: HabitAdapter
     private val habitList = mutableListOf<Habit>()
 
+    private lateinit var moodRecyclerView: RecyclerView
+    private lateinit var moodAdapter: MoodAdapter
+    private val moodList = mutableListOf<Mood>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home) // Ensure this is your consolidated layout file
+
+        Log.d("HomeActivity", "onCreate called")
 
         db = FirebaseFirestore.getInstance()
         mAuth = FirebaseAuth.getInstance()
@@ -49,6 +55,17 @@ class HomeActivity : AppCompatActivity() {
         }
 
         // Moods setup
+        moodRecyclerView = findViewById(R.id.moodRecyclerView)
+        moodRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        Log.d("HomeActivity", "Before fetching moods")
+
+        moodList.clear()
+        fetchMoods() // Ensure this line is present
+
+        moodAdapter = MoodAdapter(moodList)
+        moodRecyclerView.adapter = moodAdapter
+
         val happyButton: ImageView = findViewById(R.id.happyButton)
         val contentButton: ImageView = findViewById(R.id.contentButton)
         val neutralButton: ImageView = findViewById(R.id.neutralButton)
@@ -65,18 +82,21 @@ class HomeActivity : AppCompatActivity() {
         habitRecyclerView = findViewById(R.id.habitRecyclerView)
         habitRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Call fetchHabits() before setting up the adapter
         habitList.clear() // Clear the list before fetching habits
         fetchHabits() // Fetch habits before setting up RecyclerView adapter
 
         habitAdapter = HabitAdapter(habitList)
         habitRecyclerView.adapter = habitAdapter
 
-
         val buttonAddHabit: Button = findViewById(R.id.buttonAddHabit)
         buttonAddHabit.setOnClickListener {
             showAddHabitDialog()
         }
+
+        //Journal setup
+        fetchJournalEntries()
+
+        Log.d("HomeActivity", "onCreate finished")
     }
 
     private fun updateLabel() {
@@ -94,6 +114,8 @@ class HomeActivity : AppCompatActivity() {
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
                 updateLabel()
                 fetchHabits()
+                fetchMoods()
+                fetchJournalEntries()
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -113,11 +135,56 @@ class HomeActivity : AppCompatActivity() {
         db.collection("Mood")
             .add(mood)
             .addOnSuccessListener {
+                fetchMoods()
                 Toast.makeText(this, "Mood saved", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error saving mood", Toast.LENGTH_SHORT).show()
             }
+    }
+
+    private fun fetchMoods() {
+        Log.d("HomeActivity", "fetchMoods called")
+        val selectedDate = selectedDateTextView.text.toString()
+        Log.d("HomeActivity", "Selected date: $selectedDate")
+        currentUserEmail?.let { email ->
+            Log.d("HomeActivity", "Current user email: $email")
+            db.collection("User")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener { documents ->
+                    Log.d("HomeActivity", "User documents: ${documents.size()}")
+                    if (documents.isEmpty) {
+                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                        return@addOnSuccessListener
+                    }
+                    val userId = documents.first().id
+                    Log.d("HomeActivity", "User ID: $userId")
+                    db.collection("Mood")
+                        .whereEqualTo("userId", userId)
+                        .whereEqualTo("dateAdded", selectedDate)
+                        .get()
+                        .addOnSuccessListener { result ->
+                            Log.d("HomeActivity", "Moods fetched: ${result.size()}")
+                            moodList.clear()
+                            for (document in result) {
+                                val mood = document.toObject(Mood::class.java)
+                                moodList.add(mood)
+                            }
+                            moodAdapter.notifyDataSetChanged()
+                        }
+                        .addOnFailureListener { e ->
+                            Toast.makeText(this, "Error fetching moods: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Log.e("HomeActivity", "Error fetching moods: ${e.message}", e)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("HomeActivity", "Error fetching user: ${e.message}", e)
+                }
+        } ?: run {
+            Log.e("HomeActivity", "currentUserEmail is null")
+        }
     }
 
     private fun showAddHabitDialog() {
@@ -157,48 +224,75 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun fetchHabits() {
-        Log.d("HomeActivity", "MartijnchHabits() called")
-        try{
-            Log.d("HomeActivity", "fetchHabits() called")
-            val selectedDate = selectedDateTextView.text.toString()
-            Log.d("HomeActivity", "Selected Date: $selectedDate")
-            currentUserEmail?.let { email ->
-                db.collection("User")
-                    .whereEqualTo("email", email)
-                    .get()
-                    .addOnSuccessListener { documents ->
-                        if (documents.isEmpty) {
-                            Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
-                            return@addOnSuccessListener
+        val selectedDate = selectedDateTextView.text.toString()
+        currentUserEmail?.let { email ->
+            db.collection("User")
+                .whereEqualTo("email", email)
+                .get()
+                .addOnSuccessListener { documents ->
+                    if (documents.isEmpty) {
+                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                        return@addOnSuccessListener
+                    }
+                    val userId = documents.first().id
+                    Log.d("HomeActivity", "User ID: $userId")
+                    db.collection("Habit")
+                        .whereEqualTo("userId", userId)
+                        .whereEqualTo("dateAdded", selectedDate)
+                        .get()
+                        .addOnSuccessListener { result ->
+                            habitList.clear()
+                            for (document in result) {
+                                val habit = document.toObject(Habit::class.java)
+                                habitList.add(habit)
+                            }
+                            habitAdapter.notifyDataSetChanged()
+                            Log.d("HomeActivity", "Habits fetched: ${habitList.size}")
                         }
-                        val userId = documents.first().id
-                        Log.d("HomeActivity", "User ID: $userId")
-                        db.collection("Habit")
-                            .whereEqualTo("userId", userId)
-                            .whereEqualTo("dateAdded", selectedDate) // Filter by selected date
-                            .get()
-                            .addOnSuccessListener { result ->
-                                habitList.clear()
-                                for (document in result) {
-                                    val habit = document.toObject(Habit::class.java)
-                                    habitList.add(habit)
-                                }
-                                habitAdapter.notifyDataSetChanged()
-                                Log.d("HomeActivity", "Habits fetched: ${habitList.size}")
-                            }
-                            .addOnFailureListener { e ->
-                                Toast.makeText(this, "Error fetching habits: ${e.message}", Toast.LENGTH_SHORT).show()
-                                Log.e("HomeActivity", "Error fetching habits: ${e.message}", e)
-                            }
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(this, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
-                        Log.e("HomeActivity", "Error fetching user: ${e.message}", e)
-                    }
-            }
-        } catch (e: Exception) {
-            Log.e("HomeActivity", "Exception in fetchHabits(): ${e.message}", e)
+                        .addOnFailureListener { e ->
+                            Toast.makeText(
+                                this,
+                                "Error fetching habits: ${e.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            Log.e("HomeActivity", "Error fetching habits: ${e.message}", e)
+                        }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
+                    Log.e("HomeActivity", "Error fetching user: ${e.message}", e)
+                }
         }
     }
 
+    private fun fetchJournalEntries() {
+        val selectedDate = selectedDateTextView.text.toString()
+        val userId = mAuth.currentUser?.uid ?: return
+
+        db.collection("Journal")
+            .whereEqualTo("userId", userId)
+            .whereEqualTo("date", selectedDate)
+            .get()
+            .addOnSuccessListener { result ->
+                val journalList = mutableListOf<JournalEntry>()
+                for (document in result) {
+                    val journalEntry = document.toObject(JournalEntry::class.java)
+                    journalList.add(journalEntry)
+                }
+                updateJournalRecyclerView(journalList)
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Error fetching journal entries: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun updateJournalRecyclerView(journalList: List<JournalEntry>) {
+        val journalRecyclerView: RecyclerView = findViewById(R.id.JournalRecyclerView)
+        journalRecyclerView.layoutManager = LinearLayoutManager(this)
+        val journalAdapter = JournalAdapter(journalList)
+        journalRecyclerView.adapter = journalAdapter
+    }
+
 }
+
