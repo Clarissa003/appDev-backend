@@ -34,7 +34,7 @@
                 android:textStyle="italic"
                 app:fontFamily="@font/altone"
                 android:textColor="@color/gray"
-                android:textColorHint="#@color/gray"
+                android:textColorHint="@color/gray"
                 app:layout_constraintTop_toBottomOf="@+id/idSearch"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
