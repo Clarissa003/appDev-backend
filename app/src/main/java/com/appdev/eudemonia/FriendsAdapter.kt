@@ -10,31 +10,35 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
 
-class FriendsAdapter(context: Context, users: List<User>) : ArrayAdapter<User>(context, 0, users) {
+class FriendsAdapter(private val activity: FriendsActivity, users: List<User>) : ArrayAdapter<User>(activity, 0, users) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var view = convertView
+        val view = convertView ?: LayoutInflater.from(activity).inflate(R.layout.activity_friends_list, parent, false)
         val user = getItem(position)
 
-        if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.activity_friends_list, parent, false)
-        }
-
-        val profileImage = view!!.findViewById<ImageView>(R.id.profile_image)
+        val profileImage = view.findViewById<ImageView>(R.id.profile_image)
         val friendName = view.findViewById<TextView>(R.id.friend_name)
         val addButton = view.findViewById<Button>(R.id.add_button)
 
-        user?.let { user ->
-            friendName.text = user.username
-            if (user.profilePicUrl != null) {
-                Glide.with(context).load(user.profilePicUrl).into(profileImage)
+        user?.let {
+            friendName.text = it.username
+            if (it.profilePicUrl != null) {
+                Glide.with(activity).load(it.profilePicUrl).into(profileImage)
             } else {
                 profileImage.setImageResource(R.drawable.default_profile_picture)
             }
 
-            addButton.setOnClickListener {
-                if (context is FriendsActivity) {
-                    (context as FriendsActivity).addFriend(user)
+            if (it.isFriend) {
+                addButton.text = "Friend"
+                addButton.isEnabled = false
+            } else {
+                addButton.text = "Add"
+                addButton.isEnabled = true
+                addButton.setOnClickListener {
+                    val clickedUser = getItem(position)
+                    clickedUser?.let { user ->
+                        activity.addFriend(user)
+                    }
                 }
             }
         }

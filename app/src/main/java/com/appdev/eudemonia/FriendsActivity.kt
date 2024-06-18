@@ -1,6 +1,7 @@
 package com.appdev.eudemonia
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.Toast
@@ -8,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FriendsActivity : AppCompatActivity() {
+class FriendsActivity : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -16,28 +17,24 @@ class FriendsActivity : AppCompatActivity() {
     private lateinit var adapter: FriendsAdapter
     private lateinit var searchView: SearchView
     private val users = mutableListOf<User>()
-    private val displayedUsers = mutableListOf<User>() // To keep track of displayed users
+    private val displayedUsers = mutableListOf<User>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friends)
 
-        // Initialize Firebase instances
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Initialize views
         listView = findViewById(R.id.idFriends)
         searchView = findViewById(R.id.idSearch)
 
-        // Initialize adapter with the displayedUsers list
         adapter = FriendsAdapter(this, displayedUsers)
         listView.adapter = adapter
 
-        // Load users from Firestore
         loadUsers()
+        loadFriends()
 
-        // Set up SearchView listener
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -51,22 +48,63 @@ class FriendsActivity : AppCompatActivity() {
     }
 
     private fun loadUsers() {
-        db.collection("Profile")
+        val currentUser = auth.currentUser
+        currentUser?.let { currentUser ->
+            db.collection("Profile")
+                .get()
+                .addOnSuccessListener { documents ->
+                    users.clear()
+                    for (document in documents) {
+                        val userId = document.id
+                        val username = document.getString("username") ?: "Unknown"
+                        val profilePicUrl = document.getString("profilePicUrl")
+                        val user = User(userId, username, profilePicUrl)
+
+                        checkIfFriend(currentUser.uid, userId) { isFriend ->
+                            user.isFriend = isFriend
+                            users.add(user)
+                            adapter.notifyDataSetChanged()
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to load users: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
+
+    private fun checkIfFriend(currentUserId: String, friendUserId: String, callback: (Boolean) -> Unit) {
+        db.collection("Friends").whereEqualTo("userId", friendUserId).whereEqualTo("addedBy", currentUserId)
             .get()
             .addOnSuccessListener { documents ->
-                users.clear()
-                for (document in documents) {
-                    val userId = document.id
-                    val username = document.getString("username") ?: "Unknown"
-                    val profilePicUrl = document.getString("profilePicUrl")
-                    val user = User(userId, username, profilePicUrl)
-                    users.add(user)
-                }
-                // We don't notify the adapter here because we only want to display users when searched
+                callback(documents.isEmpty.not())
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Failed to load users: ${e.message}", Toast.LENGTH_SHORT).show()
+                Log.e("FriendsActivity", "Error checking if user is friend", e)
+                callback(false)
             }
+    }
+
+    private fun loadFriends() {
+        val currentUser = auth.currentUser
+        currentUser?.let { user ->
+            db.collection("Friends").whereEqualTo("addedBy", user.uid)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        val userId = document.getString("userId")
+                        userId?.let { friendId ->
+                            users.find { it.userId == friendId }?.let { friend ->
+                                friend.isFriend = true
+                            }
+                        }
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to load friends: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
     private fun filterUsers(query: String?) {
@@ -81,17 +119,21 @@ class FriendsActivity : AppCompatActivity() {
     fun addFriend(user: User) {
         val currentUser = auth.currentUser
         currentUser?.let { currentUser ->
-            val friendsRef = db.collection("Friends").document(currentUser.uid)
+            val friendsRef = db.collection("Friends")
 
             val friendData = hashMapOf(
                 "userId" to user.userId,
                 "username" to user.username,
-                "profilePicUrl" to user.profilePicUrl
+                "profilePicUrl" to user.profilePicUrl,
+                "addedBy" to currentUser.uid // Include who added the friend
             )
 
-            friendsRef.collection("userFriends").document(user.userId).set(friendData)
+            friendsRef.add(friendData)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Added ${user.username} as friend!", Toast.LENGTH_SHORT).show()
+
+                    user.isFriend = true
+                    adapter.notifyDataSetChanged()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Failed to add friend: ${e.message}", Toast.LENGTH_SHORT).show()

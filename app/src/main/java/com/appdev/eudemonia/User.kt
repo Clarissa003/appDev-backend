@@ -3,5 +3,7 @@ package com.appdev.eudemonia
 data class User(
     val userId: String,
     val username: String,
-    val profilePicUrl: String? = null
+    val profilePicUrl: String?,
+    var isFriend: Boolean = false // Add this property
 )
+
