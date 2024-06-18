@@ -132,7 +132,7 @@ class FriendsActivity : BaseActivity() {
                 "userId" to user.userId,
                 "username" to user.username,
                 "profilePicUrl" to user.profilePicUrl,
-                "addedBy" to currentUser.uid // Include who added the friend
+                "addedBy" to currentUser.uid
             )
 
             friendsRef.add(friendData)
@@ -150,5 +150,31 @@ class FriendsActivity : BaseActivity() {
                 }
         }
     }
+    fun removeFriend(user: User) {
+        val currentUser = auth.currentUser
+        currentUser?.let { currentUser ->
+            db.collection("Friends")
+                .whereEqualTo("userId", user.userId)
+                .whereEqualTo("addedBy", currentUser.uid)
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        db.collection("Friends").document(document.id).delete()
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Removed ${user.username} as friend!", Toast.LENGTH_SHORT).show()
 
+                                user.isFriend = false
+                                displayedUsers.remove(user)
+                                adapter.notifyDataSetChanged()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Failed to remove friend: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Failed to find friend: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
 }

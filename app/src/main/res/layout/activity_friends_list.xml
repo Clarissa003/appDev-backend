@@ -36,4 +36,14 @@
         android:fontFamily="@font/altone"
         android:onClick="onAddFriendClick"
         android:text="Add" />
+    <Button
+        android:id="@+id/remove_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@color/greenUltraDark"
+        android:layout_marginLeft="150dp"
+        android:fontFamily="@font/altone"
+        android:text="Remove"
+        android:visibility="gone"/>
 </LinearLayout>

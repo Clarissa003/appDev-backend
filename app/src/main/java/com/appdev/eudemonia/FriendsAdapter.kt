@@ -19,6 +19,7 @@ class FriendsAdapter(private val activity: FriendsActivity, users: List<User>) :
         val profileImage = view.findViewById<ImageView>(R.id.profile_image)
         val friendName = view.findViewById<TextView>(R.id.friend_name)
         val addButton = view.findViewById<Button>(R.id.add_button)
+        val removeButton = view.findViewById<Button>(R.id.remove_button)
 
         user?.let {
             friendName.text = it.username
@@ -29,9 +30,17 @@ class FriendsAdapter(private val activity: FriendsActivity, users: List<User>) :
             }
 
             if (it.isFriend) {
-                addButton.text = "Friend"
-                addButton.isEnabled = false
+                addButton.visibility = View.GONE
+                removeButton.visibility = View.VISIBLE
+                removeButton.setOnClickListener {
+                    val clickedUser = getItem(position)
+                    clickedUser?.let { user ->
+                        activity.removeFriend(user)
+                    }
+                }
             } else {
+                addButton.visibility = View.VISIBLE
+                removeButton.visibility = View.GONE
                 addButton.text = "Add"
                 addButton.isEnabled = true
                 addButton.setOnClickListener {
