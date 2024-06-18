@@ -54,6 +54,7 @@ class FriendsActivity : BaseActivity() {
                 .get()
                 .addOnSuccessListener { documents ->
                     users.clear()
+                    displayedUsers.clear()
                     for (document in documents) {
                         val userId = document.id
                         val username = document.getString("username") ?: "Unknown"
@@ -63,6 +64,9 @@ class FriendsActivity : BaseActivity() {
                         checkIfFriend(currentUser.uid, userId) { isFriend ->
                             user.isFriend = isFriend
                             users.add(user)
+                            if (isFriend) {
+                                displayedUsers.add(user)
+                            }
                             adapter.notifyDataSetChanged()
                         }
                     }
@@ -96,6 +100,7 @@ class FriendsActivity : BaseActivity() {
                         userId?.let { friendId ->
                             users.find { it.userId == friendId }?.let { friend ->
                                 friend.isFriend = true
+                                displayedUsers.add(friend)
                             }
                         }
                     }
@@ -112,6 +117,8 @@ class FriendsActivity : BaseActivity() {
         if (!query.isNullOrEmpty()) {
             val filteredUsers = users.filter { it.username.contains(query, ignoreCase = true) }
             displayedUsers.addAll(filteredUsers)
+        } else {
+            displayedUsers.addAll(users.filter { it.isFriend })
         }
         adapter.notifyDataSetChanged()
     }
@@ -133,6 +140,9 @@ class FriendsActivity : BaseActivity() {
                     Toast.makeText(this, "Added ${user.username} as friend!", Toast.LENGTH_SHORT).show()
 
                     user.isFriend = true
+                    if (!displayedUsers.contains(user)) {
+                        displayedUsers.add(user)
+                    }
                     adapter.notifyDataSetChanged()
                 }
                 .addOnFailureListener { e ->
@@ -140,4 +150,5 @@ class FriendsActivity : BaseActivity() {
                 }
         }
     }
+
 }
