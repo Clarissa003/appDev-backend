@@ -25,7 +25,6 @@ class SongsListActivity : AppCompatActivity() {
 
         firestore = FirebaseFirestore.getInstance()
 
-        // Fetch songs from Firestore
         fetchSongsFromFirestore()
 
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
@@ -45,13 +44,7 @@ class SongsListActivity : AppCompatActivity() {
                     val song = document.toObject(SongModel::class.java)
                     songsList.add(song)
                 }
-                if (songsList.isNotEmpty()) {
-                    // Set the activity header with the first song's title
-                    binding.nameTextView.text = songsList[0].title
-                } else {
-                    Log.e("SongsListActivity", "No songs found!")
-                }
-                // Update the adapter with the fetched songs
+                Log.d("SongsListActivity", "Fetched ${songsList.size} songs")
                 songsListAdapter.updateSongsList(songsList)
             }
             .addOnFailureListener { exception ->

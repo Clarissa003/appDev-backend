@@ -1,34 +1,47 @@
 package com.appdev.eudemonia
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import androidx.media3.exoplayer.ExoPlayer
 import com.appdev.eudemonia.databinding.ActivityPlayerBinding
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.request.RequestOptions
+import androidx.media3.exoplayer.ExoPlayer
 
 class PlayerActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityPlayerBinding
-    lateinit var exoPlayer: ExoPlayer
+    private lateinit var binding: ActivityPlayerBinding
+    private var exoPlayer: ExoPlayer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        MyExoplayer.getCurrentSong()?.apply{
-            binding.songTitleTextView.text = title
-            binding.songSubtitleTextView.text= subtitle
+        initializePlayer()
+    }
 
-            Glide.with(binding.songCoverImageView).load(coverUrl).circleCrop().into(binding
-                .songCoverImageView)
-            exoPlayer = MyExoplayer.getInstance()!!
-            binding.playerView.player = exoPlayer
+    private fun initializePlayer() {
+        exoPlayer = MyExoplayer.getInstance()
+        binding.playerView.player = exoPlayer
+
+        MyExoplayer.getCurrentSong()?.let { song ->
+            binding.songTitleTextView.text = song.title
+            binding.songSubtitleTextView.text = song.subtitle
+            Glide.with(this).load(song.coverUrl).circleCrop().into(binding.songCoverImageView)
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        exoPlayer?.playWhenReady = false
+    }
+
+    override fun onResume() {
+        super.onResume()
+        exoPlayer?.playWhenReady = true
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        MyExoplayer.releasePlayer()
+    }
 }

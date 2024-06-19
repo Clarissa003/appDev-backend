@@ -5,8 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.appdev.eudemonia.MyExoplayer
-import com.appdev.eudemonia.PlayerActivity
 import com.appdev.eudemonia.databinding.SongListItemRecyclerRowBinding
 import com.appdev.eudemonia.models.SongModel
 import com.bumptech.glide.Glide
@@ -26,10 +24,17 @@ class SongsListAdapter(private var songsList: List<SongModel>) : RecyclerView.Ad
                 .into(binding.songCoverImageView)
             binding.root.setOnClickListener {
                 MyExoplayer.startPlaying(binding.root.context, song)
-                it.context.startService(Intent(it.context, PlayerActivity::class.java))
+                val intent = Intent(binding.root.context, PlayerActivity::class.java).apply {
+                    putExtra("song", song)
+                }
+                binding.root.context.startActivity(intent)
             }
         }
     }
+
+
+
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val binding = SongListItemRecyclerRowBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -37,6 +42,7 @@ class SongsListAdapter(private var songsList: List<SongModel>) : RecyclerView.Ad
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        Log.d("SongsListAdapter", "Binding position: $position")
         holder.bindData(songsList[position])
     }
 
@@ -45,6 +51,7 @@ class SongsListAdapter(private var songsList: List<SongModel>) : RecyclerView.Ad
     }
 
     fun updateSongsList(newSongsList: List<SongModel>) {
+        Log.d("SongsListAdapter", "Updating songs list with ${newSongsList.size} songs")
         songsList = newSongsList
         notifyDataSetChanged()
     }
