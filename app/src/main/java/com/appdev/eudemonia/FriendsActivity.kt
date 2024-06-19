@@ -231,13 +231,17 @@ class FriendsActivity : BaseActivity() {
             friendRequestsRef.add(friendRequestData)
                 .addOnSuccessListener { documentReference ->
                     Toast.makeText(this, "Friend request sent to ${user.username}!", Toast.LENGTH_SHORT).show()
+                    // Fetch usernames
+                    val usernameReceiver = user.username ?: "Unknown"
+                    val usernameRequester = currentUser.displayName ?: "Unknown"
                     // Update requester's friend list as well
                     val friendsRef = db.collection("Friends")
 
                     val friendData = hashMapOf(
                         "userId" to user.userId,
-                        "username" to user.username,
+                        "username" to usernameReceiver,
                         "profilePicUrl" to (user.profilePicUrl ?: ""),
+                        "usernameRequester" to usernameRequester,
                         "addedBy" to currentUser.uid
                     )
 
