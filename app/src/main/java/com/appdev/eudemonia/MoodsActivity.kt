@@ -32,7 +32,6 @@ class MoodsActivity : BaseActivity() {
         neutralButton.setOnClickListener { saveMoodToDb("neutral") }
         unhappyButton.setOnClickListener { saveMoodToDb("unhappy") }
         sadButton.setOnClickListener { saveMoodToDb("sad") }
-
     }
 
     private fun saveMoodToDb(moodName: String) {
