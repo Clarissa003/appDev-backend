@@ -1,15 +1,29 @@
 package com.appdev.eudemonia
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.Toast
+import android.Manifest
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class FriendsActivity : BaseActivity() {
+
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -18,6 +32,7 @@ class FriendsActivity : BaseActivity() {
     private lateinit var searchView: SearchView
     private val users = mutableListOf<User>()
     private val displayedUsers = mutableListOf<User>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -136,8 +151,11 @@ class FriendsActivity : BaseActivity() {
             )
 
             friendsRef.add(friendData)
-                .addOnSuccessListener {
+                .addOnSuccessListener { documentReference ->
                     Toast.makeText(this, "Added ${user.username} as friend!", Toast.LENGTH_SHORT).show()
+
+                    // Send local notification to the user being added
+                    sendFriendRequestNotification(user)
 
                     user.isFriend = true
                     if (!displayedUsers.contains(user)) {
@@ -148,6 +166,70 @@ class FriendsActivity : BaseActivity() {
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Failed to add friend: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
+        }
+    }
+
+    private fun sendFriendRequestNotification(user: User) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+            createNotificationChannel()
+
+            val intent = Intent(this, FriendsActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            val pendingIntent: PendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE  // Use FLAG_UPDATE_CURRENT or FLAG_IMMUTABLE
+            )
+
+            val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Friend Request")
+                .setContentText("${user.username} wants to add you as a friend.")
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+
+            with(NotificationManagerCompat.from(this)) {
+                notify(NOTIFICATION_ID, notificationBuilder.build())
+            }
+        } else {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.VIBRATE), PERMISSION_REQUEST_CODE)
+        }
+    }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_REQUEST_CODE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // Permission granted, proceed to show the notification again if needed
+                    // You can call sendFriendRequestNotification(user) here again if needed
+                } else {
+                    Toast.makeText(this, "Permission denied. Cannot show notifications.", Toast.LENGTH_SHORT).show()
+                }
+                return
+            }
+
+        }
+    }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because the NotificationChannel class is new and not in the support library
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Friend Requests"
+            val descriptionText = "Notifications for friend requests"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(Companion.CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+                enableLights(true)
+                lightColor = Color.RED
+                enableVibration(true)
+            }
+            // Register the channel with the system
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
     fun removeFriend(user: User) {
@@ -177,4 +259,11 @@ class FriendsActivity : BaseActivity() {
                 }
         }
     }
+
+    companion object {
+        private const val CHANNEL_ID = "friend_requests_channel"
+        private const val NOTIFICATION_ID = 1
+        private const val PERMISSION_REQUEST_CODE = 1001
+    }
+
 }
