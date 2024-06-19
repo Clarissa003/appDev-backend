@@ -79,6 +79,7 @@ dependencies {
     implementation ("com.google.android.material:material:1.4.0")
     implementation ("com.google.firebase:firebase-dynamic-links:21.0.0")
     implementation ("com.google.firebase:firebase-messaging:22.0.0")
+    implementation ("com.squareup.picasso:picasso:2.71828")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

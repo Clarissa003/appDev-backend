@@ -17,6 +17,7 @@ import android.widget.ListView
 import android.widget.SearchView
 import android.widget.Toast
 import android.Manifest
+import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
@@ -99,25 +100,27 @@ class FriendsActivity : BaseActivity() {
         db.collection("Profile").document(senderId).get()
             .addOnSuccessListener { document ->
                 val username = document.getString("username") ?: "Unknown"
-                sendFriendRequestNotification(username)
+                sendFriendRequestNotification(username, senderId)  // Pass senderId here
             }
             .addOnFailureListener { e ->
                 Log.e("FriendsActivity", "Error fetching sender details", e)
             }
     }
 
-    private fun sendFriendRequestNotification(username: String) {
+
+    private fun sendFriendRequestNotification(username: String, senderId: String) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
             createNotificationChannel()
 
-            val intent = Intent(this, FriendsActivity::class.java).apply {
+            val intent = Intent(this, FriendRequestDetailActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                putExtra("senderId", senderId)  // Pass the sender's user ID
             }
             val pendingIntent: PendingIntent = PendingIntent.getActivity(
                 this,
                 0,
                 intent,
-                PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_IMMUTABLE  // Use FLAG_UPDATE_CURRENT to update the intent data
             )
 
             val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -135,6 +138,7 @@ class FriendsActivity : BaseActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.VIBRATE), PERMISSION_REQUEST_CODE)
         }
     }
+
 
 
     private fun loadUsers() {
@@ -227,6 +231,25 @@ class FriendsActivity : BaseActivity() {
             friendRequestsRef.add(friendRequestData)
                 .addOnSuccessListener { documentReference ->
                     Toast.makeText(this, "Friend request sent to ${user.username}!", Toast.LENGTH_SHORT).show()
+                    // Update requester's friend list as well
+                    val friendsRef = db.collection("Friends")
+
+                    val friendData = hashMapOf(
+                        "userId" to user.userId,
+                        "username" to user.username,
+                        "profilePicUrl" to (user.profilePicUrl ?: ""),
+                        "addedBy" to currentUser.uid
+                    )
+
+                    friendsRef.add(friendData)
+                        .addOnSuccessListener {
+                            Log.d(TAG, "Added ${user.username} as friend for requester")
+                            // Optionally handle success if needed
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e(TAG, "Error adding ${user.username} as friend for requester", e)
+                            // Handle failure if needed
+                        }
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Failed to send friend request: ${e.message}", Toast.LENGTH_SHORT).show()
