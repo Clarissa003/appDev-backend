@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.appdev.eudemonia">
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -86,6 +88,17 @@
             android:label="Guided Journal Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="true"
+            android:label="Settings"
+            android:theme="@style/Theme.AppCompat" />
+        <!-- TimeSelectorActivity -->
+        <activity
+            android:name=".TimeSelectorActivity"
+            android:exported="true"
+            android:label="Time Selector"
+            android:theme="@style/Theme.AppCompat" />
     </application>
     
 
