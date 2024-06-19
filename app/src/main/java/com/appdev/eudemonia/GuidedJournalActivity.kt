@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
 
+
 class GuidedJournalActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGuidedJournalBinding
@@ -35,7 +36,7 @@ class GuidedJournalActivity : BaseActivity() {
             saveJournalEntry()
         }
 
-        // Redirect to the unguided journal page
+        /* Redirect to the unguided journal page
         findViewById<TextView>(R.id.buttonUnguidedJournal).setOnClickListener {
             startActivity(Intent(this, UnguidedJournalActivity::class.java))
         }
@@ -53,7 +54,7 @@ class GuidedJournalActivity : BaseActivity() {
         // Redirect to the habits page
         findViewById<TextView>(R.id.buttonHabits).setOnClickListener {
             startActivity(Intent(this, HabitsActivity::class.java))
-        }
+        } */
     }
 
     private fun generatePrompt() {
