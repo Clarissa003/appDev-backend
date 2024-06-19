@@ -1,14 +1,9 @@
 package com.appdev.eudemonia.models
 
 data class SongModel(
-    val id:String,
-    val title:String,
-    val subtitle:String,
-    val url:String,
-    val coverUrl:String,
-) {
-        constructor(): this("","","","", "")
-
-    }
-
-
+    val coverUrl: String = "",
+    val id: String = "",
+    val subtitle: String = "",
+    val title: String = "",
+    val url: String = ""
+)
