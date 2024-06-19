@@ -7,24 +7,16 @@
     android:padding="16dp"
     tools:context=".FriendRequestDetailActivity">
 
-    <ImageView
-        android:id="@+id/profileImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:contentDescription="@string/profile_image"
-        android:scaleType="centerCrop"
-        android:background="@drawable/round_border" />
-
     <TextView
         android:id="@+id/usernameTextView"
-        android:layout_width="4dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
-        android:textColor="#525252"
+        android:textColor="#FFFFFF"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:text="Username" /> <!-- Set your username text here -->
 
     <Button
         android:id="@+id/addFriendButton"
@@ -34,5 +26,5 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/greenUltraDark"
         android:text="@string/add_friend"
-        android:fontFamily="@font/altone" />
+        android:fontFamily="@font/altone" /> <!-- Optional: Set button text color to white -->
 </LinearLayout>

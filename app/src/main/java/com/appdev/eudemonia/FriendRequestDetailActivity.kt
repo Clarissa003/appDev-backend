@@ -44,10 +44,10 @@ class FriendRequestDetailActivity : AppCompatActivity() {
                 val profilePicUrl = document.getString("profilePicUrl")
 
                 findViewById<TextView>(R.id.usernameTextView).text = username
-                profilePicUrl?.let {
+               /* profilePicUrl?.let {
                     val imageView = findViewById<ImageView>(R.id.profileImageView)
                     Picasso.get().load(it).into(imageView)
-                }
+                }*/
             }
             .addOnFailureListener { e ->
                 Log.e("FriendRequestDetail", "Error fetching sender details", e)
