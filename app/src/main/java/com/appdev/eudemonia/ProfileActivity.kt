@@ -38,7 +38,7 @@ class ProfileActivity : AppCompatActivity() {
 
         // Redirect to the unguided journal page
         findViewById<TextView>(R.id.buttonUnguidedJournal).setOnClickListener {
-            startActivity(Intent(this, UnguidedJournalActivity::class.java))
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
 
         // Redirect to the guided journal page

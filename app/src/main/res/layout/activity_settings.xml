@@ -18,47 +18,16 @@
         android:textSize="45sp"
         android:textStyle="bold"/>
 
-    <LinearLayout
+    <Button
+        android:id="@+id/buttonNotificationTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="8dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Receive Crisis Notifications"
-            android:textSize="18sp"
-            android:textColor="@color/black" />
-
-        <Switch
-            android:id="@+id/toggleCrisisNotifications"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:padding="8dp">
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Receive Affirmation Notifications"
-            android:textSize="18sp"
-            android:textColor="@color/black" />
-
-        <Switch
-            android:id="@+id/toggleAffirmationNotifications"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-    </LinearLayout>
+        android:text="Set Affirmation Notification Time"
+        android:textColor="@color/white"
+        android:background="@color/greenUltraDark"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:padding="12dp" />
 
     <Button
         android:id="@+id/buttonLogout"
@@ -82,15 +51,5 @@
         android:textAllCaps="false"
         android:padding="12dp" />
 
-    <Button
-        android:id="@+id/buttonResetData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Reset Data"
-        android:textColor="@color/white"
-        android:background="@color/greenUltraDark"
-        android:layout_marginTop="16dp"
-        android:textAllCaps="false"
-        android:padding="12dp" />
 
 </LinearLayout>
