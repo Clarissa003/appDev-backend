@@ -10,10 +10,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 
-class FriendsActivity : AppCompatActivity() {
+class FriendListActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter: FriendAdapter
+    private lateinit var adapter: FriendListAdapter
     private val friendsList = ArrayList<Friend>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class FriendsActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.idFriendsRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        adapter = FriendAdapter(friendsList)
+        adapter = FriendListAdapter(friendsList)
         recyclerView.adapter = adapter
 
         fetchFriends()

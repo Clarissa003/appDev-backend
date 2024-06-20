@@ -98,7 +98,7 @@
 
         <!-- FriendsActivity -->
         <activity
-                android:name=".FriendsActivity"
+                android:name=".FriendListActivity"
                 android:exported="true"
                 android:label="Friends Activity"
                 android:theme="@style/Theme.AppCompat">
