@@ -23,18 +23,6 @@ open class BaseActivity : AppCompatActivity() {
                 return true
             }
 
-            R.id.moods -> {
-                // Navigate to Moods page
-                startActivity(Intent(this, MoodsActivity::class.java))
-                return true
-            }
-
-            R.id.habit -> {
-                // Navigate to Habit page
-                startActivity(Intent(this, HabitsActivity::class.java))
-                return true
-            }
-
             R.id.unguidedJournal -> {
                 // Navigate to Unguided Journal page
                 startActivity(Intent(this, UnguidedJournalActivity::class.java))
@@ -49,6 +37,17 @@ open class BaseActivity : AppCompatActivity() {
             R.id.calendar -> {
                 // Navigate to Guided Journal page
                 startActivity(Intent(this, HomeActivity::class.java))
+                return true
+            }
+
+            R.id.calendar -> {
+                // Navigate to Guided Journal page
+                startActivity(Intent(this, HomeActivity::class.java))
+                return true
+            }
+
+            R.id.friends -> {
+                startActivity(Intent(this, FriendListActivity::class.java))
                 return true
             }
 

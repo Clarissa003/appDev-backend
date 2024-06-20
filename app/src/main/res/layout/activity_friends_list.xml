@@ -24,3 +24,13 @@
     android:layout_marginTop="8dp" />
 
     </LinearLayout>
+    <TextView
+            android:id="@+id/friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Friend Name"
+            android:textColor="#525252"
+            android:fontFamily="@font/gontserratregular"
+            android:textSize="16sp"
+            android:layout_gravity="center_vertical" />
+</LinearLayout>

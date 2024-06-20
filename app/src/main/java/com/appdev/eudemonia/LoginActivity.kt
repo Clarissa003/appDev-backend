@@ -58,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
 
                     // Navigate to ProfileActivity
-                    val intent = Intent(this, HomeActivity::class.java)
+                    val intent = Intent(this, FriendListActivity::class.java)
                     startActivity(intent)
                     // Optional: finish the LoginActivity to prevent the user from going back to it
                     finish()

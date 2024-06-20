@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+
 class GuidedJournalActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGuidedJournalBinding
@@ -37,7 +38,6 @@ class GuidedJournalActivity : BaseActivity() {
         binding.saveButton.setOnClickListener {
             saveJournalEntry()
         }
-
     }
 
     private fun generatePrompt() {
