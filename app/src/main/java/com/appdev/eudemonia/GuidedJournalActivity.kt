@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Date
 
+
 class GuidedJournalActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGuidedJournalBinding
@@ -34,7 +35,6 @@ class GuidedJournalActivity : BaseActivity() {
         binding.saveButton.setOnClickListener {
             saveJournalEntry()
         }
-
     }
 
     private fun generatePrompt() {

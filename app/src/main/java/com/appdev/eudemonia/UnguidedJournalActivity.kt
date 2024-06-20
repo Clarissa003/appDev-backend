@@ -42,7 +42,6 @@ class UnguidedJournalActivity : BaseActivity() {
         saveButton.setOnClickListener {
             saveJournalEntry()
         }
-
     }
 
     private fun saveJournalEntry() {

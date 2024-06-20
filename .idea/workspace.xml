@@ -26,12 +26,22 @@
           <theme>@style/Theme.AppCompat</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_home.xml">
+        <config>
+          <theme>@style/Theme.AppCompat</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
         <config>
           <theme>@style/Theme.AppCompat</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_moods.xml">
+        <config>
+          <theme>@style/Theme.AppCompat</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_player.xml">
         <config>
           <theme>@style/Theme.AppCompat</theme>
         </config>
@@ -56,12 +66,27 @@
           <theme>@style/Theme.AppCompat</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_single_mood.xml">
+        <config>
+          <theme>@style/Theme.AppCompat</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_songs_list.xml">
+        <config>
+          <theme>@style/Theme.AppCompat</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sounds.xml">
+        <config>
+          <theme>@style/Theme.AppCompat</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_unguided_journal.xml">
         <config>
           <theme>@style/Theme.AppCompat</theme>
         </config>
       </layout>
-      <layout url="file://$PROJECT_DIR$/app/src/main/res/menu/activity_menu.xml">
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/song_list_item_recycler_row.xml">
         <config>
           <theme>@style/Theme.AppCompat</theme>
         </config>
@@ -74,6 +99,7 @@
   <component name="ChangeListManager">
     <list default="true" id="3235061d-6c5e-401c-b5fe-939146201cc6" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_songs_list.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_songs_list.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_profile.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/FriendsActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/FriendsActivity.java" afterDir="false" />
@@ -142,18 +168,20 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Kotlin File" />
-        <option value="resourceFile" />
         <option value="Kotlin File" />
         <option value="Kotlin File" />
-        <option value="layoutResourceFile" />
         <option value="resourceFile" />
         <option value="Kotlin Interface" />
-        <option value="Kotlin Data Class" />
         <option value="layoutResourceFile" />
-        <option value="Kotlin Class" />
+        <option value="resourceFile" />
         <option value="layoutResourceFile" />
         <option value="layoutResourceFile" />
         <option value="Class" />
+        <option value="Kotlin Class" />
+        <option value="valueResourceFile" />
+        <option value="Kotlin Data Class" />
+        <option value="layoutResourceFile" />
+        <option value="Kotlin Object" />
         <option value="resourceFile" />
       </list>
     </option>
@@ -165,7 +193,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="CurrentFile" />
+    <option name="selectedTabId" value="ProjectErrors" />
   </component>
   <component name="ProjectColorInfo">{
     &quot;customColor&quot;: &quot;&quot;,
@@ -203,12 +231,22 @@
 }</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sarar\appDev-backend\app\src\main\res\drawable" />
       <recent name="C:\Users\clari\appDev-backend\app\src\main\res\menu" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="com.appdev.eudemonia" />
     </key>
+    <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">
+      <recent name="com.appdev.eudemonia.models" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.appdev.eudemonia" />
+    </key>
+    <key name="android.template.1637172606">
+      <recent name="com.appdev.eudemonia" />
+    </key>
+    <key name="android.template.-70883748">
       <recent name="com.appdev.eudemonia" />
     </key>
   </component>
@@ -683,7 +721,18 @@
       </window_info>
     </layout>
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$PROJECT_DIR$/../.gradle/caches/modules-2/files-2.1/androidx.fragment/fragment/1.3.6/25ece06338d39da1fdc9d8488aa57b5014866918/fragment-1.3.6-sources.jar!/androidx/fragment/app/FragmentActivity.java</url>
+          <line>276</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+
   </component>
 </project>

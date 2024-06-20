@@ -35,7 +35,6 @@ class ProfileActivity : BaseActivity() {
         profilePicture.setOnClickListener {
             selectImage()
         }
-
     }
 
     private fun loadUserProfile() {
