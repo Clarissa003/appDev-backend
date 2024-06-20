@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
+        android:background="@color/greenUltraLight"
         tools:context=".ProfileActivity">
 
     <ImageView
@@ -36,11 +36,11 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:ellipsize="end"
-            android:fontFamily="@font/altone"
             android:maxLines="1"
             android:text="Profile Name"
             android:textColor="@android:color/black"
             android:textSize="24sp"
+            android:fontFamily="@font/gontserratbold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
 
@@ -52,7 +52,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
-            android:fontFamily="@font/altone"
+            android:fontFamily="@font/gontserratregular"
             android:maxLines="3"
             android:text="This is a placeholder for the bio."
             android:textColor="@android:color/black"
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:fontFamily="@font/altone"
+            android:fontFamily="@font/gontserratregular"
             android:padding="0dp"
             android:text="Edit Bio"
             android:textColor="@color/greenUltraDark"
@@ -81,7 +81,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:fontFamily="@font/altone"
+            android:fontFamily="@font/gontserratregular"
             android:padding="0dp"
             android:text="Edit Name"
             android:textColor="@color/greenUltraDark"
