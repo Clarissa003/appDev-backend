@@ -95,6 +95,13 @@
             android:label="Home Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
+        <!-- FriendsActivity -->
+        <activity
+            android:name=".FriendsActivity"
+            android:exported="true"
+            android:label="Friends Activity"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
     </application>
     
 
