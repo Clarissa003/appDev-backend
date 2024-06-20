@@ -115,6 +115,12 @@
             android:label="Home Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
+
+        <!-- Define the com.appdev.eudemonia.DeleteOldMessagesService -->
+        <service
+            android:name=".DeleteOldMessagesService"
+            android:enabled="true"
+            android:exported="false" />
     </application>
 
 </manifest>
