@@ -10,6 +10,7 @@
     <application
             android:allowBackup="true"
             android:dataExtractionRules="@xml/data_extraction_rules"
+            android:enableOnBackInvokedCallback="true"
             android:fullBackupContent="@xml/backup_rules"
             android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
@@ -31,62 +32,81 @@
             </intent-filter>
         </activity>
         -->
-
         <!-- SignupActivity - set as launcher activity -->
         <activity
                 android:name=".SignupActivity"
                 android:exported="true"
                 android:label="Signup Activity"
                 android:theme="@style/Theme.AppCompat">
-            <!--
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            -->
         </activity>
-
-        <!-- ProfileActivity -->
+         <!-- ProfileActivity -->
         <activity
                 android:name=".ProfileActivity"
                 android:exported="true"
                 android:label="Profile Activity"
                 android:theme="@style/Theme.AppCompat" />
-
-        <!-- ResetPasswordActivity -->
         <activity
                 android:name=".ResetPasswordActivity"
                 android:exported="true"
                 android:label="Reset Password Activity"
                 android:theme="@style/Theme.AppCompat" />
-
+        
         <!-- LoginActivity -->
         <activity
                 android:name=".LoginActivity"
                 android:exported="true"
                 android:label="Login Activity"
                 android:theme="@style/Theme.AppCompat" />
-
+        <activity
+                android:name=".MoodsActivity"
+                android:exported="true"
+                android:label="Moods Activity"
+                android:theme="@style/Theme.AppCompat" /> 
+        
+        <!-- HabitsActivity -->
+        <activity
+                android:name=".HabitsActivity"
+                android:exported="true"
+                android:label="Habits Activity"
+                android:theme="@style/Theme.AppCompat" /> 
+        
         <!-- UnguidedJournalActivity -->
         <activity
                 android:name=".UnguidedJournalActivity"
                 android:exported="true"
                 android:label="Unguided Journal"
-                android:theme="@style/Theme.AppCompat" />
-
+                android:theme="@style/Theme.AppCompat" /> 
+        
         <!-- GuidedJournalActivity -->
         <activity
                 android:name=".GuidedJournalActivity"
                 android:exported="true"
                 android:label="Guided Journal Activity"
-                android:theme="@style/Theme.AppCompat">
-            <!-- Set this activity as the launcher for testing -->
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                android:theme="@style/Theme.AppCompat" /> 
+        
+        <!-- FriendsActivity -->
+        <activity
+                android:name=".FriendsActivity"
+                android:exported="true"
+                android:label="Friends Activity"
+                android:theme="@style/Theme.AppCompat" />
+        <activity
+                android:name=".HomeActivity"
+                android:exported="true"
+                android:label="Home Activity"
+                android:theme="@style/Theme.AppCompat" />
 
+        <activity
+            android:name=".PlayerActivity"
+            android:exported="true" />
+        <activity
+            android:name=".SongsListActivity"
+            android:exported="true" />
     </application>
 
 </manifest>

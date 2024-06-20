@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        tools:context=".UnguidedJournalActivity">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="36dp"
+            android:fontFamily="@font/gallient"
+            android:text="Daily entry"
+            android:textColor="@color/greenUltraDark"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.088"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/enterDailyAnswer"
+            android:layout_width="351dp"
+            android:layout_height="612dp"
+            android:layout_marginTop="4dp"
+            android:gravity="top"
+            android:hint="Enter answer..."
+            android:textColor="#000000"
+            android:textColorHint="#808080"
+            android:minHeight="450dp"
+            android:paddingLeft="10dp"
+            android:textStyle="italic"
+            app:fontFamily="@font/altone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.45"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
+
+        <ImageView
+            android:id="@+id/shareIcon"
+            android:layout_width="39dp"
+            android:layout_height="54dp"
+            android:layout_marginStart="200dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/ic_share"
+            app:layout_constraintBottom_toBottomOf="@+id/enterDailyAnswer"
+            app:layout_constraintStart_toStartOf="@+id/enterDailyAnswer" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/greenUltraDark"
+            android:fontFamily="@font/altone"
+            android:text="Save"
+            app:layout_constraintBottom_toBottomOf="@+id/enterDailyAnswer"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/shareIcon" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

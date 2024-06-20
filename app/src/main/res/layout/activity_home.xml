@@ -9,9 +9,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:layout_marginTop="30dp">
 
         <!-- Calendar Layout -->
+
+        <!-- Moods Layout -->
         <RelativeLayout
             android:id="@+id/idRLContainer"
             android:layout_width="match_parent"
@@ -22,14 +25,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
+                android:fontFamily="@font/gontserratbold"
                 android:gravity="center"
                 android:padding="10dp"
-                android:text="Select a day"
+                android:text="DASHBOARD"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/gontserratregular"/>
+                android:textColor="@color/greenUltraDark"
+                android:textSize="30sp"/>
 
             <TextView
                 android:id="@+id/idTVSelectedDate"
@@ -37,31 +39,29 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/idTVHeading"
                 android:layout_margin="20dp"
+                android:fontFamily="@font/gontserratmedium"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="Date"
                 android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:fontFamily="@font/gontserratregular"/>
+                android:textColor="@color/greenUltraDark"
+                android:textSize="20sp"/>
 
             <Button
                 android:id="@+id/idBtnPickDate"
-                android:layout_width="121dp"
-                android:layout_height="48dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_below="@id/idTVSelectedDate"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="20dp"
-                android:background="@color/greenDark"
-                android:fontFamily="@font/gontserratregular"
-                android:text="Pick Date"
-                android:textAllCaps="false"
-                android:textColor="#4E342E"
+                android:layout_marginTop="10dp"
+                android:padding="10dp"
+                android:background="@color/greenUltraDark"
+                android:fontFamily="@font/gontserratmedium"
+                android:text="CHANGE DATE"
+                android:textColor="#FFFFFF"
                 android:textSize="15sp" />
         </RelativeLayout>
 
-        <!-- Moods Layout -->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -81,51 +81,56 @@
                     android:id="@+id/happyButton"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/happy"
-                    android:layout_margin="10dp"
-                    android:scaleType="fitCenter"
+                    android:layout_margin="5dp"
+                    android:contentDescription="happy_description"
                     android:onClick="onMoodButtonClick"
-                    android:contentDescription="happy_description"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/happy"
+                    app:tint="#3F3F3F" />
 
                 <ImageView
                     android:id="@+id/contentButton"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/content"
-                    android:layout_margin="10dp"
-                    android:scaleType="fitCenter"
+                    android:layout_margin="5dp"
+                    android:contentDescription="content_description"
                     android:onClick="onMoodButtonClick"
-                    android:contentDescription="content_description"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/content"
+                    app:tint="#3F3F3F" />
 
                 <ImageView
                     android:id="@+id/neutralButton"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/neutral"
-                    android:layout_margin="10dp"
-                    android:scaleType="fitCenter"
+                    android:layout_margin="5dp"
+                    android:contentDescription="neutral_description"
                     android:onClick="onMoodButtonClick"
-                    android:contentDescription="neutral_description"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/neutral"
+                    app:tint="#3F3F3F" />
 
                 <ImageView
                     android:id="@+id/unhappyButton"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/unhappy"
-                    android:layout_margin="10dp"
-                    android:scaleType="fitCenter"
+                    android:layout_margin="5dp"
+                    android:contentDescription="unhappy_description"
                     android:onClick="onMoodButtonClick"
-                    android:contentDescription="unhappy_description"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/unhappy"
+                    app:tint="#3F3F3F" />
 
                 <ImageView
                     android:id="@+id/sadButton"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/sad"
-                    android:layout_margin="10dp"
-                    android:scaleType="fitCenter"
+                    android:layout_margin="5dp"
+                    android:contentDescription="sad_description"
                     android:onClick="onMoodButtonClick"
-                    android:contentDescription="sad_description"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/sad"
+                    app:tint="#3F3F3F" />
             </LinearLayout>
 
             <!-- RecyclerView for displaying moods -->
@@ -141,13 +146,11 @@
 
         <!-- Habits Layout -->
         <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp"
             android:layout_margin="16dp"
-            app:cardBackgroundColor="@color/greenLight">
+            android:backgroundTint="@color/green">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -159,11 +162,10 @@
                     android:id="@+id/textViewTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Habit Tracker"
+                    android:text="DAILY HABITS"
                     android:textSize="24sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/gallient"
-                    android:textColor="@color/gray"
+                    android:fontFamily="@font/gontserratbold"
+                    android:textColor="@color/white"
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp" />
 
@@ -179,12 +181,12 @@
                     android:layout_height="wrap_content"
                     android:text="Add Habit"
                     android:layout_gravity="center"
-                    android:textColor="#000000"
-                    android:backgroundTint="@color/greenultradark"
-                    android:fontFamily="@font/altone"
-                    android:textAllCaps="false"
-                    android:stateListAnimator="@null"
-                    android:layout_marginTop="16dp" />
+                    android:padding="10dp"
+                    android:background="@color/greenUltraDark"
+                    android:fontFamily="@font/gontserratmedium"
+                    android:textColor="#FFFFFF"
+                    android:textSize="15sp"
+                    android:stateListAnimator="@null"/>
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>

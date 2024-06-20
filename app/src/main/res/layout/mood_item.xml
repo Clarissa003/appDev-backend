@@ -9,6 +9,12 @@
         android:id="@+id/moodNameTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:textSize="18sp"
         android:textColor="@android:color/black" />
+=======
+        android:textSize="20sp"
+        android:fontFamily="@font/gontserratmedium"
+        android:textColor="#3F3F3F" />
+>>>>>>> origin/dev
 </LinearLayout>

@@ -72,11 +72,11 @@ class HomeActivity : BaseActivity() {
         val unhappyButton: ImageView = findViewById(R.id.unhappyButton)
         val sadButton: ImageView = findViewById(R.id.sadButton)
 
-        happyButton.setOnClickListener { saveMoodToDb("happy") }
-        contentButton.setOnClickListener { saveMoodToDb("content") }
-        neutralButton.setOnClickListener { saveMoodToDb("neutral") }
-        unhappyButton.setOnClickListener { saveMoodToDb("unhappy") }
-        sadButton.setOnClickListener { saveMoodToDb("sad") }
+        happyButton.setOnClickListener { saveMoodToDb("Happy") }
+        contentButton.setOnClickListener { saveMoodToDb("Content") }
+        neutralButton.setOnClickListener { saveMoodToDb("Neutral") }
+        unhappyButton.setOnClickListener { saveMoodToDb("Unhappy") }
+        sadButton.setOnClickListener { saveMoodToDb("Sad") }
 
         // Habits setup
         habitRecyclerView = findViewById(R.id.habitRecyclerView)
