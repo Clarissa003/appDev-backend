@@ -68,11 +68,15 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     implementation(libs.firebase.storage.ktx)
+<<<<<<< HEAD
+    implementation(libs.androidx.work.runtime.ktx)
+=======
     implementation(libs.material)
 <<<<<<< HEAD
     implementation(libs.firebase.database.ktx)
 =======
     implementation(libs.androidx.activity)
+>>>>>>> origin/dev
 >>>>>>> origin/dev
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation(libs.firebase.firestore.ktx)
