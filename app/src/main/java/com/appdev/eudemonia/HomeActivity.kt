@@ -1,5 +1,6 @@
 package com.appdev.eudemonia
 
+import android.Manifest
 import android.app.DatePickerDialog
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -22,17 +23,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.media3.common.util.NotificationUtil.createNotificationChannel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.firestore.QuerySnapshot
 import java.text.SimpleDateFormat
 import java.util.*
-import android.Manifest
-
 
 class HomeActivity : AppCompatActivity() {
 
@@ -108,8 +107,11 @@ class HomeActivity : AppCompatActivity() {
             showAddHabitDialog()
         }
 
-        //Journal setup
+        // Journal setup
         fetchJournalEntries()
+        fetchFriends { friendIds ->
+            // Handle fetching friends here if needed
+        }
 
         Log.d("HomeActivity", "onCreate finished")
     }
@@ -153,9 +155,11 @@ class HomeActivity : AppCompatActivity() {
                 fetchMoods()
                 Toast.makeText(this, "Mood saved", Toast.LENGTH_SHORT).show()
                 if (moodName == "sad") {
-                    fetchFriends(userId) { friendIds ->
+                    fetchFriends { friendIds ->
                         friendIds.forEach { friendId ->
-                            sendCrisisNotification(friendId)
+                            fetchUsername(friendId) { username ->
+                                sendCrisisNotification(friendId, username)
+                            }
                         }
                     }
                 }
@@ -165,24 +169,63 @@ class HomeActivity : AppCompatActivity() {
             }
     }
 
-    private fun fetchFriends(userId: String, callback: (List<String>) -> Unit) {
-        db.collection("Friends")
-            .whereEqualTo("userId", userId)
-            .get()
-            .addOnSuccessListener { documents ->
-                val friendIds = mutableListOf<String>()
-                for (document in documents) {
-                    val friendId = document.getString("friendId")
-                    friendId?.let {
-                        friendIds.add(it)
-                    }
+    private fun fetchFriends(callback: (List<String>) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
+
+        if (currentUserUid != null) {
+            db.collection("Friends")
+                .whereEqualTo("addedBy", currentUserUid)
+                .get()
+                .addOnSuccessListener { addedBySnapshot ->
+                    handleFriendsSnapshot(addedBySnapshot, "userId", callback)
                 }
-                callback(friendIds)
+                .addOnFailureListener { exception ->
+                    Log.e("HomeActivity", "Error fetching friends (addedBy): ", exception)
+                }
+
+            db.collection("Friends")
+                .whereEqualTo("userId", currentUserUid)
+                .get()
+                .addOnSuccessListener { userIdSnapshot ->
+                    handleFriendsSnapshot(userIdSnapshot, "addedBy", callback)
+                }
+                .addOnFailureListener { exception ->
+                    Log.e("HomeActivity", "Error fetching friends (userId): ", exception)
+                }
+        } else {
+            Log.e("HomeActivity", "Current user UID is null")
+        }
+    }
+
+    private fun handleFriendsSnapshot(snapshot: QuerySnapshot, idField: String, callback: (List<String>) -> Unit) {
+        val friendIds = mutableListOf<String>()
+        for (document in snapshot) {
+            val friendId = document.getString(idField)
+            friendId?.let {
+                friendIds.add(it)
             }
-            .addOnFailureListener { e ->
-                Log.e("HomeActivity", "Error fetching friends", e)
+        }
+        callback(friendIds)
+    }
+
+    private fun fetchUsername(userId: String, callback: (String) -> Unit) {
+        db.collection("User")
+            .document(userId)
+            .get()
+            .addOnSuccessListener { document ->
+                if (document.exists()) {
+                    val username = document.getString("username") ?: ""
+                    callback(username)
+                } else {
+                    Log.e("HomeActivity", "User document not found for ID: $userId")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.e("HomeActivity", "Error fetching username: ", exception)
             }
     }
+
     private fun fetchMoods() {
         Log.d("HomeActivity", "fetchMoods called")
         val selectedDate = selectedDateTextView.text.toString()
@@ -195,10 +238,10 @@ class HomeActivity : AppCompatActivity() {
                 .addOnSuccessListener { documents ->
                     Log.d("HomeActivity", "User documents: ${documents.size()}")
                     if (documents.isEmpty) {
-                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@HomeActivity, "User not found", Toast.LENGTH_SHORT).show()
                         return@addOnSuccessListener
                     }
-                    val userId = documents.first().id
+                    val userId = documents.documents[0].id
                     Log.d("HomeActivity", "User ID: $userId")
                     db.collection("Mood")
                         .whereEqualTo("userId", userId)
@@ -207,25 +250,28 @@ class HomeActivity : AppCompatActivity() {
                         .addOnSuccessListener { result ->
                             Log.d("HomeActivity", "Moods fetched: ${result.size()}")
                             moodList.clear()
-                            for (document in result) {
+                            for (document in result.documents) {
                                 val mood = document.toObject(Mood::class.java)
-                                moodList.add(mood)
+                                if (mood != null) {
+                                    moodList.add(mood)
+                                }
                             }
                             moodAdapter.notifyDataSetChanged()
                         }
                         .addOnFailureListener { e ->
-                            Toast.makeText(this, "Error fetching moods: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this@HomeActivity, "Error fetching moods: ${e.message}", Toast.LENGTH_SHORT).show()
                             Log.e("HomeActivity", "Error fetching moods: ${e.message}", e)
                         }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@HomeActivity, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
                     Log.e("HomeActivity", "Error fetching user: ${e.message}", e)
                 }
         } ?: run {
             Log.e("HomeActivity", "currentUserEmail is null")
         }
     }
+
 
     private fun showAddHabitDialog() {
         val dialog = AlertDialog.Builder(this)
@@ -245,26 +291,25 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun saveHabitToDb(habitName: String) {
-        val currentDate = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(Date())
         val userId = mAuth.currentUser?.uid ?: return
         val habit = hashMapOf(
             "name" to habitName,
-            "userId" to userId,
-            "dateAdded" to currentDate
+            "userId" to userId
         )
         db.collection("Habit")
             .add(habit)
-            .addOnSuccessListener {
+            .addOnSuccessListener { documentReference ->
                 fetchHabits()
-                Toast.makeText(this, "Habit added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Habit saved", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error adding habit: ${e.message}", Toast.LENGTH_SHORT).show()
+            .addOnFailureListener {
+                Toast.makeText(this, "Error saving habit", Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun fetchHabits() {
         val selectedDate = selectedDateTextView.text.toString()
+        Log.d("HomeActivity", "fetchHabits called for date: $selectedDate")
         currentUserEmail?.let { email ->
             db.collection("User")
                 .whereEqualTo("email", email)
@@ -275,10 +320,8 @@ class HomeActivity : AppCompatActivity() {
                         return@addOnSuccessListener
                     }
                     val userId = documents.first().id
-                    Log.d("HomeActivity", "User ID: $userId")
                     db.collection("Habit")
                         .whereEqualTo("userId", userId)
-                        .whereEqualTo("dateAdded", selectedDate)
                         .get()
                         .addOnSuccessListener { result ->
                             habitList.clear()
@@ -287,117 +330,69 @@ class HomeActivity : AppCompatActivity() {
                                 habitList.add(habit)
                             }
                             habitAdapter.notifyDataSetChanged()
-                            Log.d("HomeActivity", "Habits fetched: ${habitList.size}")
                         }
                         .addOnFailureListener { e ->
-                            Toast.makeText(
-                                this,
-                                "Error fetching habits: ${e.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this, "Error fetching habits: ${e.message}", Toast.LENGTH_SHORT).show()
                             Log.e("HomeActivity", "Error fetching habits: ${e.message}", e)
                         }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
                     Log.e("HomeActivity", "Error fetching user: ${e.message}", e)
                 }
+        } ?: run {
+            Log.e("HomeActivity", "currentUserEmail is null")
         }
     }
 
     private fun fetchJournalEntries() {
-        val selectedDate = selectedDateTextView.text.toString()
-        val userId = mAuth.currentUser?.uid ?: return
-
-        db.collection("Journal")
-            .whereEqualTo("userId", userId)
-            .whereEqualTo("date", selectedDate)
-            .get()
-            .addOnSuccessListener { result ->
-                val journalList = mutableListOf<JournalEntry>()
-                for (document in result) {
-                    val journalEntry = document.toObject(JournalEntry::class.java)
-                    journalList.add(journalEntry)
-                }
-                updateJournalRecyclerView(journalList)
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(this, "Error fetching journal entries: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+        // Implement fetching journal entries if needed
     }
 
-    private fun updateJournalRecyclerView(journalList: List<JournalEntry>) {
-        val journalRecyclerView: RecyclerView = findViewById(R.id.JournalRecyclerView)
-        journalRecyclerView.layoutManager = LinearLayoutManager(this)
-        val journalAdapter = JournalAdapter(journalList)
-        journalRecyclerView.adapter = journalAdapter
-    }
-    private fun sendCrisisNotification(friendId: String) {
-        db.collection("Profile").document(friendId).get()
-            .addOnSuccessListener { document ->
-                val username = document.getString("username") ?: "Unknown"
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
-                    createNotificationChannel()
+    private fun sendCrisisNotification(friendId: String, username: String) {
+        // Check if VIBRATE permission is granted
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+            // Permission is granted, proceed with notification creation
+            createNotificationChannel()
 
-                    /*val intent = Intent(this, ChatActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        putExtra("userId", friendId)
-                    }*/
-                    val pendingIntent: PendingIntent = PendingIntent.getActivity(
-                        this,
-                        0,
-                        intent,
-                        PendingIntent.FLAG_IMMUTABLE
-                    )
-
-                    val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_notification)
-                        .setContentTitle("Friend in crisis!")
-                        .setContentText("$username is not feeling well, have a chat.")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true)
-
-                    with(NotificationManagerCompat.from(this)) {
-                        notify(NOTIFICATION_ID, notificationBuilder.build())
-                    }
-                } else {
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(Manifest.permission.VIBRATE),
-                        PERMISSION_REQUEST_CODE
-                    )
-                }
+            val intent = Intent(this, GuidedJournalActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                putExtra("userId", friendId)
             }
-            .addOnFailureListener { e ->
-                Log.e("HomeActivity", "Error fetching friend details", e)
-            }
-    }
+            val pendingIntent: PendingIntent = PendingIntent.getActivity(
+                this,
+                0,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE
+            )
 
+            val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_notification)
+                .setContentTitle("Friend in crisis!")
+                .setContentText("$username is not feeling well, have a chat.")
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSION_REQUEST_CODE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // Permission granted
-                } else {
-                    Toast.makeText(this, "Permission denied. Cannot show notifications.", Toast.LENGTH_SHORT).show()
-                }
+            with(NotificationManagerCompat.from(this)) {
+                notify(friendId.hashCode(), notificationBuilder.build())
+                Log.d("HomeActivity", "Notification sent to $username")
             }
+        } else {
+            // Permission is not granted, request it from the user
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.VIBRATE),
+                PERMISSION_REQUEST_CODE
+            )
         }
     }
 
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Crisis notification"
-            val descriptionText = "Notifications for crisis mood"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val name = "Friend Notifications"
+            val descriptionText = "Channel for Friend Notifications"
+            val importance = NotificationManager.IMPORTANCE_HIGH
             val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
                 description = descriptionText
                 enableLights(true)
@@ -411,9 +406,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     companion object {
-        private const val CHANNEL_ID = "crisis_notification_channel"
-        private const val NOTIFICATION_ID = 1
-        private const val PERMISSION_REQUEST_CODE = 1001
+        private const val CHANNEL_ID = "friend_channel"
+        private const val PERMISSION_REQUEST_CODE = 123
     }
 }
-
