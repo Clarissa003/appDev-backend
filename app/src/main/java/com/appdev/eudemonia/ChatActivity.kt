@@ -1,15 +1,17 @@
 package com.appdev.eudemonia
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -31,6 +33,9 @@ class ChatActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
+
+        // Start the DeleteOldMessagesService
+        startDeleteOldMessagesService()
 
         friendUserId = intent.getStringExtra("friendUserId")
         friendUsername = intent.getStringExtra("friendUsername")
@@ -98,7 +103,7 @@ class ChatActivity : AppCompatActivity() {
                 senderName = currentUserUsername!!,  // Ensure currentUserUsername is not null here
                 receiverId = friendUserId!!,
                 content = messageText,
-                timestamp = System.currentTimeMillis()
+                timestamp = Timestamp.now()
             )
 
             Log.d("ChatActivity", "Attempting to send message: $message")
@@ -176,5 +181,10 @@ class ChatActivity : AppCompatActivity() {
 
         Log.d("ChatActivity", "Updating chat messages with ${allMessages.size} messages in total")
         chatAdapter.updateMessages(allMessages)
+    }
+
+    private fun startDeleteOldMessagesService() {
+        val intent = Intent(this, DeleteOldMessagesService::class.java)
+        startService(intent)
     }
 }
