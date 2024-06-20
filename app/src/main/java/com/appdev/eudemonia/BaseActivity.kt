@@ -42,7 +42,7 @@ open class BaseActivity : AppCompatActivity() {
             }
 
             R.id.friends -> {
-                startActivity(Intent(this, FriendsActivity::class.java))
+                startActivity(Intent(this, FriendListActivity::class.java))
                 return true
             }
 
