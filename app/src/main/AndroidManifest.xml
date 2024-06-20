@@ -110,8 +110,6 @@
             android:label="Friends Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
-    </application>
-    
         <activity
             android:name=".ChatActivity"
             android:exported="true"
