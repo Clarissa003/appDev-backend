@@ -61,7 +61,7 @@
                 android:name=".LoginActivity"
                 android:exported="true"
                 android:label="Login Activity"
-                android:theme="@style/Theme.AppCompat" />
+                android:theme="@style/Theme.AppCompat"/>
         <activity
                 android:name=".MoodsActivity"
                 android:exported="true"

@@ -213,9 +213,9 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
                     android:fontFamily="@font/gontserratbold"
-                    android:text="DAILY ENTRIES"
                     android:textColor="@color/white"
-                    android:textSize="24sp" />
+                    android:textSize="24sp"
+                    android:text="DAILY ENTRIES"/>
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/JournalRecyclerView"

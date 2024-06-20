@@ -12,14 +12,15 @@
         android:id="@+id/textViewEudemonia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="170dp"
         android:fontFamily="@font/gallient"
         android:text="Eudemonia"
         android:textColor="@color/gray"
         android:textSize="45sp"
         android:textStyle="bold"
         app:fontFamily="@font/gallient"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,11 +29,11 @@
         android:layout_width="300dp"
         android:layout_height="48dp"
         android:layout_marginTop="64dp"
+        android:fontFamily="@font/gontserratlight"
         android:hint="Email"
         android:inputType="textEmailAddress"
         android:textColor="#000000"
         android:textColorHint="#808080"
-        android:fontFamily="@font/gontserratlight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="parent"
@@ -70,12 +71,12 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/gontserratlight"
         android:hint="Set Password"
         android:inputType="textPassword"
+        android:minHeight="48dp"
         android:textColor="#000000"
         android:textColorHint="#808080"
-        android:minHeight="48dp"
-        android:fontFamily="@font/gontserratlight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.414"
         app:layout_constraintStart_toStartOf="parent"
@@ -94,12 +95,5 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/buttonLogin" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="20dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
