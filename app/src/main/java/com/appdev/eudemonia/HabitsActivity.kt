@@ -40,7 +40,6 @@ class HabitsActivity : BaseActivity() {
         }
 
         fetchHabits()
-
     }
 
     private fun showAddHabitDialog() {
@@ -126,7 +125,6 @@ class HabitsActivity : BaseActivity() {
         }
     }
 }
-
 
 
 

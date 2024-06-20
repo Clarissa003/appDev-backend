@@ -39,7 +39,7 @@
             android:textColor="#000000"
             android:textColorHint="#808080"
             android:textStyle="italic"
-            app:fontFamily="@font/altone"
+            app:fontFamily="@font/gontserratregular"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.437"
             app:layout_constraintHorizontal_chainStyle="spread_inside"

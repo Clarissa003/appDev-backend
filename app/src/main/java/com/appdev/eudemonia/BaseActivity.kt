@@ -47,6 +47,17 @@ open class BaseActivity : AppCompatActivity() {
                 return true
             }
 
+            R.id.calendar -> {
+                // Navigate to Guided Journal page
+                startActivity(Intent(this, HomeActivity::class.java))
+                return true
+            }
+
+            R.id.friends -> {
+                startActivity(Intent(this, FriendsActivity::class.java))
+                return true
+            }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
