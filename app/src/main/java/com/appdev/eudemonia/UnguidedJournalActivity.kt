@@ -12,14 +12,17 @@ import com.appdev.eudemonia.LoginActivity
 import com.appdev.eudemonia.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
-class UnguidedJournalActivity : AppCompatActivity() {
+class UnguidedJournalActivity : BaseActivity() {
 
     private lateinit var editText: EditText
     private lateinit var saveButton: Button
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,26 +45,6 @@ class UnguidedJournalActivity : AppCompatActivity() {
         saveButton.setOnClickListener {
             saveJournalEntry()
         }
-
-        // Redirect to the unguided journal page
-        findViewById<Button>(R.id.buttonUnguidedJournal).setOnClickListener {
-            startActivity(Intent(this, UnguidedJournalActivity::class.java))
-        }
-
-        // Redirect to the guided journal page
-        findViewById<Button>(R.id.buttonGuidedJournal).setOnClickListener {
-            startActivity(Intent(this, GuidedJournalActivity::class.java))
-        }
-
-        // Redirect to the moods page
-        findViewById<Button>(R.id.buttonMoods).setOnClickListener {
-            startActivity(Intent(this, MoodsActivity::class.java))
-        }
-
-        // Redirect to the habits page
-        findViewById<Button>(R.id.buttonHabits).setOnClickListener {
-            startActivity(Intent(this, HabitsActivity::class.java))
-        }
     }
 
     private fun saveJournalEntry() {
@@ -72,9 +55,11 @@ class UnguidedJournalActivity : AppCompatActivity() {
         Log.d("UnguidedJournalActivity", "UserId: $userId")
 
         if (content.isNotEmpty() && userId != null) {
+            val currentDate = dateFormat.format(Date())
+
             val journalEntry = hashMapOf(
                 "content" to content,
-                "date" to Date(),
+                "date" to currentDate,
                 "userId" to userId
             )
 
@@ -85,7 +70,8 @@ class UnguidedJournalActivity : AppCompatActivity() {
                     editText.text.clear()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error saving entry: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error saving entry: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
         } else {
             if (content.isEmpty()) {

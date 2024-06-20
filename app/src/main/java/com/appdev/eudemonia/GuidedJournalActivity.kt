@@ -8,13 +8,17 @@ import androidx.appcompat.app.AppCompatActivity
 import com.appdev.eudemonia.databinding.ActivityGuidedJournalBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
-class GuidedJournalActivity : AppCompatActivity() {
+
+class GuidedJournalActivity : BaseActivity() {
 
     private lateinit var binding: ActivityGuidedJournalBinding
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,26 +37,6 @@ class GuidedJournalActivity : AppCompatActivity() {
         // Set click listener for the Save Entry button
         binding.saveButton.setOnClickListener {
             saveJournalEntry()
-        }
-
-        // Redirect to the unguided journal page
-        findViewById<TextView>(R.id.buttonUnguidedJournal).setOnClickListener {
-            startActivity(Intent(this, UnguidedJournalActivity::class.java))
-        }
-
-        // Redirect to the guided journal page
-        findViewById<TextView>(R.id.buttonGuidedJournal).setOnClickListener {
-            startActivity(Intent(this, GuidedJournalActivity::class.java))
-        }
-
-        // Redirect to the moods page
-        findViewById<TextView>(R.id.buttonMoods).setOnClickListener {
-            startActivity(Intent(this, MoodsActivity::class.java))
-        }
-
-        // Redirect to the habits page
-        findViewById<TextView>(R.id.buttonHabits).setOnClickListener {
-            startActivity(Intent(this, HabitsActivity::class.java))
         }
     }
 
@@ -73,9 +57,11 @@ class GuidedJournalActivity : AppCompatActivity() {
         val userId = auth.currentUser?.uid
 
         if (content.isNotEmpty() && userId != null) {
+            val currentDate = dateFormat.format(Date())
+
             val journalEntry = hashMapOf(
                 "content" to content,
-                "date" to Date(),
+                "date" to currentDate,
                 "userId" to userId
             )
 
