@@ -92,7 +92,7 @@ class FriendsActivity : AppCompatActivity() {
 
             // Fetch profile picture URL from Firebase Storage
             val storageReference = FirebaseStorage.getInstance().reference
-            val profilePictureRef = storageReference.child("gs://eudemonia-c9eac.appspot.com/profile_pictures/${friendUserId}.jpg") // Adjust path as per your storage structure
+            val profilePictureRef = storageReference.child("profile_pictures/${friendUserId}") // Adjust path as per your storage structure
 
             profilePictureRef.downloadUrl.addOnSuccessListener { uri ->
                 val profilePictureUrl = uri.toString()
