@@ -1,11 +1,12 @@
+package com.appdev.eudemonia
+
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.appdev.eudemonia.Friend
-import com.appdev.eudemonia.R
 import com.bumptech.glide.Glide
 
 class FriendAdapter(private val friends: List<Friend>) : RecyclerView.Adapter<FriendAdapter.FriendViewHolder>() {
@@ -34,11 +35,20 @@ class FriendAdapter(private val friends: List<Friend>) : RecyclerView.Adapter<Fr
             if (friend.profilePictureUrl.isNotEmpty()) {
                 Glide.with(itemView.context)
                     .load(friend.profilePictureUrl)
-                    .placeholder(R.drawable.default_profile_picture) // Show while loading
-                    .error(R.drawable.default_profile_picture) // Show if there's an error
+                    .placeholder(R.drawable.default_profile_picture)
+                    .error(R.drawable.default_profile_picture)
                     .into(profileImageView)
             } else {
                 profileImageView.setImageResource(R.drawable.default_profile_picture)
+            }
+
+            itemView.setOnClickListener {
+                val context = itemView.context
+                val intent = Intent(context, ChatActivity::class.java).apply {
+                    putExtra("friendUserId", friend.userId)
+                    putExtra("friendUsername", friend.username)
+                }
+                context.startActivity(intent)
             }
         }
     }

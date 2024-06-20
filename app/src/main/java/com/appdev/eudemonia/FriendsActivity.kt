@@ -1,6 +1,5 @@
 package com.appdev.eudemonia
 
-import FriendAdapter
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -19,7 +18,7 @@ class FriendsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_friends)
+        setContentView(R.layout.activity_friends_list)
 
         Log.d("FriendsActivity", "onCreate called")
 
