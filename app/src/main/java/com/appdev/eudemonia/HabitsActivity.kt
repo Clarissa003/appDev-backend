@@ -40,26 +40,6 @@ class HabitsActivity : BaseActivity() {
         }
 
         fetchHabits()
-
-        /*// Redirect to the unguided journal page
-        findViewById<TextView>(R.id.buttonUnguidedJournal).setOnClickListener {
-            startActivity(Intent(this, UnguidedJournalActivity::class.java))
-        }
-
-        // Redirect to the guided journal page
-        findViewById<TextView>(R.id.buttonGuidedJournal).setOnClickListener {
-            startActivity(Intent(this, GuidedJournalActivity::class.java))
-        }
-
-        // Redirect to the moods page
-        findViewById<TextView>(R.id.buttonMoods).setOnClickListener {
-            startActivity(Intent(this, MoodsActivity::class.java))
-        }
-
-        // Redirect to the habits page
-        findViewById<TextView>(R.id.buttonHabits).setOnClickListener {
-            startActivity(Intent(this, HabitsActivity::class.java))
-        }*/
     }
 
     private fun showAddHabitDialog() {
