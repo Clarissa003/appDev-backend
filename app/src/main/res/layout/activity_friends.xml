@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/greenUltraLight"
+            tools:context=".FriendListActivity">
+
+        <SearchView
+            android:id="@+id/idSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:iconifiedByDefault="false"
+            android:padding="4dp"
+            android:queryHint="Search..."
+            android:textColor="@color/black"
+            android:textColorHint="@color/gray"
+            android:textStyle="italic"
+            app:fontFamily="@font/gontserratregular"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+        <ListView
+                android:id="@+id/idFriends"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:textStyle="italic"
+                app:fontFamily="@font/gontserratregular"
+                android:textColor="@color/gray"
+                app:layout_constraintTop_toBottomOf="@+id/idSearch"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="0.5"
+                android:layout_marginTop="8dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

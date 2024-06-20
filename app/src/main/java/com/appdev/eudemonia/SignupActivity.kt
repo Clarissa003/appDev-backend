@@ -1,14 +1,12 @@
 package com.appdev.eudemonia
 
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.UserProfileChangeRequest
+import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
 import java.security.MessageDigest
 
@@ -26,7 +24,11 @@ class SignupActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signup)
 
         // Initialize Firebase Auth if not already initialized
+        if (FirebaseApp.getApps(this).isEmpty()) {
+            FirebaseApp.initializeApp(this)
+        }
         auth = FirebaseAuth.getInstance()
+
         // Initialize Firestore
         firestore = FirebaseFirestore.getInstance()
 
@@ -48,106 +50,48 @@ class SignupActivity : AppCompatActivity() {
             if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
                 if (password == confirmPassword) {
                     // Passwords match
-                    // Create user with email and password
-                    auth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                // Sign in success, update UI with the signed-in user's information
-                                val user = auth.currentUser
-                                val profileUpdates = UserProfileChangeRequest.Builder()
-                                    .setDisplayName(username)
-                                    .build()
+                    // Create a user object
+                    val user = hashMapOf(
+                        "email" to email,
+                        "name" to username,
+                        "password" to password
+                    )
 
-                                user?.updateProfile(profileUpdates)
-                                    ?.addOnCompleteListener { profileTask ->
-                                        if (profileTask.isSuccessful) {
-                                            // Add user to Firestore
-                                            addUserToFirestore(user!!.uid, email, username)
-                                            // Show success message
-                                            Toast.makeText(
-                                                applicationContext,
-                                                "User registered successfully",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                            // Navigate to login activity
-                                            startActivity(Intent(this, LoginActivity::class.java))
-                                            finish() // Finish the current activity
-                                        } else {
-                                            Toast.makeText(
-                                                applicationContext,
-                                                "Failed to update user profile",
-                                                Toast.LENGTH_SHORT
-                                            ).show()
-                                        }
-                                    }
-                            } else {
-                                // If sign in fails, display a message to the user.
-                                val exceptionMessage = task.exception?.message
-                                Toast.makeText(
-                                    applicationContext, "Authentication failed: $exceptionMessage",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
+                    // Add user to Firestore
+                    addUserToFirestore(user)
                 } else {
                     // Passwords don't match, show error message
                     confirmPasswordEditText.error = "Passwords do not match"
                 }
             } else {
                 // Fields are empty, show error message
-                Toast.makeText(applicationContext, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
-        }
-
-        val textViewLoginRedirect: TextView = findViewById(R.id.textViewLoginRedirect)
-        textViewLoginRedirect.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish() // Finish the current activity if you don't want it to stay in the back stack
         }
     }
 
-    private fun addUserToFirestore(userId: String, email: String, username: String) {
-        // Create user object
-        val user = hashMapOf(
-            "email" to email,
-            "username" to username
-        )
+    private fun addUserToFirestore(user: HashMap<String, String>) {
+        // Hash the password before adding the user to Firestore
+        val hashedPassword = hashPassword(user["password"]!!)
+        user["password"] = hashedPassword
 
         // Add user to Firestore
         firestore.collection("User")
-            .document(userId)
-            .set(user)
-            .addOnSuccessListener {
-                // User added successfully to Firestore
-
-                val profile = hashMapOf(
-                    "userId" to userId,
-                    "username" to username,
-                    "profilePic" to null
-                )
-
-                firestore.collection("Profile")
-                    .document(userId)
-                    .set(profile)
-                    .addOnSuccessListener {
-                        // User and profile added successfully to Firestore
-                    }
-                    .addOnFailureListener { e ->
-                        Toast.makeText(
-                            this,
-                            "Failed to register user profile in Firestore: ${e.message}",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+            .add(user)
+            .addOnSuccessListener { documentReference ->
+                // Handle success
+                Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(
-                    this,
-                    "Failed to register user in Firestore: ${e.message}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                // Handle failure
+                Toast.makeText(this, "Failed to register user: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-}
 
+    private fun hashPassword(password: String): String {
+        val bytes = password.toByteArray()
+        val md = MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        return digest.fold("", { str, it -> str + "%02x".format(it) })
+    }
+}

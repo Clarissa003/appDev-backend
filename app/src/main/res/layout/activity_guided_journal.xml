@@ -12,18 +12,19 @@
 
         <TextView
             android:id="@+id/displayPrompt"
-            android:layout_width="350dp"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="28dp"
             android:layout_marginTop="44dp"
-            android:background="@color/greenUltraDark"
-            android:gravity="center_vertical"
-            android:minHeight="48dp"
-            android:paddingLeft="10dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="24dp"
+            android:background="@color/greenDark"
+            android:fontFamily="@font/gontserratsemibolditalic"
+            android:padding="10dp"
+            android:stateListAnimator="@null"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             android:text="Some very deep question?"
-            android:textColor="#212121"
-            android:textStyle="italic"
-            app:fontFamily="@font/altone"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -36,84 +37,50 @@
             android:gravity="top"
             android:hint="Enter answer..."
             android:minHeight="250dp"
-            android:paddingLeft="10dp"
             android:textColor="#000000"
             android:textColorHint="#808080"
-            android:textStyle="italic"
-            app:fontFamily="@font/altone"
+            android:paddingLeft="15dp"
+            app:fontFamily="@font/gontserratitalic"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.437"
+            app:layout_constraintHorizontal_bias="0.42"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/generatePromptButton" />
 
-        <ImageView
-            android:id="@+id/shareIcon"
-            android:layout_width="37dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="24dp"
-            android:src="@drawable/ic_share"
-            app:layout_constraintBottom_toBottomOf="@+id/enterAnswer"
-            tools:layout_editor_absoluteX="228dp"
-            tools:ignore="MissingConstraints" />
         <Button
             android:id="@+id/generatePromptButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Generate Prompt"
-            app:layout_constraintTop_toBottomOf="@+id/displayPrompt"
-            app:layout_constraintStart_toStartOf="@+id/displayPrompt" />
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="24dp"
+            android:background="@color/greenUltraDark"
+            android:fontFamily="@font/gontserratmedium"
+            android:padding="10dp"
+            android:stateListAnimator="@null"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:text="Generate prompt"
+            android:textAllCaps="true"
+            app:layout_constraintStart_toStartOf="@+id/displayPrompt"
+            app:layout_constraintTop_toBottomOf="@+id/displayPrompt" />
+
         <Button
             android:id="@+id/saveButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="40dp"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/greenUltraDark"
-            android:fontFamily="@font/altone"
+            android:background="@color/greenUltraDark"
+            android:fontFamily="@font/gontserratmedium"
+            android:padding="10dp"
+            android:stateListAnimator="@null"
             android:text="Save"
-            app:fontFamily="@font/altone"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/enterAnswer"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/shareIcon" />
-
-        <!-- Buttons -->
-        <Button
-            android:id="@+id/buttonUnguidedJournal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go to unguided journal page"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/saveButton"/>
-
-        <Button
-            android:id="@+id/buttonGuidedJournal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go to guided journal page"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonUnguidedJournal"/>
-
-        <Button
-            android:id="@+id/buttonMoods"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go to moods"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/buttonGuidedJournal"/>
-
-        <Button
-            android:id="@+id/buttonHabits"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Go to habits"
-            android:layout_marginTop="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/saveButton"/>
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
