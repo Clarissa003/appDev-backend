@@ -1,6 +1,14 @@
 package com.appdev.eudemonia
 
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -10,6 +18,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
+import androidx.media3.common.util.NotificationUtil.createNotificationChannel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +31,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
+import android.Manifest
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -134,15 +149,40 @@ class HomeActivity : AppCompatActivity() {
         )
         db.collection("Mood")
             .add(mood)
-            .addOnSuccessListener {
+            .addOnSuccessListener { documentReference ->
                 fetchMoods()
                 Toast.makeText(this, "Mood saved", Toast.LENGTH_SHORT).show()
+                if (moodName == "sad") {
+                    fetchFriends(userId) { friendIds ->
+                        friendIds.forEach { friendId ->
+                            sendCrisisNotification(friendId)
+                        }
+                    }
+                }
             }
             .addOnFailureListener {
                 Toast.makeText(this, "Error saving mood", Toast.LENGTH_SHORT).show()
             }
     }
 
+    private fun fetchFriends(userId: String, callback: (List<String>) -> Unit) {
+        db.collection("Friends")
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { documents ->
+                val friendIds = mutableListOf<String>()
+                for (document in documents) {
+                    val friendId = document.getString("friendId")
+                    friendId?.let {
+                        friendIds.add(it)
+                    }
+                }
+                callback(friendIds)
+            }
+            .addOnFailureListener { e ->
+                Log.e("HomeActivity", "Error fetching friends", e)
+            }
+    }
     private fun fetchMoods() {
         Log.d("HomeActivity", "fetchMoods called")
         val selectedDate = selectedDateTextView.text.toString()
@@ -293,6 +333,87 @@ class HomeActivity : AppCompatActivity() {
         val journalAdapter = JournalAdapter(journalList)
         journalRecyclerView.adapter = journalAdapter
     }
+    private fun sendCrisisNotification(friendId: String) {
+        db.collection("Profile").document(friendId).get()
+            .addOnSuccessListener { document ->
+                val username = document.getString("username") ?: "Unknown"
+                if (ContextCompat.checkSelfPermission(this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+                    createNotificationChannel()
 
+                    /*val intent = Intent(this, ChatActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        putExtra("userId", friendId)
+                    }*/
+                    val pendingIntent: PendingIntent = PendingIntent.getActivity(
+                        this,
+                        0,
+                        intent,
+                        PendingIntent.FLAG_IMMUTABLE
+                    )
+
+                    val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_notification)
+                        .setContentTitle("Friend in crisis!")
+                        .setContentText("$username is not feeling well, have a chat.")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true)
+
+                    with(NotificationManagerCompat.from(this)) {
+                        notify(NOTIFICATION_ID, notificationBuilder.build())
+                    }
+                } else {
+                    ActivityCompat.requestPermissions(
+                        this,
+                        arrayOf(Manifest.permission.VIBRATE),
+                        PERMISSION_REQUEST_CODE
+                    )
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("HomeActivity", "Error fetching friend details", e)
+            }
+    }
+
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_REQUEST_CODE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // Permission granted
+                } else {
+                    Toast.makeText(this, "Permission denied. Cannot show notifications.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Crisis notification"
+            val descriptionText = "Notifications for crisis mood"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+                enableLights(true)
+                lightColor = Color.RED
+                enableVibration(true)
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
+    companion object {
+        private const val CHANNEL_ID = "crisis_notification_channel"
+        private const val NOTIFICATION_ID = 1
+        private const val PERMISSION_REQUEST_CODE = 1001
+    }
 }
 
