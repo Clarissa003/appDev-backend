@@ -44,7 +44,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/gontserratRegular"/>
+                android:fontFamily="@font/altone"/>
 
             <Button
                 android:id="@+id/idBtnPickDate"
