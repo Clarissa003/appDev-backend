@@ -125,8 +125,7 @@
             android:exported="true"
             android:label="Time Selector"
             android:theme="@style/Theme.AppCompat" />
-    </application>
-    
+  
         <activity
             android:name=".ChatActivity"
             android:exported="true"
