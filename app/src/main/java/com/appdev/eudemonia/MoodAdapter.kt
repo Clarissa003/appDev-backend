@@ -3,44 +3,28 @@ package com.appdev.eudemonia
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.appdev.eudemonia.R
 
-class MoodsAdapter(private val moodList: List<Mood>) :
-    RecyclerView.Adapter<MoodsAdapter.MoodViewHolder>() {
+class MoodAdapter(private val moodList: List<Mood>) : RecyclerView.Adapter<MoodAdapter.MoodViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MoodViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.activity_single_mood, parent, false)
-        return MoodViewHolder(itemView)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.mood_item, parent, false)
+        return MoodViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MoodViewHolder, position: Int) {
-        val currentMood = moodList[position]
-        holder.bind(currentMood)
+        val mood = moodList[position]
+        holder.bind(mood)
     }
 
-    override fun getItemCount() = moodList.size
+    override fun getItemCount(): Int = moodList.size
 
     class MoodViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val moodImageView: ImageView = itemView.findViewById(R.id.moodImageView)
+        private val moodNameTextView: TextView = itemView.findViewById(R.id.moodNameTextView)
 
         fun bind(mood: Mood) {
-            // Assuming you have a method to get the drawable resource ID based on mood
-            moodImageView.setImageResource(getMoodDrawableId(mood))
-        }
-
-        private fun getMoodDrawableId(mood: Mood): Int {
-            return when (mood.name) {
-                "Happy" -> R.drawable.happy
-                "Content" -> R.drawable.content
-                "Neutral" -> R.drawable.neutral
-                "Unhappy" -> R.drawable.unhappy
-                "Sad" -> R.drawable.sad
-                // No default case
-                else -> throw IllegalArgumentException("Unknown mood: ${mood.name}")
-            }
+            moodNameTextView.text = mood.name
         }
     }
 }
