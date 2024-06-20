@@ -1,4 +1,3 @@
-import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -21,6 +20,7 @@ import com.google.firebase.storage.FirebaseStorage
 class ProfileActivity : AppCompatActivity() {
 
     private lateinit var profilePicture: ImageView
+    private lateinit var coverPhoto: ImageView
     private lateinit var profileName: TextView
     private lateinit var profileBio: TextView
 
@@ -33,13 +33,18 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_profile)
 
         profilePicture = findViewById(R.id.profilePicture)
+        coverPhoto = findViewById(R.id.coverPhoto)
         profileName = findViewById(R.id.profileName)
         profileBio = findViewById(R.id.profileBio)
 
         loadUserProfile()
 
         profilePicture.setOnClickListener {
-            selectImage()
+            selectImage("profilePicture")
+        }
+
+        coverPhoto.setOnClickListener {
+            selectImage("coverPhoto")
         }
 
         findViewById<Button>(R.id.editProfileNameButton).setOnClickListener {
@@ -62,17 +67,21 @@ class ProfileActivity : AppCompatActivity() {
             }
             profileName.text = currentUser.displayName ?: "No Username"
 
-            // fetch bio
             db.collection("Profile").document(currentUser.uid).get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         profileBio.text = document.getString("bio") ?: "No bio available"
+                        val coverPhotoUrl = document.getString("coverPhoto")
+                        coverPhotoUrl?.let { url ->
+                            Glide.with(this)
+                                .load(url)
+                                .into(coverPhoto)
+                        }
                     }
                 }
                 .addOnFailureListener { exception ->
                     Toast.makeText(this, "Error getting profile bio: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
-        } else {
         }
     }
 
@@ -105,7 +114,6 @@ class ProfileActivity : AppCompatActivity() {
                     profileName.text = name
                     Toast.makeText(this, "Name updated successfully", Toast.LENGTH_SHORT).show()
 
-                    // Update name
                     db.collection("Profile").document(user.uid)
                         .update("username", name)
                         .addOnSuccessListener {
@@ -123,7 +131,6 @@ class ProfileActivity : AppCompatActivity() {
     private fun updateProfileBio(bio: String) {
         val user = auth.currentUser
         user?.let {
-            // Update bio
             db.collection("Profile").document(it.uid)
                 .update("bio", bio)
                 .addOnSuccessListener {
@@ -136,58 +143,79 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
-    private fun selectImage() {
+    private fun selectImage(imageType: String) {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        pickImage.launch(intent)
+        if (imageType == "profilePicture") {
+            pickProfileImage.launch(intent)
+        } else if (imageType == "coverPhoto") {
+            pickCoverImage.launch(intent)
+        }
     }
 
-    private val pickImage =
+    private val pickProfileImage =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 result.data?.data?.let { uri ->
-                    uploadImage(uri)
+                    uploadImage(uri, "profilePicture")
                 }
             }
         }
 
-    private fun uploadImage(imageUri: Uri) {
+    private val pickCoverImage =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                result.data?.data?.let { uri ->
+                    uploadImage(uri, "coverPhoto")
+                }
+            }
+        }
+
+    private fun uploadImage(imageUri: Uri, imageType: String) {
         val userId = auth.currentUser?.uid
         userId?.let { uid ->
             val storageRef = storage.reference
-            val imageRef = storageRef.child("profile_pictures/$uid")
+            val imageRef = if (imageType == "profilePicture") {
+                storageRef.child("profile_pictures/$uid")
+            } else {
+                storageRef.child("cover_photos/$uid")
+            }
 
             imageRef.putFile(imageUri)
                 .addOnSuccessListener { taskSnapshot ->
-                    // Image uploaded successfully, now get the download URL
                     imageRef.downloadUrl.addOnSuccessListener { uri ->
-                        // Update FirebaseUser with the new photo URL
                         val user = auth.currentUser
-                        user?.updateProfile(UserProfileChangeRequest.Builder().setPhotoUri(uri).build())
-                            ?.addOnSuccessListener {
-                                // Profile image URL updated successfully
-                                // Reload the profile with the new image
-                                loadUserProfile()
-                                Toast.makeText(this, "Profile image updated successfully", Toast.LENGTH_SHORT).show()
-
-                                // Update Firestore with new photo URL
-                                db.collection("Profile").document(uid)
-                                    .update("profilePic", uri.toString())
-                                    .addOnSuccessListener {
-                                        Toast.makeText(this, "Profile image updated in Firestore", Toast.LENGTH_SHORT).show()
-                                    }
-                                    .addOnFailureListener { exception ->
-                                        Toast.makeText(this, "Error updating profile image in Firestore: ${exception.message}", Toast.LENGTH_SHORT).show()
-                                    }
-                            }
-                            ?.addOnFailureListener { exception ->
-                                // Handle failed update
-                                Toast.makeText(this, "Failed to update profile image: ${exception.message}", Toast.LENGTH_SHORT).show()
-                            }
+                        if (imageType == "profilePicture") {
+                            user?.updateProfile(UserProfileChangeRequest.Builder().setPhotoUri(uri).build())
+                                ?.addOnSuccessListener {
+                                    loadUserProfile()
+                                    Toast.makeText(this, "Profile image updated successfully", Toast.LENGTH_SHORT).show()
+                                    db.collection("Profile").document(uid)
+                                        .update("profilePic", uri.toString())
+                                        .addOnSuccessListener {
+                                            Toast.makeText(this, "Profile image updated in Firestore", Toast.LENGTH_SHORT).show()
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            Toast.makeText(this, "Error updating profile image in Firestore: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                        }
+                                }
+                                ?.addOnFailureListener { exception ->
+                                    Toast.makeText(this, "Failed to update profile image: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        } else if (imageType == "coverPhoto") {
+                            db.collection("Profile").document(uid)
+                                .update("coverPhoto", uri.toString())
+                                .addOnSuccessListener {
+                                    loadUserProfile()
+                                    Toast.makeText(this, "Cover photo updated successfully", Toast.LENGTH_SHORT).show()
+                                }
+                                .addOnFailureListener { exception ->
+                                    Toast.makeText(this, "Error updating cover photo: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                }
+                        }
                     }
                 }
                 .addOnFailureListener { exception ->
-                    // Handle failed image upload
                     Toast.makeText(this, "Failed to upload image: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
         }

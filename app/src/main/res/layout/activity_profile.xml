@@ -43,20 +43,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-            android:id="@+id/editProfilePhotoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/altone"
-            android:padding="0dp"
-            android:text="Edit Photo"
-            android:textColor="@color/greenUltraDark"
-            app:layout_constraintStart_toEndOf="@+id/profilePicture"
-            app:layout_constraintTop_toBottomOf="@+id/coverPhoto" />
-
     <TextView
             android:id="@+id/profileName"
             android:layout_width="wrap_content"
@@ -90,21 +76,6 @@
             app:layout_constraintTop_toBottomOf="@+id/profileName" />
 
     <Button
-            android:id="@+id/editProfileNameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/altone"
-            android:padding="0dp"
-            android:text="Edit Name"
-            android:textColor="@color/greenUltraDark"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profileBio"
-            app:layout_constraintHorizontal_bias="0.95"
-            android:layout_marginTop="284dp" />
-
-    <Button
             android:id="@+id/editBio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -115,7 +86,48 @@
             android:textColor="@color/greenUltraDark"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editProfileNameButton"
+            app:layout_constraintTop_toBottomOf="@id/profileBio"
+            app:layout_constraintHorizontal_bias="0.955"
+            android:layout_marginTop="240dp" />
+
+    <Button
+            android:id="@+id/editProfileNameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/altone"
+            android:padding="0dp"
+            android:text="Edit Name"
+            android:textColor="@color/greenUltraDark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editBio"
             app:layout_constraintHorizontal_bias="0.95" />
+
+    <Button
+            android:id="@+id/editProfilePhotoButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/altone"
+            android:padding="0dp"
+            android:text="Edit Photo"
+            android:textColor="@color/greenUltraDark"
+            app:layout_constraintTop_toBottomOf="@+id/editBio"
+            tools:layout_editor_absoluteX="344dp"
+            android:layout_marginTop="48dp" />
+
+    <Button
+            android:id="@+id/editCoverImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/altone"
+            android:padding="0dp"
+            android:text="Edit Cover Image"
+            android:textColor="@color/greenUltraDark"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editProfilePhotoButton"
+            android:layout_marginStart="300dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
