@@ -23,6 +23,18 @@ open class BaseActivity : AppCompatActivity() {
                 return true
             }
 
+            R.id.moods -> {
+                // Navigate to Moods page
+                startActivity(Intent(this, MoodsActivity::class.java))
+                return true
+            }
+
+            R.id.habit -> {
+                // Navigate to Habit page
+                startActivity(Intent(this, HabitsActivity::class.java))
+                return true
+            }
+
             R.id.unguidedJournal -> {
                 // Navigate to Unguided Journal page
                 startActivity(Intent(this, UnguidedJournalActivity::class.java))
