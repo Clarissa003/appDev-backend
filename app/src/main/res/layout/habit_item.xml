@@ -9,6 +9,7 @@
         android:id="@+id/habitNameTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"/>
+        android:textSize="20sp"
+        android:fontFamily="@font/gontserratmedium"
+        android:textColor="#3F3F3F"/>
 </LinearLayout>

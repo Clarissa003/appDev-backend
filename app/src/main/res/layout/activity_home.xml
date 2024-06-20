@@ -138,26 +138,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/moodImagesLayout" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <!-- Habits Layout -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:layout_marginTop="20dp"
-            app:cardBackgroundColor="@color/greenLight"
+            app:cardBackgroundColor="@android:color/transparent"
             app:cardElevation="0dp">
 
-            <LinearLayout
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/textViewTitle"
@@ -196,16 +195,16 @@
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
+            android:layout_margin="1dp"
             android:layout_marginTop="20dp"
-            app:cardBackgroundColor="@color/greenLight"
-            app:cardElevation="4dp">
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardElevation="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="16dp">
+                android:padding="10dp">
 
                 <TextView
                     android:id="@+id/textViewTitleJournal"
@@ -213,11 +212,10 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
-                    android:fontFamily="@font/gallient"
-                    android:text="Daily Entries"
-                    android:textColor="@color/gray"
-                    android:textSize="24sp"
-                    android:textStyle="bold" />
+                    android:fontFamily="@font/gontserratbold"
+                    android:text="DAILY ENTRIES"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/JournalRecyclerView"
