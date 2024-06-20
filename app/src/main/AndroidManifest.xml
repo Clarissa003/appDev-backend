@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
             android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
             android:allowBackup="true"
@@ -96,12 +98,20 @@
                 android:label="Friends Activity"
                 android:theme="@style/Theme.AppCompat" />
         <activity
-<<<<<<< HEAD
             android:name=".HomeActivity"
             android:exported="true"
             android:label="Home Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
+        <!-- FriendsActivity -->
+        <activity
+            android:name=".FriendsActivity"
+            android:exported="true"
+            android:label="Friends Activity"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
+    </application>
+    
         <activity
             android:name=".ChatActivity"
             android:exported="true"
@@ -114,11 +124,6 @@
             android:name=".DeleteOldMessagesService"
             android:enabled="true"
             android:exported="false" />
-=======
-                android:name=".HomeActivity"
-                android:exported="true"
-                android:label="Home Activity"
-                android:theme="@style/Theme.AppCompat" />
 
         <activity
             android:name=".PlayerActivity"
@@ -126,7 +131,6 @@
         <activity
             android:name=".SongsListActivity"
             android:exported="true" />
->>>>>>> origin/dev
     </application>
 
 </manifest>

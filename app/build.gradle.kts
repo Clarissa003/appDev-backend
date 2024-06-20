@@ -81,6 +81,9 @@ dependencies {
     implementation(libs.androidx.media3.common)
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+<<<<<<< HEAD
+    implementation ("com.squareup.picasso:picasso:2.71828")
+=======
     implementation ("com.google.android.material:material:1.4.0")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -90,6 +93,7 @@ dependencies {
     implementation ("androidx.media3:media3-ui:1.0.0")
     implementation ("androidx.media3:media3-session:1.0.0")
 
+>>>>>>> origin/dev
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

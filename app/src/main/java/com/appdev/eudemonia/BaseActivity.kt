@@ -34,6 +34,11 @@ open class BaseActivity : AppCompatActivity() {
                 startActivity(Intent(this, GuidedJournalActivity::class.java))
                 return true
             }
+            R.id.calendar -> {
+                // Navigate to Guided Journal page
+                startActivity(Intent(this, HomeActivity::class.java))
+                return true
+            }
 
             R.id.calendar -> {
                 // Navigate to Guided Journal page
