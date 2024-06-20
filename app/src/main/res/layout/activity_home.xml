@@ -29,7 +29,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/altone"/>
+                android:fontFamily="@font/gontserratregular"/>
 
             <TextView
                 android:id="@+id/idTVSelectedDate"
@@ -44,7 +44,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/gontserratRegular"/>
+                android:fontFamily="@font/gontserratregular"/>
 
             <Button
                 android:id="@+id/idBtnPickDate"
@@ -54,7 +54,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:background="@color/greenDark"
-                android:fontFamily="@font/altone"
+                android:fontFamily="@font/gontserratregular"
                 android:text="Pick Date"
                 android:textAllCaps="false"
                 android:textColor="#4E342E"
@@ -224,6 +224,22 @@
             android:layout_marginTop="16dp" />
     </LinearLayout>
     </androidx.cardview.widget.CardView>
+            <Button
+                android:id="@+id/buttonAddHabit"
+                android:layout_width="134dp"
+                android:layout_height="48dp"
+                android:text="Add Habit"
+                android:textColor="#000000"
+                android:backgroundTint="@color/greenultradark"
+                android:fontFamily="@font/gontserratregular"
+                android:layout_marginBottom="32dp"
+                android:textAllCaps="false"
+                android:stateListAnimator="@null"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </ScrollView>
