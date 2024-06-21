@@ -58,7 +58,7 @@
                 android:fontFamily="@font/gontserratmedium"
                 android:padding="10dp"
                 android:text="CHANGE DATE"
-                android:textColor="#FFFFFF"
+                android:textColor="#212121"
                 android:textSize="15sp" />
         </RelativeLayout>
 
