@@ -9,7 +9,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:fontFamily="@font/gontserratregular"
+        android:fontFamily="@font/altone"
         android:hint="Enter completed habit"
         android:minHeight="48dp"
         android:textColor="#FFFFFF"

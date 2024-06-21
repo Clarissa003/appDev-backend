@@ -7,30 +7,69 @@
         android:background="@drawable/gradient_background"
         tools:context=".ProfileActivity">
 
-    <!-- Profile Picture -->
     <ImageView
-            android:id="@+id/coverPhoto"
-            android:layout_width="0dp"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_cover_photo"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/coverPhoto"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_cover_photo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/editProfileNameButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/altone"
+        android:padding="0dp"
+        android:text="Edit Name"
+        android:textColor="@color/greenUltraDark"
+        tools:layout_editor_absoluteX="182dp"
+        tools:layout_editor_absoluteY="274dp" />
+
+    <ImageButton
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="170dp"
+        android:layout_marginEnd="16dp"
+        android:background="@android:color/transparent"
+        android:padding="0dp"
+        android:src="@drawable/baseline_share_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editProfilePhotoButton">
+    </ImageButton>
+
 
     <ImageView
-            android:id="@+id/profilePicture"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="140dp"
-            android:background="@drawable/circle_background"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_profile_picture"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        android:id="@+id/profilePicture"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="140dp"
+        android:background="@drawable/circle_background"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_profile_picture"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <!-- Profile Name -->
+    <Button
+        android:id="@+id/editProfilePhotoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@android:color/transparent"
+        android:fontFamily="@font/altone"
+        android:padding="0dp"
+        android:text="Edit Photo"
+        android:textColor="@color/greenUltraDark"
+        app:layout_constraintStart_toEndOf="@+id/profilePicture"
+        app:layout_constraintTop_toBottomOf="@+id/coverPhoto" />
+
     <TextView
             android:id="@+id/profileName"
             android:layout_width="wrap_content"
@@ -95,6 +134,5 @@
         app:layout_constraintHorizontal_bias="0.951"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/editBio" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

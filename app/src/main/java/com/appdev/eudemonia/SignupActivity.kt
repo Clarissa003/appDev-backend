@@ -96,6 +96,7 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed to register user: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+}
 
     private fun hashPassword(password: String): String {
         val bytes = password.toByteArray()
@@ -103,4 +104,3 @@ class SignupActivity : AppCompatActivity() {
         val digest = md.digest(bytes)
         return digest.fold("", { str, it -> str + "%02x".format(it) })
     }
-}

@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:text="Content"
         android:textSize="20sp"
-        android:fontFamily="@font/gontserratregular"
+        android:fontFamily="@font/altone"
         android:textColor="#3F3F3F"/>
 
     <TextView
@@ -20,6 +20,6 @@
         android:layout_height="wrap_content"
         android:text="Date"
         android:textSize="20sp"
-        android:fontFamily="@font/gontserratmediumitalic"
+        android:fontFamily="@font/altone"
         android:textColor="#3F3F3F"/>
 </LinearLayout>
