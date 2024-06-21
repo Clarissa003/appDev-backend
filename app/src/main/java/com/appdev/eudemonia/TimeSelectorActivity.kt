@@ -18,10 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 import java.util.concurrent.TimeUnit
 import android.util.Log
-<<<<<<< HEAD
-=======
 import androidx.work.WorkRequest
->>>>>>> origin/dev
 import com.google.firebase.auth.FirebaseAuth
 
 class TimeSelectorActivity : AppCompatActivity() {
@@ -115,7 +112,7 @@ class NotificationWorker(context: Context, params: WorkerParameters) :
     }
 
     private fun sendNotification(affirmation: String) {
-        val intent = Intent(applicationContext, MainActivity::class.java).apply {
+        val intent = Intent(applicationContext, BaseActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val requestCode = System.currentTimeMillis().toInt()

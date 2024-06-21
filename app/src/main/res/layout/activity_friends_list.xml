@@ -23,7 +23,6 @@
     app:layout_constraintVertical_bias="0.5"
     android:layout_marginTop="8dp" />
 
-    </LinearLayout>
     <TextView
             android:id="@+id/friend_name"
             android:layout_width="wrap_content"

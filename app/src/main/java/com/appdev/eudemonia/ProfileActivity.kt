@@ -45,14 +45,8 @@ class ProfileActivity : BaseActivity() {
             selectImage("profilePicture")
         }
 
-<<<<<<< HEAD
-        // Redirect to the unguided journal page
-        findViewById<TextView>(R.id.buttonUnguidedJournal).setOnClickListener {
-            startActivity(Intent(this, SettingsActivity::class.java))
-=======
         coverPhoto.setOnClickListener {
             selectImage("coverPhoto")
->>>>>>> origin/dev
         }
 
         findViewById<Button>(R.id.editProfileNameButton).setOnClickListener {

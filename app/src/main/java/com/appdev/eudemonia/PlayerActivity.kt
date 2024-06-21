@@ -26,7 +26,6 @@ class PlayerActivity : AppCompatActivity() {
         MyExoplayer.getCurrentSong()?.let { song ->
             binding.songTitleTextView.text = song.title
             binding.songSubtitleTextView.text = song.subtitle
-            Glide.with(this).load(song.coverUrl).circleCrop().into(binding.songCoverImageView)
         }
     }
 

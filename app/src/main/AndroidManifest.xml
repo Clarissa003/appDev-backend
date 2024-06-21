@@ -4,12 +4,10 @@
     package="com.appdev.eudemonia">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
             android:maxSdkVersion="32" />
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -68,18 +66,6 @@
                 android:exported="true"
                 android:label="Login Activity"
                 android:theme="@style/Theme.AppCompat"/>
-        <activity
-                android:name=".MoodsActivity"
-                android:exported="true"
-                android:label="Moods Activity"
-                android:theme="@style/Theme.AppCompat" /> 
-        
-        <!-- HabitsActivity -->
-        <activity
-                android:name=".HabitsActivity"
-                android:exported="true"
-                android:label="Habits Activity"
-                android:theme="@style/Theme.AppCompat" /> 
         
         <!-- UnguidedJournalActivity -->
         <activity
@@ -132,15 +118,6 @@
             android:label="Home Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
-
-        <activity android:name=".TimeSelectorActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-    </application>
     
         <!-- Define the com.appdev.eudemonia.DeleteOldMessagesService -->
         <service
@@ -155,5 +132,4 @@
             android:name=".SongsListActivity"
             android:exported="true" />
     </application>
-
-</manifest>
+    </manifest>
