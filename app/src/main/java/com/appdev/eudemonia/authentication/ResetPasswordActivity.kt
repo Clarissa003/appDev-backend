@@ -47,7 +47,7 @@ class ResetPasswordActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Reset email sent", Toast.LENGTH_LONG).show()
                     startActivity(Intent(this, LoginActivity::class.java))
-                    finish() // Finish the current activity
+                    finish()
                 } else {
                     Toast.makeText(this, "Failed to send reset email", Toast.LENGTH_LONG).show()
                 }
