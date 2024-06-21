@@ -27,7 +27,7 @@
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".spashscreen.SplashScreenActivity"
             android:exported="false" />
         <!-- MainActivity -->
         <!--
@@ -44,39 +44,24 @@
         -->
         <!-- SignupActivity - set as launcher activity -->
         <activity
-<<<<<<< HEAD
-                android:name=".SignupActivity"
+                android:name=".authentication.SignupActivity"
                 android:exported="true"
                 android:label="Signup Activity"
                 android:theme="@style/Theme.AppCompat">
-
         </activity>
          <!-- ProfileActivity -->
-=======
-            android:name=".SignupActivity"
-            android:exported="true"
-            android:label="Signup Activity"
-            android:theme="@style/Theme.AppCompat">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity> <!-- ProfileActivity -->
->>>>>>> 1a53ecb539bf908dce4b91337a6bcdb190f49611
         <activity
-            android:name=".ProfileActivity"
+            android:name=".profile.ProfileActivity"
             android:exported="true"
             android:label="Profile Activity"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".ResetPasswordActivity"
+            android:name=".authentication.ResetPasswordActivity"
             android:exported="true"
             android:label="Reset Password Activity"
             android:theme="@style/Theme.AppCompat" /> <!-- LoginActivity -->
         <activity
-<<<<<<< HEAD
-                android:name=".LoginActivity"
+                android:name=".authentication.LoginActivity"
                 android:exported="true"
                 android:label="Login Activity"
                 android:theme="@style/Theme.AppCompat">
@@ -87,68 +72,67 @@
         </activity>
         
         <!-- UnguidedJournalActivity -->
-=======
-            android:name=".LoginActivity"
-            android:exported="true"
-            android:label="Login Activity"
-            android:theme="@style/Theme.AppCompat" /> <!-- UnguidedJournalActivity -->
->>>>>>> 1a53ecb539bf908dce4b91337a6bcdb190f49611
         <activity
-            android:name=".UnguidedJournalActivity"
+            android:name=".journals.UnguidedJournalActivity"
             android:exported="true"
             android:label="Unguided Journal"
             android:theme="@style/Theme.AppCompat" /> <!-- GuidedJournalActivity -->
         <activity
-            android:name=".GuidedJournalActivity"
+            android:name=".journals.GuidedJournalActivity"
             android:exported="true"
             android:label="Guided Journal Activity"
             android:theme="@style/Theme.AppCompat" /> <!-- FriendsActivity -->
         <activity
-            android:name=".FriendListActivity"
+            android:name=".chat.FriendListActivity"
             android:exported="true"
             android:label="Friends Activity"
-            android:theme="@style/Theme.AppCompat"></activity>
+            android:theme="@style/Theme.AppCompat">
+        </activity>
         <activity
-            android:name=".FriendRequestDetailActivity"
+            android:name=".friends.FriendRequestDetailActivity"
             android:exported="false">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomeActivity"
+            android:name=".home.HomeActivity"
             android:exported="true"
             android:label="Home Activity"
-            android:theme="@style/Theme.AppCompat"></activity> <!-- FriendsActivity -->
+            android:theme="@style/Theme.AppCompat">
+        </activity> <!-- FriendsActivity -->
         <activity
-            android:name=".FriendsActivity"
+            android:name=".friends.FriendsActivity"
             android:exported="true"
             android:label="Friends Activity"
-            android:theme="@style/Theme.AppCompat"></activity>
+            android:theme="@style/Theme.AppCompat">
+        </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".settings.SettingsActivity"
             android:exported="true"
             android:label="Settings"
             android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".ChatActivity"
+            android:name=".chat.ChatActivity"
             android:exported="true"
             android:label="Home Activity"
-            android:theme="@style/Theme.AppCompat"></activity>
+            android:theme="@style/Theme.AppCompat">
+        </activity>
         <activity
-            android:name=".TimeSelectorActivity"
-            android:exported="true"></activity>
+            android:name=".settings.TimeSelectorActivity"
+            android:exported="true">
+        </activity>
 
         <service
-            android:name=".DeleteOldMessagesService"
+            android:name=".services.DeleteOldMessagesService"
             android:enabled="true"
             android:exported="false" />
 
         <activity
-            android:name=".PlayerActivity"
+            android:name=".songs.PlayerActivity"
             android:exported="true" />
         <activity
-            android:name=".SongsListActivity"
+            android:name=".songs.SongsListActivity"
             android:exported="true" />
     </application>
 
