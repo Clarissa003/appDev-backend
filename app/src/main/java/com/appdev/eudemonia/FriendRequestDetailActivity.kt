@@ -1,6 +1,7 @@
 package com.appdev.eudemonia
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -69,7 +70,10 @@ class FriendRequestDetailActivity : AppCompatActivity() {
             friendsRef.add(friendData)
                 .addOnSuccessListener { documentReference ->
                     Toast.makeText(this, "Added $username as friend!", Toast.LENGTH_SHORT).show()
-                    finish()  // Close the activity after adding friend
+                    // Redirect to FriendsActivity after adding friend
+                    val intent = Intent(this, FriendListActivity::class.java)
+                    startActivity(intent)
+                    finish()
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Failed to add friend: ${e.message}", Toast.LENGTH_SHORT).show()
