@@ -10,12 +10,8 @@ This repository contains the code for the appDev project which is a mental healt
 - [Installation](#installation)
 - [Configuration](#configuration)
 - [Running the Application](#running-the-application)
-- [Running Tests](#running-tests)
 - [API Documentation](#api-documentation)
 - [Project Structure](#project-structure)
-- [Backup and Data Extraction](#backup-and-data-extraction)
-- [Contributing](#contributing)
-
 
 ## Features
 - User authentication and authorization
