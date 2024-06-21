@@ -41,7 +41,6 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
-        // Start the DeleteOldMessagesService
         startDeleteOldMessagesService()
 
         friendUserId = intent.getStringExtra("friendUserId")
