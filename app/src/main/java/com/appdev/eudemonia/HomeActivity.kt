@@ -150,7 +150,7 @@ class HomeActivity : BaseActivity() {
                 fetchMoods()
                 Toast.makeText(this, "Mood saved", Toast.LENGTH_SHORT).show()
 
-                if (moodName == "sad") {
+                if (moodName == "Sad") {
                     sendNotification()
                 }
             }
