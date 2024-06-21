@@ -61,6 +61,10 @@ open class BaseActivity : AppCompatActivity() {
                 return true
             }
 
+            R.id.addFriends -> {
+                startActivity(Intent(this, FriendsActivity::class.java))
+                return true
+            }
 
             else -> return super.onOptionsItemSelected(item)
         }

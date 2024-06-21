@@ -29,5 +29,9 @@
             android:id="@+id/settings"
             android:title="Settings"/>
 
+        <item
+            android:id="@+id/addFriends"
+            android:title="Add Friends"/>
+
     </menu>
 
