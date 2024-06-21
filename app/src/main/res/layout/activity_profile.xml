@@ -17,18 +17,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/editProfileNameButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
-        android:fontFamily="@font/altone"
-        android:padding="0dp"
-        android:text="Edit Name"
-        android:textColor="@color/greenUltraDark"
-        tools:layout_editor_absoluteX="182dp"
-        tools:layout_editor_absoluteY="274dp" />
-
     <ImageButton
         android:id="@+id/shareButton"
         android:layout_width="wrap_content"
@@ -112,7 +100,7 @@
         android:fontFamily="@font/gontserratmedium"
         android:padding="10dp"
         android:text="Edit Bio"
-        android:textColor="#FFFFFF"
+        android:textColor="#212121"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.951"
@@ -128,7 +116,7 @@
         android:fontFamily="@font/gontserratmedium"
         android:padding="10dp"
         android:text="Edit Name"
-        android:textColor="#FFFFFF"
+        android:textColor="#212121"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.951"

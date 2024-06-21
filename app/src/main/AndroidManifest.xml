@@ -8,10 +8,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
             android:maxSdkVersion="32" />
-<<<<<<< HEAD
-    <uses-permission android:name="android.permission.INTERNET" />
-=======
->>>>>>> origin/dev
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
