@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        package="com.appdev.eudemonia">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.appdev.eudemonia">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
             android:maxSdkVersion="32" />
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.INTERNET" />
+=======
+>>>>>>> origin/dev
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
@@ -43,7 +49,6 @@
                 android:theme="@style/Theme.AppCompat">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -65,18 +70,6 @@
                 android:exported="true"
                 android:label="Login Activity"
                 android:theme="@style/Theme.AppCompat"/>
-        <activity
-                android:name=".MoodsActivity"
-                android:exported="true"
-                android:label="Moods Activity"
-                android:theme="@style/Theme.AppCompat" /> 
-        
-        <!-- HabitsActivity -->
-        <activity
-                android:name=".HabitsActivity"
-                android:exported="true"
-                android:label="Habits Activity"
-                android:theme="@style/Theme.AppCompat" /> 
         
         <!-- UnguidedJournalActivity -->
         <activity
@@ -113,24 +106,34 @@
             android:label="Home Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
-        <activity
-            android:name=".ChatActivity"
-            android:exported="true"
-            android:label="Home Activity"
-            android:theme="@style/Theme.AppCompat">
-        </activity>
+        <!-- FriendsActivity -->
         <activity
             android:name=".FriendsActivity"
             android:exported="true"
             android:label="Friends Activity"
             android:theme="@style/Theme.AppCompat">
         </activity>
-        <!-- Define the com.appdev.eudemonia.DeleteOldMessagesService -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="true"
+            android:label="Settings"
+            android:theme="@style/Theme.AppCompat" />
+  
+        <activity
+            android:name=".ChatActivity"
+            android:exported="true"
+            android:label="Home Activity"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
+
+        <activity android:name=".TimeSelectorActivity"
+            android:exported="true">
+        </activity>
+    
         <service
             android:name=".DeleteOldMessagesService"
             android:enabled="true"
             android:exported="false" />
-
 
         <activity
             android:name=".PlayerActivity"
@@ -139,5 +142,4 @@
             android:name=".SongsListActivity"
             android:exported="true" />
     </application>
-
-</manifest>
+    </manifest>

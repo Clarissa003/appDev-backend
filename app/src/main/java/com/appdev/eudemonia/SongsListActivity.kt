@@ -11,7 +11,7 @@ import com.appdev.eudemonia.models.SongModel
 import com.google.firebase.firestore.FirebaseFirestore
 import android.util.Log
 
-class SongsListActivity : AppCompatActivity() {
+class SongsListActivity : BaseActivity() {
 
     lateinit var binding: ActivitySongsListBinding
     lateinit var songsListAdapter: SongsListAdapter

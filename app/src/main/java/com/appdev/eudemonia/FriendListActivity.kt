@@ -12,11 +12,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 
-class FriendListActivity : AppCompatActivity() {
+class FriendListActivity : BaseActivity() {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FriendListAdapter
-    private val friendsList = ArrayList<Friend>()
+    private val friendsList = ArrayList<FriendList>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -101,14 +101,14 @@ class FriendListActivity : AppCompatActivity() {
 
                 // If username is not empty, add Friend to the list
                 if (username.isNotEmpty()) {
-                    friendsList.add(Friend(friendUserId, username, profilePictureUrl))
+                    friendsList.add(FriendList(friendUserId, username, profilePictureUrl))
                     adapter.notifyDataSetChanged() // Notify adapter after adding data
                 }
             }.addOnFailureListener { exception ->
                 Log.e("FriendsActivity", "Error fetching profile picture URL for $friendUserId", exception)
                 // Add friend with default profile picture URL if fetching fails
                 if (username.isNotEmpty()) {
-                    friendsList.add(Friend(friendUserId, username, ""))
+                    friendsList.add(FriendList(friendUserId, username, ""))
                     adapter.notifyDataSetChanged() // Notify adapter after adding data
                 }
             }

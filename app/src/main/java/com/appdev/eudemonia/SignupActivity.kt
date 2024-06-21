@@ -1,8 +1,10 @@
 package com.appdev.eudemonia
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +17,7 @@ class SignupActivity : AppCompatActivity() {
     private lateinit var usernameEditText: EditText
     private lateinit var passwordEditText: EditText
     private lateinit var confirmPasswordEditText: EditText
+    private lateinit var loginRedirectTextView: TextView
     private lateinit var signUpButton: Button
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
@@ -37,6 +40,7 @@ class SignupActivity : AppCompatActivity() {
         usernameEditText = findViewById(R.id.editTextUsername)
         passwordEditText = findViewById(R.id.editTextPassword)
         confirmPasswordEditText = findViewById(R.id.editTextConfirmPassword)
+        loginRedirectTextView = findViewById(R.id.textViewLoginRedirect)
         signUpButton = findViewById(R.id.buttonSignUp)
 
         // Set click listener for sign up button
@@ -67,6 +71,11 @@ class SignupActivity : AppCompatActivity() {
                 // Fields are empty, show error message
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
+        }
+        // Set click listener for login redirect text view
+        loginRedirectTextView.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 

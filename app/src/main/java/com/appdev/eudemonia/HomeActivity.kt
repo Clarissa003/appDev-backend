@@ -1,6 +1,12 @@
 package com.appdev.eudemonia
 
 import android.app.DatePickerDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -10,6 +16,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
@@ -34,6 +42,8 @@ class HomeActivity : BaseActivity() {
     private lateinit var moodRecyclerView: RecyclerView
     private lateinit var moodAdapter: MoodAdapter
     private val moodList = mutableListOf<Mood>()
+    private val CHANNEL_ID = "crisis_channel"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -77,6 +87,8 @@ class HomeActivity : BaseActivity() {
         neutralButton.setOnClickListener { saveMoodToDb("Neutral") }
         unhappyButton.setOnClickListener { saveMoodToDb("Unhappy") }
         sadButton.setOnClickListener { saveMoodToDb("Sad") }
+
+        createNotificationChannel()
 
         // Habits setup
         habitRecyclerView = findViewById(R.id.habitRecyclerView)
@@ -134,14 +146,54 @@ class HomeActivity : BaseActivity() {
         )
         db.collection("Mood")
             .add(mood)
-            .addOnSuccessListener {
+            .addOnSuccessListener { documentReference ->
                 fetchMoods()
                 Toast.makeText(this, "Mood saved", Toast.LENGTH_SHORT).show()
+
+                if (moodName == "sad") {
+                    sendNotification()
+                }
             }
-            .addOnFailureListener {
+            .addOnFailureListener { e ->
                 Toast.makeText(this, "Error saving mood", Toast.LENGTH_SHORT).show()
+                Log.e("HomeActivity", "Error saving mood", e)
             }
     }
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Crisis notification"
+            val descriptionText = "Crisis notification, chat with someone"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+    private fun sendNotification() {
+        val intent = Intent(applicationContext, FriendsActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        val requestCode = System.currentTimeMillis().toInt()
+        val pendingIntent: PendingIntent = PendingIntent.getActivity(
+            applicationContext, requestCode, intent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val builder = NotificationCompat.Builder(applicationContext, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setContentTitle("Sad?")
+            .setContentText("Chat with one of your friends!")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+
+        val notificationManager = applicationContext.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.notify(1001, builder.build())
+    }
+
 
     private fun fetchMoods() {
         Log.d("HomeActivity", "fetchMoods called")
@@ -295,4 +347,3 @@ class HomeActivity : BaseActivity() {
     }
 
 }
-

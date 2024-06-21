@@ -4,12 +4,7 @@
         <item
             android:id="@+id/profile"
             android:title="Profile"/>
-        <item
-            android:id="@+id/moods"
-            android:title="Moods" />    
-        <item
-            android:id="@+id/habit"
-            android:title="Habit"/>
+
         <item
             android:id="@+id/unguidedJournal"
             android:title="Unguided Journal" />
@@ -17,17 +12,22 @@
         <item
             android:id="@+id/guidedJournal"
             android:title="Guided Journal"/>
-        <item
-            android:id="@+id/chat"
-            android:title="Chat" />
 
         <item
             android:id="@+id/calendar"
-            android:title="Calendar"/>
+            android:title="Dashboard"/>
 
         <item
-            android:id="@+id/friends"
+            android:id="@+id/friendList"
             android:title="Friends"/>
+
+        <item
+            android:id="@+id/sounds"
+            android:title="Sounds"/>
+
+        <item
+            android:id="@+id/settings"
+            android:title="Settings"/>
 
     </menu>
 

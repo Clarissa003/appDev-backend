@@ -3,18 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/greenLight"
-    android:backgroundTint="@color/greenLight">
+    android:background="@drawable/gradient_background">
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:fontFamily="@font/altone"
-        android:text="Select Affirmation Notification Time"
-        android:textColor="@color/white"
-        android:textSize="18sp"
+        android:layout_marginTop="180dp"
+        android:fontFamily="@font/gontserratbold"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="SCHEDULE AFFIRMATIONS"
+        android:textAlignment="center"
+        android:textColor="@color/greenUltraDark"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

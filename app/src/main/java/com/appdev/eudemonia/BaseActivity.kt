@@ -34,6 +34,11 @@ open class BaseActivity : AppCompatActivity() {
                 startActivity(Intent(this, GuidedJournalActivity::class.java))
                 return true
             }
+            R.id.calendar -> {
+                // Navigate to Guided Journal page
+                startActivity(Intent(this, HomeActivity::class.java))
+                return true
+            }
 
             R.id.calendar -> {
                 // Navigate to Guided Journal page
@@ -41,10 +46,21 @@ open class BaseActivity : AppCompatActivity() {
                 return true
             }
 
-            R.id.friends -> {
-                startActivity(Intent(this, FriendsActivity::class.java))
+            R.id.friendList -> {
+                startActivity(Intent(this, FriendListActivity::class.java))
                 return true
             }
+
+            R.id.sounds -> {
+                startActivity(Intent(this, SongsListActivity::class.java))
+                return true
+            }
+
+            R.id.settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return true
+            }
+
 
             else -> return super.onOptionsItemSelected(item)
         }
