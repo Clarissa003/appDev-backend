@@ -129,19 +129,31 @@ class ProfileActivity : BaseActivity() {
                     profileName.text = name
                     Toast.makeText(this, "Name updated successfully", Toast.LENGTH_SHORT).show()
 
+                    // Update the "Profile" collection
                     db.collection("Profile").document(user.uid)
                         .update("username", name)
                         .addOnSuccessListener {
-                            Toast.makeText(this, "Name updated in Firestore", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Name updated in Profile collection", Toast.LENGTH_SHORT).show()
                         }
                         .addOnFailureListener { exception ->
-                            Toast.makeText(this, "Error updating name in Firestore: ${exception.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Error updating name in Profile collection: ${exception.message}", Toast.LENGTH_SHORT).show()
+                        }
+
+                    // Update the "Users" collection
+                    db.collection("Users").document(user.uid)
+                        .update("username", name)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Name updated in Users collection", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { exception ->
+                            Toast.makeText(this, "Error updating name in Users collection: ${exception.message}", Toast.LENGTH_SHORT).show()
                         }
                 } else {
                     Toast.makeText(this, "Failed to update name", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
 
     private fun updateProfileBio(bio: String) {
         val user = auth.currentUser
