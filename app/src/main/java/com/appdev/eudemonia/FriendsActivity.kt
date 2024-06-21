@@ -116,11 +116,8 @@ class FriendsActivity : BaseActivity() {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 putExtra("senderId", senderId)  // Pass the sender's user ID
             }
-            val pendingIntent: PendingIntent = PendingIntent.getActivity(
-                this,
-                0,
-                intent,
-                PendingIntent.FLAG_IMMUTABLE  // Use FLAG_UPDATE_CURRENT to update the intent data
+            val pendingIntent = PendingIntent.getActivity(
+                this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
             val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
@@ -254,6 +251,8 @@ class FriendsActivity : BaseActivity() {
                             Log.e(TAG, "Error adding ${user.username} as friend for requester", e)
                             // Handle failure if needed
                         }
+                    sendFriendRequestNotification(user.username, user.userId)
+
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Failed to send friend request: ${e.message}", Toast.LENGTH_SHORT).show()

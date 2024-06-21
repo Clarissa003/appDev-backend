@@ -26,3 +26,4 @@
 ## Kotlin Style Guide
 
 The code must adhere to the Kotlin Style Guide.
+https://developer.android.com/kotlin/style-guide#braces

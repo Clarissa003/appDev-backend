@@ -50,10 +50,7 @@ This repository contains the backend code for the appDev project which is a ment
 - **Properties Files**: Ensure `config.properties` is properly set up with the necessary configurations for your environment.
 
 ## Running the Application
-To run the application, use the Android Studio run configuration to build and deploy the app on an emulator or physical device.
-
-## Running Tests
-To run the tests, use the built-in testing tools in Android Studio.
+To run the application, use the Android Studio run configuration to build and deploy the app on an emulator or physical device. To test the functionalities work as expected please sign-in into the application with *a valid* email account.
 
 ## API Documentation
 API documentation for external integrations can be found in the relevant service files, such as `HuggingFaceInterface.kt` and `OpenAIModels.kt`.
