@@ -86,10 +86,8 @@ class FriendsActivity : BaseActivity() {
                                 senderId?.let { fetchSenderDetailsAndNotify(it) }
                             }
                             DocumentChange.Type.MODIFIED -> {
-                                // Handle modified document if necessary
                             }
                             DocumentChange.Type.REMOVED -> {
-                                // Handle removed document if necessary
                             }
                         }
                     }
@@ -102,7 +100,7 @@ class FriendsActivity : BaseActivity() {
         db.collection("Profile").document(senderId).get()
             .addOnSuccessListener { document ->
                 val username = document.getString("username") ?: "Unknown"
-                sendFriendRequestNotification(username, senderId)  // Pass senderId here
+                sendFriendRequestNotification(username, senderId)
             }
             .addOnFailureListener { e ->
                 Log.e("FriendsActivity", "Error fetching sender details", e)
@@ -116,7 +114,7 @@ class FriendsActivity : BaseActivity() {
 
             val intent = Intent(this, FriendRequestDetailActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                putExtra("senderId", senderId)  // Pass the sender's user ID
+                putExtra("senderId", senderId)
             }
             val pendingIntent = PendingIntent.getActivity(
                 this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
