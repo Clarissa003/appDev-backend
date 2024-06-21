@@ -27,7 +27,7 @@ class HabitsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_habits)
+        setContentView(R.layout.activity_home)
 
         habitRecyclerView = findViewById(R.id.habitRecyclerView)
         habitRecyclerView.layoutManager = LinearLayoutManager(this)

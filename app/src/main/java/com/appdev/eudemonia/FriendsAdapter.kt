@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 class FriendsAdapter(private val activity: FriendsActivity, users: List<User>) : ArrayAdapter<User>(activity, 0, users) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view = convertView ?: LayoutInflater.from(activity).inflate(R.layout.activity_friends_list, parent, false)
+        val view = convertView ?: LayoutInflater.from(activity).inflate(R.layout.activity_add_friends, parent, false)
         val user = getItem(position)
 
         val profileImage = view.findViewById<ImageView>(R.id.profile_image)
@@ -23,10 +23,16 @@ class FriendsAdapter(private val activity: FriendsActivity, users: List<User>) :
 
         user?.let {
             friendName.text = it.username
-            if (it.profilePicUrl != null) {
-                Glide.with(activity).load(it.profilePicUrl).into(profileImage)
+
+            // Load profile picture if available, otherwise set default image
+            if (it.profilePicUrl != null && it.profilePicUrl.isNotBlank()) {
+                Glide.with(activity)
+                    .load(it.profilePicUrl)
+                    .placeholder(R.drawable.default_profile_picture) // Placeholder if image loading fails
+                    .error(R.drawable.default_profile_picture) // Error image if Glide fails to load image
+                    .into(profileImage)
             } else {
-                profileImage.setImageResource(R.drawable.default_profile_picture)
+                profileImage.setImageResource(R.drawable.default_profile_picture) // Default image if profilePicUrl is null or blank
             }
 
             if (it.isFriend) {

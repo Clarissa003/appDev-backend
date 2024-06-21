@@ -95,4 +95,3 @@ class SignupActivity : AppCompatActivity() {
         val digest = md.digest(bytes)
         return digest.fold("", { str, it -> str + "%02x".format(it) })
     }
-}

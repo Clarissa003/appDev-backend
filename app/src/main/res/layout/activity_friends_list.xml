@@ -23,35 +23,5 @@
     app:layout_constraintVertical_bias="0.5"
     android:layout_marginTop="8dp" />
 
-    </LinearLayout>
-    <TextView
-            android:id="@+id/friend_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Friend Name"
-            android:textColor="#525252"
-            android:fontFamily="@font/altone"
-            android:textSize="16sp"
-            android:layout_gravity="center_vertical" />
 
-    <Button
-        android:id="@+id/add_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:backgroundTint="@color/greenUltraDark"
-        android:layout_marginLeft="150dp"
-        android:fontFamily="@font/altone"
-        android:onClick="onAddFriendClick"
-        android:text="Add" />
-    <Button
-        android:id="@+id/remove_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:backgroundTint="@color/greenUltraDark"
-        android:layout_marginLeft="150dp"
-        android:fontFamily="@font/altone"
-        android:text="Remove"
-        android:visibility="gone"/>
 </LinearLayout>

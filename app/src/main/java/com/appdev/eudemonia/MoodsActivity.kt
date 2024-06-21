@@ -16,7 +16,7 @@ class MoodsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_moods)
+        setContentView(R.layout.activity_home)
 
         db = FirebaseFirestore.getInstance()
         mAuth = FirebaseAuth.getInstance()
