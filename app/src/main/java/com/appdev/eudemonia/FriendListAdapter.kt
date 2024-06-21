@@ -47,6 +47,7 @@ class FriendListAdapter(private val friendLists: List<FriendList>) : RecyclerVie
                 val intent = Intent(context, ChatActivity::class.java).apply {
                     putExtra("friendUserId", friendList.userId)
                     putExtra("friendUsername", friendList.username)
+                    putExtra("friendProfilePictureUrl", friendList.profilePictureUrl)
                 }
                 context.startActivity(intent)
             }

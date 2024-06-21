@@ -30,7 +30,7 @@
                 android:text="DASHBOARD"
                 android:textAlignment="center"
                 android:textColor="@color/greenUltraDark"
-                android:textSize="30sp" />
+                android:textSize="40sp" />
 
             <TextView
                 android:id="@+id/idTVSelectedDate"
@@ -55,10 +55,10 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:background="@color/greenUltraDark"
-                android:fontFamily="@font/gontserratmedium"
+                android:fontFamily="@font/gontserratbold"
                 android:padding="10dp"
                 android:text="CHANGE DATE"
-                android:textColor="#212121"
+                android:textColor="#FFF"
                 android:textSize="15sp" />
         </RelativeLayout>
 

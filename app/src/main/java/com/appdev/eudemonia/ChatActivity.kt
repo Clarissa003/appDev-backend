@@ -7,10 +7,12 @@ import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -29,6 +31,7 @@ class ChatActivity : AppCompatActivity() {
     private var friendUserId: String? = null
     private var friendUsername: String? = null
     private var currentUserUsername: String? = null
+    private var friendProfilePictureUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +42,18 @@ class ChatActivity : AppCompatActivity() {
 
         friendUserId = intent.getStringExtra("friendUserId")
         friendUsername = intent.getStringExtra("friendUsername")
+        friendProfilePictureUrl = intent.getStringExtra("friendProfilePictureUrl")
 
         userNameTextView = findViewById(R.id.user_name)
         userNameTextView.text = friendUsername
+
+        val profileImageView = findViewById<ImageView>(R.id.profile_image)
+        if (friendProfilePictureUrl != null) {
+            Glide.with(this)
+                .load(friendProfilePictureUrl)
+                .placeholder(R.drawable.default_profile_picture) // Optional placeholder image
+                .into(profileImageView)
+        }
 
         db = FirebaseFirestore.getInstance()
 

@@ -20,8 +20,6 @@ import com.appdev.eudemonia.R
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.dynamiclinks.DynamicLink
-import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 
@@ -53,9 +51,6 @@ class ProfileActivity : BaseActivity() {
 
         profilePicture.setOnClickListener {
             selectImage("profilePicture")
-        }
-        shareButton.setOnClickListener {
-            generateFriendLink()
         }
 
         coverPhoto.setOnClickListener {
@@ -140,7 +135,7 @@ class ProfileActivity : BaseActivity() {
                         }
 
                     // Update the "Users" collection
-                    db.collection("Users").document(user.uid)
+                    db.collection("User").document(user.uid)
                         .update("username", name)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Name updated in Users collection", Toast.LENGTH_SHORT).show()
@@ -249,29 +244,4 @@ class ProfileActivity : BaseActivity() {
 
 
     }
-    private fun generateFriendLink() {
-        val userId = auth.currentUser?.uid
-        userId?.let { uid ->
-            val dynamicLink = FirebaseDynamicLinks.getInstance().createDynamicLink()
-                .setLink(Uri.parse("https://www.yourapp.com/addfriend?uid=$uid"))
-                .setDomainUriPrefix("https://yourapp.page.link")
-                .setAndroidParameters(
-                    DynamicLink.AndroidParameters.Builder(packageName)
-                        .build()
-                )
-                .buildDynamicLink()
-
-            val dynamicLinkUri = dynamicLink.uri
-            copyLinkToClipboard(dynamicLinkUri.toString())
-        }
-    }
-
-    private fun copyLinkToClipboard(link: String) {
-        val clipboard = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        val clip = ClipData.newPlainText("Friend Link", link)
-        clipboard.setPrimaryClip(clip)
-        Toast.makeText(this, "Link copied to clipboard!", Toast.LENGTH_SHORT).show()
-    }
-
-
 }
