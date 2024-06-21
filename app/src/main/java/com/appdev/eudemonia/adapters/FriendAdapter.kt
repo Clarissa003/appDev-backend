@@ -42,15 +42,6 @@ class FriendAdapter(private val friends: List<Friend>) : RecyclerView.Adapter<Fr
             } else {
                 profileImageView.setImageResource(R.drawable.default_profile_picture)
             }
-
-           /* itemView.setOnClickListener {
-                val context = itemView.context
-                val intent = Intent(context, ChatActivity::class.java).apply {
-                    putExtra("friendUserId", friend.userId)
-                    putExtra("friendUsername", friend.username)
-                }
-                context.startActivity(intent)
-            }*/
         }
     }
 }
