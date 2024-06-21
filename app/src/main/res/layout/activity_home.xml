@@ -43,6 +43,10 @@
                 android:padding="10dp"
                 android:text="Date"
                 android:textAlignment="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:fontFamily="@font/altone"/>
                 android:textColor="@color/greenUltraDark"
                 android:textSize="20sp" />
 
