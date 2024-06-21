@@ -7,7 +7,6 @@
     android:background="@drawable/gradient_background"
     tools:context=".authentication.LoginActivity">
 
-
     <TextView
         android:id="@+id/textViewEudemonia"
         android:layout_width="wrap_content"
