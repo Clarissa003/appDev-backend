@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/gradient_background"
+        tools:context=".journals.GuidedJournalActivity">
+
+        <TextView
+            android:id="@+id/displayPrompt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="28dp"
+            android:layout_marginBottom="24dp"
+            android:background="@color/greenDark"
+            android:padding="10dp"
+            android:stateListAnimator="@null"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:text="Some very deep question?"
+            app:fontFamily="@font/gontserratsemibold"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/enterAnswer"
+            android:layout_width="350dp"
+            android:layout_height="514dp"
+            android:layout_marginTop="4dp"
+            android:gravity="top"
+            android:hint="Enter answer..."
+            android:minHeight="250dp"
+            android:textColor="#000000"
+            android:textColorHint="#808080"
+            android:fontFamily="@font/gontserratitalic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/generatePromptButton" />
+
+        <Button
+            android:id="@+id/generatePromptButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/greenUltraDark"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="24dp"
+            android:background="@color/greenUltraDark"
+            android:padding="10dp"
+            android:fontFamily="@font/gontserratmedium"
+            android:stateListAnimator="@null"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:text="Generate prompt"
+            android:textAllCaps="true"
+            app:layout_constraintStart_toStartOf="@+id/displayPrompt"
+            app:layout_constraintTop_toBottomOf="@+id/displayPrompt" />
+
+        <Button
+            android:id="@+id/saveButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="40dp"
+            android:layout_marginBottom="24dp"
+            android:backgroundTint="@color/greenUltraDark"
+            android:fontFamily="@font/gontserratmedium"
+            android:textAllCaps="false"
+            android:background="@color/greenUltraDark"
+            android:padding="10dp"
+            android:text="SAVE"
+            android:stateListAnimator="@null"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            app:layout_constraintBottom_toBottomOf="@+id/enterAnswer"
+            app:layout_constraintEnd_toEndOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

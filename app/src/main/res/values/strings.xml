@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Eudemonia</string>
+    <string name="channel_name">Affirmation Channel</string>
+    <string name="channel_description">Channel for daily affirmations</string>
+    <string name="profile_image">Profile Image</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="add_friend">Add Friend</string>
+</resources>

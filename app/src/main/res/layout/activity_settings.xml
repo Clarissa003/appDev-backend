@@ -1,0 +1,56 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/gradient_background">
+
+    <TextView
+        android:id="@+id/textViewEudemonia"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:fontFamily="@font/gallient"
+        android:text="Eudemonia"
+        android:textColor="@color/gray"
+        android:textSize="45sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <Button
+        android:id="@+id/buttonNotificationTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Set Affirmation Notification Time"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gontserratmedium"
+        android:background="@color/greenUltraDark"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:padding="12dp" />
+
+    <Button
+        android:id="@+id/buttonLogout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Logout"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gontserratmedium"
+        android:background="@color/greenUltraDark"
+        android:layout_marginTop="120dp"
+        android:textAllCaps="false"
+        android:padding="12dp" />
+
+    <Button
+        android:id="@+id/buttonDeleteAccount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Delete Account"
+        android:textColor="@color/white"
+        android:fontFamily="@font/gontserratmedium"
+        android:background="@color/greenUltraDark"
+        android:layout_marginTop="16dp"
+        android:textAllCaps="false"
+        android:padding="12dp" />
+
+</LinearLayout>
