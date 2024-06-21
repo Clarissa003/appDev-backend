@@ -25,10 +25,10 @@
         android:text="Song Name"
         android:textColor="#3F3F3F"
         android:fontFamily="@font/gontserratmedium"
+        android:layout_marginStart="15dp"
         app:layout_constraintStart_toEndOf="@id/song_cover_image_view"
         app:layout_constraintTop_toTopOf="@id/song_cover_image_view"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginStart="15dp" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/song_subtitle_text_view"
