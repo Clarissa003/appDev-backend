@@ -85,7 +85,7 @@
         <activity
                 android:name=".FriendListActivity"
                 android:exported="true"
-                android:label="Friends Activity"
+                android:label="Friend Activity"
                 android:theme="@style/Theme.AppCompat" />
         <activity
             android:name=".HomeActivity"

@@ -46,10 +46,21 @@ open class BaseActivity : AppCompatActivity() {
                 return true
             }
 
-            R.id.friends -> {
+            R.id.friendList -> {
                 startActivity(Intent(this, FriendListActivity::class.java))
                 return true
             }
+
+            R.id.sounds -> {
+                startActivity(Intent(this, SongsListActivity::class.java))
+                return true
+            }
+
+            R.id.settings -> {
+                startActivity(Intent(this, SettingsActivity::class.java))
+                return true
+            }
+
 
             else -> return super.onOptionsItemSelected(item)
         }
