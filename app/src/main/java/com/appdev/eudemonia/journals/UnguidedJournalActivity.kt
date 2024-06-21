@@ -32,9 +32,7 @@ class UnguidedJournalActivity : BaseActivity() {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
 
-        // Check if user is authenticated
         if (auth.currentUser == null) {
-            // Redirect to LoginActivity if not authenticated
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
@@ -49,10 +47,7 @@ class UnguidedJournalActivity : BaseActivity() {
     private fun saveJournalEntry() {
         val content = editText.text.toString().trim()
         val userId = auth.currentUser?.uid
-
-        Log.d("UnguidedJournalActivity", "Content: $content")
-        Log.d("UnguidedJournalActivity", "UserId: $userId")
-
+        
         if (content.isNotEmpty() && userId != null) {
             val currentDate = dateFormat.format(Date())
 
