@@ -143,6 +143,15 @@ class ProfileActivity : BaseActivity() {
                         .addOnFailureListener { exception ->
                             Toast.makeText(this, "Error updating name in Users collection: ${exception.message}", Toast.LENGTH_SHORT).show()
                         }
+                    // Update the "Friends" collection
+                    db.collection("Friends").document(user.uid)
+                        .update("username", name)
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Name updated in Friends collection", Toast.LENGTH_SHORT).show()
+                        }
+                        .addOnFailureListener { exception ->
+                            Toast.makeText(this, "Error updating name in Friends collection: ${exception.message}", Toast.LENGTH_SHORT).show()
+                        }
                 } else {
                     Toast.makeText(this, "Failed to update name", Toast.LENGTH_SHORT).show()
                 }
