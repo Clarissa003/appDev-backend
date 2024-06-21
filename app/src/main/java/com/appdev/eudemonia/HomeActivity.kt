@@ -173,7 +173,7 @@ class HomeActivity : BaseActivity() {
         }
     }
     private fun sendNotification() {
-        val intent = Intent(applicationContext, FriendsActivity::class.java).apply {
+        val intent = Intent(applicationContext, FriendListActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
         val requestCode = System.currentTimeMillis().toInt()
