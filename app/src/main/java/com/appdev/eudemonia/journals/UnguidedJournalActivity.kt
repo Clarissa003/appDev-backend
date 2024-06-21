@@ -47,7 +47,7 @@ class UnguidedJournalActivity : BaseActivity() {
     private fun saveJournalEntry() {
         val content = editText.text.toString().trim()
         val userId = auth.currentUser?.uid
-        
+
         if (content.isNotEmpty() && userId != null) {
             val currentDate = dateFormat.format(Date())
 
