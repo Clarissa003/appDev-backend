@@ -4,7 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/greenUltraLight"
+        android:background="@drawable/gradient_background"
         tools:context=".ProfileActivity">
 
     <!-- Profile Picture -->
@@ -39,10 +39,12 @@
             android:layout_marginTop="24dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Profile Name"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"
             android:fontFamily="@font/gontserratbold"
+            android:gravity="center"
+            android:text="Profile Name"
+            android:textAlignment="center"
+            android:textColor="@color/greenUltraDark"
+            android:textSize="25sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
 
@@ -51,7 +53,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:fontFamily="@font/gontserratregular"
@@ -64,34 +65,36 @@
             app:layout_constraintTop_toBottomOf="@+id/profileName" />
 
     <Button
-            android:id="@+id/editBio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/gontserratregular"
-            android:padding="0dp"
-            android:text="Edit Bio"
-            android:textColor="@color/greenUltraDark"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/profileBio"
-            app:layout_constraintHorizontal_bias="0.955"
-            android:layout_marginTop="240dp" />
+        android:id="@+id/editBio"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="212dp"
+        android:background="@color/greenUltraDark"
+        android:fontFamily="@font/gontserratmedium"
+        android:padding="10dp"
+        android:text="Edit Bio"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profileBio" />
 
     <Button
-            android:id="@+id/editProfileNameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:fontFamily="@font/gontserratregular"
-            android:padding="0dp"
-            android:text="Edit Name"
-            android:textColor="@color/greenUltraDark"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editBio"
-            app:layout_constraintHorizontal_bias="0.95" />
-
+        android:id="@+id/editProfileNameButton"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:background="@color/greenUltraDark"
+        android:fontFamily="@font/gontserratmedium"
+        android:padding="10dp"
+        android:text="Edit Name"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.951"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editBio" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,16 +7,15 @@
 
     <TextView
         android:id="@+id/textViewEudemonia"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="184dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginTop="200dp"
         android:fontFamily="@font/gallient"
         android:text="Eudemonia"
-        android:textColor="#000000"
+        android:textColor="@color/gray"
         android:textSize="45sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:gravity="center"/>
 
     <Button
         android:id="@+id/buttonNotificationTime"
