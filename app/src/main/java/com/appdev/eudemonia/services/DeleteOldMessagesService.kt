@@ -26,18 +26,16 @@ class DeleteOldMessagesService : Service() {
         super.onCreate()
         handler = Handler(HandlerThread("DeleteOldMessagesThread").apply { start() }.looper)
         db = FirebaseFirestore.getInstance()
-        Log.d("com.appdev.eudemonia.services.DeleteOldMessagesService", "Service onCreate")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        Log.d("com.appdev.eudemonia.services.DeleteOldMessagesService", "Service onStartCommand")
-        handler.post(deleteOldMessagesTask) // Start task immediately
+        handler.post(deleteOldMessagesTask)
         return START_STICKY
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        handler.removeCallbacks(deleteOldMessagesTask) // Remove pending tasks
+        handler.removeCallbacks(deleteOldMessagesTask)
         Log.d("com.appdev.eudemonia.services.DeleteOldMessagesService", "Service onDestroy")
     }
 
@@ -62,18 +60,7 @@ class DeleteOldMessagesService : Service() {
                         batch.delete(document.reference)
                     }
                     batch.commit()
-                        .addOnSuccessListener {
-                            Log.d("com.appdev.eudemonia.services.DeleteOldMessagesService", "Deleted ${querySnapshot.size()} old messages successfully")
-                        }
-                        .addOnFailureListener { e ->
-                            Log.e("com.appdev.eudemonia.services.DeleteOldMessagesService", "Error committing batch delete", e)
-                        }
-                } else {
-                    Log.d("com.appdev.eudemonia.services.DeleteOldMessagesService", "No old messages to delete")
                 }
-            }
-            .addOnFailureListener { e ->
-                Log.e("com.appdev.eudemonia.services.DeleteOldMessagesService", "Error querying old messages", e)
             }
     }
 

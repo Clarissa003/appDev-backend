@@ -6,7 +6,6 @@
     android:padding="8dp"
     android:background="@color/greenUltraLight">
 
-    <!-- Profile Image -->
     <ImageView
         android:id="@+id/profile_image"
         android:layout_width="80dp"
@@ -14,7 +13,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/default_profile_picture" />
 
-    <!-- Friend Name -->
     <TextView
         android:id="@+id/friend_name"
         android:layout_width="wrap_content"
@@ -25,7 +23,6 @@
         android:textSize="16sp"
         android:layout_gravity="center_vertical" />
 
-    <!-- Add Button -->
     <Button
         android:id="@+id/add_button"
         android:layout_width="wrap_content"
@@ -37,7 +34,6 @@
         android:text="Add"
         android:onClick="onAddFriendClick" />
 
-    <!-- Remove Button -->
     <Button
         android:id="@+id/remove_button"
         android:layout_width="wrap_content"

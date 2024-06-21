@@ -30,11 +30,11 @@ class FriendsAdapter(private val activity: FriendsActivity, users: List<User>) :
             if (it.profilePicUrl != null && it.profilePicUrl.isNotBlank()) {
                 Glide.with(activity)
                     .load(it.profilePicUrl)
-                    .placeholder(R.drawable.default_profile_picture) // Placeholder if image loading fails
-                    .error(R.drawable.default_profile_picture) // Error image if Glide fails to load image
+                    .placeholder(R.drawable.default_profile_picture)
+                    .error(R.drawable.default_profile_picture)
                     .into(profileImage)
             } else {
-                profileImage.setImageResource(R.drawable.default_profile_picture) // Default image if profilePicUrl is null or blank
+                profileImage.setImageResource(R.drawable.default_profile_picture)
             }
 
             if (it.isFriend) {

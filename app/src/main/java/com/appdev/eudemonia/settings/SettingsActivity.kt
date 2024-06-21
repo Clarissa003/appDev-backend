@@ -18,15 +18,12 @@ class SettingsActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        // Initialize Firebase Auth
         auth = FirebaseAuth.getInstance()
 
-        // Initialize UI elements
         val buttonNotificationTime = findViewById<Button>(R.id.buttonNotificationTime)
         val buttonLogout = findViewById<Button>(R.id.buttonLogout)
         val buttonDeleteAccount = findViewById<Button>(R.id.buttonDeleteAccount)
 
-        // Set click listeners
         buttonNotificationTime.setOnClickListener {
             val intent = Intent(this, TimeSelectorActivity::class.java)
             startActivity(intent)
