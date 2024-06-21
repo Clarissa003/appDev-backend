@@ -121,7 +121,6 @@ class ProfileActivity : BaseActivity() {
                     profileName.text = name
                     Toast.makeText(this, "Name updated successfully", Toast.LENGTH_SHORT).show()
 
-                    // Update the "Profile" collection
                     db.collection("Profile").document(user.uid)
                         .update("username", name)
                         .addOnSuccessListener {
@@ -131,7 +130,6 @@ class ProfileActivity : BaseActivity() {
                             Toast.makeText(this, "Error updating name in Profile collection: ${exception.message}", Toast.LENGTH_SHORT).show()
                         }
 
-                    // Update the "Users" collection
                     db.collection("User").document(user.uid)
                         .update("username", name)
                         .addOnSuccessListener {
@@ -140,7 +138,6 @@ class ProfileActivity : BaseActivity() {
                         .addOnFailureListener { exception ->
                             Toast.makeText(this, "Error updating name in Users collection: ${exception.message}", Toast.LENGTH_SHORT).show()
                         }
-                    // Update the "Friends" collection
                     db.collection("Friends").document(user.uid)
                         .update("username", name)
                         .addOnSuccessListener {
