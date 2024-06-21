@@ -11,9 +11,6 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <!-- Calendar Layout -->
-
-        <!-- Moods Layout -->
         <RelativeLayout
             android:id="@+id/idRLContainer"
             android:layout_width="match_parent"
@@ -145,7 +142,6 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!-- Habits Layout -->
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -191,8 +187,7 @@
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
-        <!-- Journal entries -->
+        
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

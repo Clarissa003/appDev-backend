@@ -39,8 +39,6 @@ class FriendListActivity : BaseActivity() {
         val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
 
         if (currentUserUid != null) {
-            Log.d("FriendsActivity", "Current user UID: $currentUserUid")
-
             db.collection("Friends")
                 .whereEqualTo("addedBy", currentUserUid)
                 .get()

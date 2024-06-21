@@ -95,16 +95,11 @@ class ChatActivity : AppCompatActivity() {
             db.collection("User").document(currentUserUid).get().addOnSuccessListener { document ->
                 if (document != null) {
                     currentUserUsername = document.getString("username")
-                    // Start listening for messages only after fetching username
                     listenForMessages()
-                } else {
-                    Log.e("ChatActivity", "No such document for current user")
                 }
             }.addOnFailureListener { e ->
                 Log.e("ChatActivity", "Error fetching current user data", e)
             }
-        } else {
-            Log.e("ChatActivity", "Current user UID is null")
         }
     }
 
@@ -115,13 +110,12 @@ class ChatActivity : AppCompatActivity() {
         if (messageText.isNotEmpty() && friendUserId != null && currentUserUid != null && currentUserUsername != null) {
             val message = Message(
                 senderId = currentUserUid,
-                senderName = currentUserUsername!!,  // Ensure currentUserUsername is not null here
+                senderName = currentUserUsername!!,
                 receiverId = friendUserId!!,
                 content = messageText,
                 timestamp = Timestamp.now()
             )
 
-            Log.d("ChatActivity", "Attempting to send message: $message")
 
             db.collection("Message").add(message)
                 .addOnSuccessListener {
@@ -132,8 +126,6 @@ class ChatActivity : AppCompatActivity() {
                     e.printStackTrace()
                     Log.e("ChatActivity", "Error sending message", e)
                 }
-        } else {
-            Log.e("ChatActivity", "Message text is empty or user IDs are null")
         }
     }
 
@@ -141,7 +133,6 @@ class ChatActivity : AppCompatActivity() {
         val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
 
         if (currentUserUid != null && friendUserId != null) {
-            Log.d("ChatActivity", "Listening for messages between $currentUserUid and $friendUserId")
 
             val currentUserMessages = mutableListOf<Message>()
             val friendUserMessages = mutableListOf<Message>()
@@ -152,11 +143,9 @@ class ChatActivity : AppCompatActivity() {
                 .orderBy("timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener { snapshot, error ->
                     if (error != null) {
-                        Log.e("ChatActivity", "Error fetching messages sent by the current user", error)
                         return@addSnapshotListener
                     }
                     if (snapshot != null) {
-                        Log.d("ChatActivity", "Snapshot size for messages sent by current user: ${snapshot.size()}")
                         currentUserMessages.clear()
                         currentUserMessages.addAll(snapshot.documents.mapNotNull { it.toObject(
                             Message::class.java) })
@@ -172,21 +161,15 @@ class ChatActivity : AppCompatActivity() {
                 .orderBy("timestamp", Query.Direction.ASCENDING)
                 .addSnapshotListener { snapshot, error ->
                     if (error != null) {
-                        Log.e("ChatActivity", "Error fetching messages sent by the friend", error)
                         return@addSnapshotListener
                     }
                     if (snapshot != null) {
-                        Log.d("ChatActivity", "Snapshot size for messages sent by friend: ${snapshot.size()}")
                         friendUserMessages.clear()
                         friendUserMessages.addAll(snapshot.documents.mapNotNull { it.toObject(
                             Message::class.java) })
                         mergeAndDisplayMessages(currentUserMessages, friendUserMessages)
-                    } else {
-                        Log.d("ChatActivity", "Snapshot is null for messages sent by friend")
                     }
                 }
-        } else {
-            Log.e("ChatActivity", "User IDs are null")
         }
     }
 
@@ -196,7 +179,6 @@ class ChatActivity : AppCompatActivity() {
         allMessages.addAll(friendUserMessages)
         allMessages.sortBy { it.timestamp }
 
-        Log.d("ChatActivity", "Updating chat messages with ${allMessages.size} messages in total")
         chatAdapter.updateMessages(allMessages)
     }
 
