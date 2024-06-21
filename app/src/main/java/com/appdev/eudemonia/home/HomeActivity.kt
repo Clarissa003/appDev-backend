@@ -6,7 +6,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -25,7 +24,6 @@ import com.appdev.eudemonia.adapters.HabitAdapter
 import com.appdev.eudemonia.adapters.JournalAdapter
 import com.appdev.eudemonia.adapters.Mood
 import com.appdev.eudemonia.adapters.MoodAdapter
-import com.appdev.eudemonia.authentication.LoginActivity
 import com.appdev.eudemonia.chat.FriendListActivity
 import com.appdev.eudemonia.dataclasses.Habit
 import com.appdev.eudemonia.dataclasses.JournalEntry
@@ -35,28 +33,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
-
-class HomeActivity : BaseActivity() {
-
-    private lateinit var db: FirebaseFirestore
-    private lateinit var mAuth: FirebaseAuth
-    private val myPreferences: SharedPreferences by lazy {
-        getSharedPreferences("myPref", Context.MODE_PRIVATE)
-    }
-
-    private lateinit var selectedDateTextView: TextView
-    private lateinit var calendar: Calendar
-    private var currentUserEmail = Firebase.auth.currentUser?.email
-
-    private lateinit var habitRecyclerView: RecyclerView
-    private lateinit var habitAdapter: HabitAdapter
-    private val habitList = mutableListOf<Habit>()
-
-    private lateinit var moodRecyclerView: RecyclerView
-    private lateinit var moodAdapter: MoodAdapter
-    private val moodList = mutableListOf<Mood>()
-    private val CHANNEL_ID = "crisis_channel"
-
 
     class HomeActivity : BaseActivity() {
 
@@ -78,14 +54,13 @@ class HomeActivity : BaseActivity() {
 
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_home) // Ensure this is your consolidated layout file
+            setContentView(R.layout.activity_home)
 
             Log.d("HomeActivity", "onCreate called")
 
             db = FirebaseFirestore.getInstance()
             mAuth = FirebaseAuth.getInstance()
 
-            // Calendar setup
             selectedDateTextView = findViewById(R.id.idTVSelectedDate)
             val pickDateButton: Button = findViewById(R.id.idBtnPickDate)
             calendar = Calendar.getInstance()
@@ -102,7 +77,7 @@ class HomeActivity : BaseActivity() {
             Log.d("HomeActivity", "Before fetching moods")
 
             moodList.clear()
-            fetchMoods() // Ensure this line is present
+            fetchMoods()
 
             moodAdapter = MoodAdapter(moodList)
             moodRecyclerView.adapter = moodAdapter
@@ -121,12 +96,11 @@ class HomeActivity : BaseActivity() {
 
             createNotificationChannel()
 
-            // Habits setup
             habitRecyclerView = findViewById(R.id.habitRecyclerView)
             habitRecyclerView.layoutManager = LinearLayoutManager(this)
 
-            habitList.clear() // Clear the list before fetching habits
-            fetchHabits() // Fetch habits before setting up RecyclerView adapter
+            habitList.clear()
+            fetchHabits()
 
             habitAdapter = HabitAdapter(habitList)
             habitRecyclerView.adapter = habitAdapter
@@ -136,10 +110,8 @@ class HomeActivity : BaseActivity() {
                 showAddHabitDialog()
             }
 
-            //Journal setup
             fetchJournalEntries()
 
-            Log.d("HomeActivity", "onCreate finished")
         }
 
         private fun updateLabel() {
@@ -187,7 +159,6 @@ class HomeActivity : BaseActivity() {
                 }
                 .addOnFailureListener { e ->
                     Toast.makeText(this, "Error saving mood", Toast.LENGTH_SHORT).show()
-                    Log.e("HomeActivity", "Error saving mood", e)
                 }
         }
 
@@ -398,4 +369,3 @@ class HomeActivity : BaseActivity() {
         }
 
     }
-}
