@@ -18,7 +18,7 @@ class DeleteOldMessagesService : Service() {
     private val deleteOldMessagesTask = object : Runnable {
         override fun run() {
             deleteOldMessages()
-            handler.postDelayed(this, 24 * 60 * 60 * 1000) // Schedule again in 10 minutes
+            handler.postDelayed(this, 24 * 60 * 60 * 1000)
         }
     }
 
@@ -47,7 +47,7 @@ class DeleteOldMessagesService : Service() {
 
     private fun deleteOldMessages() {
         val currentTimeMillis = System.currentTimeMillis()
-        val tenMinutesInMillis = 10 * 60 * 1000  // 10 minutes in milliseconds
+        val tenMinutesInMillis = 24 * 60 * 60 * 1000
         val thresholdTimeMillis = currentTimeMillis - tenMinutesInMillis
 
         val thresholdTimestamp = Timestamp(Date(thresholdTimeMillis))
