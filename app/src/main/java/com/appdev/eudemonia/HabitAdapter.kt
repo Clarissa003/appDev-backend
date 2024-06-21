@@ -6,16 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class HabitAdapter(private val habitList: MutableList<Habit>) :
-    RecyclerView.Adapter<HabitAdapter.HabitViewHolder>() {
-
-    class HabitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val habitNameTextView: TextView = itemView.findViewById(R.id.habitNameEditText)
-    }
+class HabitAdapter(private val habitList: List<Habit>) : RecyclerView.Adapter<HabitAdapter.HabitViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HabitViewHolder {
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.activity_single_habit, parent, false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.habit_item, parent, false)
         return HabitViewHolder(itemView)
     }
 
@@ -26,9 +20,7 @@ class HabitAdapter(private val habitList: MutableList<Habit>) :
 
     override fun getItemCount() = habitList.size
 
-    fun updateHabits(newHabits: List<Habit>) {
-        habitList.clear()
-        habitList.addAll(newHabits)
-        notifyDataSetChanged()
+    class HabitViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val habitNameTextView: TextView = itemView.findViewById(R.id.habitNameTextView)
     }
 }

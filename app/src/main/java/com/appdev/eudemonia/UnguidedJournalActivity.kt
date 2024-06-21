@@ -12,7 +12,9 @@ import com.appdev.eudemonia.LoginActivity
 import com.appdev.eudemonia.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class UnguidedJournalActivity : BaseActivity() {
 
@@ -20,6 +22,7 @@ class UnguidedJournalActivity : BaseActivity() {
     private lateinit var saveButton: Button
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
+    private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +45,6 @@ class UnguidedJournalActivity : BaseActivity() {
         saveButton.setOnClickListener {
             saveJournalEntry()
         }
-
     }
 
     private fun saveJournalEntry() {
@@ -53,9 +55,11 @@ class UnguidedJournalActivity : BaseActivity() {
         Log.d("UnguidedJournalActivity", "UserId: $userId")
 
         if (content.isNotEmpty() && userId != null) {
+            val currentDate = dateFormat.format(Date())
+
             val journalEntry = hashMapOf(
                 "content" to content,
-                "date" to Date(),
+                "date" to currentDate,
                 "userId" to userId
             )
 
@@ -66,7 +70,8 @@ class UnguidedJournalActivity : BaseActivity() {
                     editText.text.clear()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error saving entry: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error saving entry: ${e.message}", Toast.LENGTH_SHORT)
+                        .show()
                 }
         } else {
             if (content.isEmpty()) {
