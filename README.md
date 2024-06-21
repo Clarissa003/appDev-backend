@@ -1,8 +1,8 @@
 # appDev-backend
 
 ## Overview
-This repository contains the backend code for the appDev project which is a mental health focused android applicaation
-, focusing on habit tracking and social interaction features. The backend is implemented using Kotlin and Java, providing a robust API for managing user data, habits, moods, and more.
+This repository contains the code for the appDev project which is a mental health focused android applicaation
+, focusing on habit tracking and social interaction features. The backend is implemented using Kotlin, providing a robust API for managing user data, habits, moods, and more.
 
 ## Table of Contents
 - [Features](#features)
@@ -65,19 +65,3 @@ API documentation for external integrations can be found in the relevant service
 - **Services and Interfaces**: Contains files for API integrations and service configurations (e.g., HuggingFace, OpenAI, Retrofit).
 
 - **Configuration and Build**: Contains Gradle build files, properties files, and rules for data backup and extraction.
-
-## Backup and Data Extraction
-- **Backup Rules**: Defined in `backup_rules.xml` to manage what data should be backed up.
-- **Data Extraction Rules**: Defined in `data_extraction_rules.xml` to manage what data should be extracted and backed up during cloud backups.
-
-## Contributing
-We welcome contributions! Please follow these steps:
-1. Fork the repository.
-2. Create a new branch (`git checkout -b feature/your-feature`).
-3. Make your changes and commit them (`git commit -m 'Add new feature'`).
-4. Push to the branch (`git push origin feature/your-feature`).
-5. Create a new Pull Request.
-
----
-
-Thank you for using the appDev-backend project!
