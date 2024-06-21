@@ -41,7 +41,6 @@ class ProfileActivity : BaseActivity() {
         coverPhoto = findViewById(R.id.coverPhoto)
         profileName = findViewById(R.id.profileName)
         profileDisplayData = findViewById(R.id.profileBio)
-        shareButton = findViewById(R.id.shareButton)
         profileBio = findViewById(R.id.profileBio)
 
         loadUserProfile()
