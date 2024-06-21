@@ -130,7 +130,6 @@
                     app:tint="#3F3F3F" />
             </LinearLayout>
 
-            <!-- RecyclerView for displaying moods -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/moodRecyclerView"
                 android:layout_width="match_parent"
@@ -187,7 +186,7 @@
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-        
+
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
