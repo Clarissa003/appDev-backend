@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:backgroundTint="@color/greenUltraDark"
-        android:fontFamily="@font/altone"
+        android:fontFamily="@font/gontserratmedium"
         android:text="Set Notification Time"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

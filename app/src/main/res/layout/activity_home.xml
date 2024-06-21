@@ -24,7 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:fontFamily="@font/altone"
+                android:fontFamily="@font/gontserratbold"
                 android:gravity="center"
                 android:padding="10dp"
                 android:text="DASHBOARD"
@@ -42,10 +42,10 @@
                 android:padding="10dp"
                 android:text="Date"
                 android:textAlignment="center"
-                android:textColor="@color/black"
+                android:textColor="@color/greenUltraDark"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:fontFamily="@font/altone"/>
+                android:fontFamily="@font/gontserratmedium"/>
 
             <Button
                 android:id="@+id/idBtnPickDate"
@@ -55,7 +55,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="10dp"
                 android:background="@color/greenUltraDark"
-                android:fontFamily="@font/altone"
+                android:fontFamily="@font/gontserratmedium"
                 android:padding="10dp"
                 android:text="CHANGE DATE"
                 android:textColor="#FFFFFF"
@@ -165,7 +165,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
-                    android:fontFamily="@font/altone"
+                    android:fontFamily="@font/gontserratbold"
                     android:text="DAILY HABITS"
                     android:textColor="@color/white"
                     android:textSize="24sp" />
@@ -182,7 +182,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@color/greenUltraDark"
-                    android:fontFamily="@font/altone"
+                    android:fontFamily="@font/gontserratbold"
                     android:padding="10dp"
                     android:stateListAnimator="@null"
                     android:text="Add Habit"
@@ -213,7 +213,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginBottom="16dp"
-                    android:fontFamily="@font/altone"
+                    android:fontFamily="@font/gontserratbold"
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:text="DAILY ENTRIES"/>

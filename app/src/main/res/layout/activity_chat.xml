@@ -18,9 +18,9 @@
             android:layout_toEndOf="@id/profile_image"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:fontFamily="@font/altone"
+            android:fontFamily="@font/gontserratsemibold"
             android:text="Username"
-            android:textColor="@color/gray"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -51,8 +51,8 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:hint="Type message..."
-                android:textColorHint="#808080"
-                android:fontFamily="@font/altone"/>
+                android:textColorHint="@color/white"
+                android:fontFamily="@font/gontserratlight"/>
 
         <Button
                 android:id="@+id/send_button"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:backgroundTint="@color/greenUltraDark"
-                android:fontFamily="@font/altone"
+                android:fontFamily="@font/gontserratmedium"
                 android:textAllCaps="false"
                 android:text="SEND" />
 

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:fontFamily="@font/altone"
+        android:fontFamily="@font/gontserratregular"
         android:textColor="#3F3F3F" />
 
 </LinearLayout>

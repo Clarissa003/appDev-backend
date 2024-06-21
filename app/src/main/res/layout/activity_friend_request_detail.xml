@@ -16,6 +16,7 @@
         android:textColor="#FFFFFF"
         android:textSize="18sp"
         android:textStyle="bold"
+        android:fontFamily="@font/gontserratsemibold"
         android:text="Username" /> <!-- Set your username text here -->
 
     <Button
@@ -26,5 +27,5 @@
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/greenUltraDark"
         android:text="@string/add_friend"
-        android:fontFamily="@font/altone" /> <!-- Optional: Set button text color to white -->
+        android:fontFamily="@font/gontserratmedium" /> <!-- Optional: Set button text color to white -->
 </LinearLayout>

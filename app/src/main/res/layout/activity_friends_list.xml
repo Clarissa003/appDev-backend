@@ -13,7 +13,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:textStyle="italic"
-    app:fontFamily="@font/altone"
+    app:fontFamily="@font/gontserratregular"
     android:textColor="@color/gray"
     android:textColorHint="@color/gray"
     app:layout_constraintTop_toBottomOf="@+id/idSearch"
