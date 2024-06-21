@@ -41,7 +41,6 @@ class FriendListActivity : BaseActivity() {
         if (currentUserUid != null) {
             Log.d("FriendsActivity", "Current user UID: $currentUserUid")
 
-            // Fetch friends added by the current user
             db.collection("Friends")
                 .whereEqualTo("addedBy", currentUserUid)
                 .get()
@@ -53,7 +52,6 @@ class FriendListActivity : BaseActivity() {
                     Log.e("FriendsActivity", "Error fetching friends (addedBy): ", exception)
                 }
 
-            // Fetch friends where the current user is added as a friend
             db.collection("Friends")
                 .whereEqualTo("userId", currentUserUid)
                 .get()
@@ -76,38 +74,31 @@ class FriendListActivity : BaseActivity() {
             val userId = document.getString("userId") ?: ""
             val addedBy = document.getString("addedBy") ?: ""
 
-            // Determine which ID and username to fetch based on the current user's role in the friendship
             val friendUserId: String
             val username: String
 
             if (field == "userId" && currentUserId == addedBy) {
-                // Current user initiated the friendship, fetch username of the friend
                 friendUserId = userId
                 username = document.getString("username") ?: ""
             } else if (field == "addedBy" && currentUserId == userId) {
-                // Current user was added by someone else, fetch username of the current user
                 friendUserId = addedBy
                 username = document.getString("usernameRequester") ?: ""
             } else {
-                // In case of unexpected conditions, continue to the next document
                 continue
             }
 
-            // Fetch profile picture URL from Firebase Storage
             val storageReference = FirebaseStorage.getInstance().reference
             val profilePictureRef = storageReference.child("profile_pictures/${friendUserId}") // Adjust path as per your storage structure
 
             profilePictureRef.downloadUrl.addOnSuccessListener { uri ->
                 val profilePictureUrl = uri.toString()
 
-                // If username is not empty, add Friend to the list
                 if (username.isNotEmpty()) {
                     friendsList.add(FriendList(friendUserId, username, profilePictureUrl))
                     adapter.notifyDataSetChanged() // Notify adapter after adding data
                 }
             }.addOnFailureListener { exception ->
                 Log.e("FriendsActivity", "Error fetching profile picture URL for $friendUserId", exception)
-                // Add friend with default profile picture URL if fetching fails
                 if (username.isNotEmpty()) {
                     friendsList.add(FriendList(friendUserId, username, ""))
                     adapter.notifyDataSetChanged() // Notify adapter after adding data
