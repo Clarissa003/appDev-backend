@@ -1,8 +1,6 @@
 package com.appdev.eudemonia.authentication
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -12,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.home.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
-import java.util.*
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var editTextUsername: EditText
@@ -58,17 +55,12 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     val user = auth.currentUser
                     Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-
-                    // Navigate to ProfileActivity
                     val intent = Intent(this, HomeActivity::class.java)
                     startActivity(intent)
-                    // Optional: finish the LoginActivity to prevent the user from going back to it
                     finish()
                 } else {
-                    // If sign in fails, display a message to the user.
                     Toast.makeText(
                         baseContext, "Authentication failed. ${task.exception?.message}",
                         Toast.LENGTH_SHORT
