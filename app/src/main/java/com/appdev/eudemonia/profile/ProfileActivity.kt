@@ -71,12 +71,14 @@ class ProfileActivity : BaseActivity() {
                     .load(url)
                     .into(profilePicture)
             }
-            profileName.text = currentUser.displayName ?: "No Username"
 
             db.collection("Profile").document(currentUser.uid).get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         profileBio.text = document.getString("bio") ?: "No bio available"
+                        val username = document.getString("username") ?: "No Username"
+                        profileName.text = username
+                        // Load cover photo if available
                         val coverPhotoUrl = document.getString("coverPhoto")
                         coverPhotoUrl?.let { url ->
                             Glide.with(this)
@@ -86,10 +88,11 @@ class ProfileActivity : BaseActivity() {
                     }
                 }
                 .addOnFailureListener { exception ->
-                    Toast.makeText(this, "Error getting profile bio: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Error getting profile data: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }
+
 
     private fun showEditDialog(field: String) {
         val builder = AlertDialog.Builder(this)

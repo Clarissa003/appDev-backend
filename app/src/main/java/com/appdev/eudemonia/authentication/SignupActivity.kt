@@ -69,7 +69,7 @@ class SignupActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user: FirebaseUser? = auth.currentUser
                     user?.let {
-                        saveUserToFirestore(email, username)
+                        saveUserToFirestore(it.uid, email, username)
                         saveProfileToFirestore(it.uid, username)
                     }
                 } else {
@@ -78,14 +78,15 @@ class SignupActivity : AppCompatActivity() {
             }
     }
 
-    private fun saveUserToFirestore(email: String, username: String) {
+    private fun saveUserToFirestore(userId: String, email: String, username: String) {
         val user = hashMapOf(
             "email" to email,
             "username" to username
         )
 
         firestore.collection("User")
-            .add(user)
+            .document(userId)
+            .set(user)
             .addOnSuccessListener {
                 Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show()
             }
@@ -96,7 +97,6 @@ class SignupActivity : AppCompatActivity() {
 
     private fun saveProfileToFirestore(userId: String, username: String) {
         val profile = hashMapOf(
-            "userId" to userId,
             "username" to username,
             "bio" to null,
             "profilePic" to null,
@@ -104,7 +104,8 @@ class SignupActivity : AppCompatActivity() {
         )
 
         firestore.collection("Profile")
-            .add(profile)
+            .document(userId)  // <-- Set the document ID to userId
+            .set(profile)      // <-- Use .set() instead of .add()
             .addOnSuccessListener {
                 Toast.makeText(this, "Profile created successfully", Toast.LENGTH_SHORT).show()
             }
@@ -112,4 +113,5 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed to create profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
+
 }
