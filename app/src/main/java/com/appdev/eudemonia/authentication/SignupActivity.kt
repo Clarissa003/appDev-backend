@@ -70,6 +70,7 @@ class SignupActivity : AppCompatActivity() {
                     val user: FirebaseUser? = auth.currentUser
                     user?.let {
                         saveUserToFirestore(email, username)
+                        saveProfileToFirestore(it.uid, username)
                     }
                 } else {
                     Toast.makeText(this, "Sign up failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
@@ -84,13 +85,31 @@ class SignupActivity : AppCompatActivity() {
         )
 
         firestore.collection("User")
-            .document()
-            .set(user)
+            .add(user)
             .addOnSuccessListener {
                 Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Failed to register user: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+    private fun saveProfileToFirestore(userId: String, username: String) {
+        val profile = hashMapOf(
+            "userId" to userId,
+            "username" to username,
+            "bio" to null,
+            "profilePic" to null,
+            "coverPhoto" to null
+        )
+
+        firestore.collection("Profile")
+            .add(profile)
+            .addOnSuccessListener {
+                Toast.makeText(this, "Profile created successfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "Failed to create profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
