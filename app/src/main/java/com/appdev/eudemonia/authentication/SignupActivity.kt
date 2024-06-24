@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.appdev.eudemonia.R
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
 class SignupActivity : AppCompatActivity() {
@@ -30,7 +31,6 @@ class SignupActivity : AppCompatActivity() {
             FirebaseApp.initializeApp(this)
         }
         auth = FirebaseAuth.getInstance()
-
         firestore = FirebaseFirestore.getInstance()
 
         emailEditText = findViewById(R.id.editTextEmail)
@@ -48,12 +48,7 @@ class SignupActivity : AppCompatActivity() {
 
             if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
                 if (password == confirmPassword) {
-                    val user = hashMapOf(
-                        "email" to email,
-                        "name" to username,
-                        "password" to password
-                    )
-                    addUserToFirestore(user)
+                    signUpUser(email, username, password)
                 } else {
                     confirmPasswordEditText.error = "Passwords do not match"
                 }
@@ -61,19 +56,37 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
             }
         }
+
         loginRedirectTextView.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
         }
     }
 
-    private fun addUserToFirestore(user: HashMap<String, String>) {
-        val hashedPassword = hashPassword(user["password"]!!)
-        user["password"] = hashedPassword
+    private fun signUpUser(email: String, username: String, password: String) {
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user: FirebaseUser? = auth.currentUser
+                    user?.let {
+                        saveUserToFirestore(email, username)
+                    }
+                } else {
+                    Toast.makeText(this, "Sign up failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
+
+    private fun saveUserToFirestore(email: String, username: String) {
+        val user = hashMapOf(
+            "email" to email,
+            "username" to username
+        )
 
         firestore.collection("User")
-            .add(user)
-            .addOnSuccessListener { documentReference ->
+            .document()
+            .set(user)
+            .addOnSuccessListener {
                 Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
