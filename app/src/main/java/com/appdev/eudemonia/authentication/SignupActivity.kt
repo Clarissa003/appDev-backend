@@ -27,40 +27,70 @@ class SignupActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
+        initializeFirebase()
+        initializeViews()
+        initializeManagers()
+        setButtonListeners()
+    }
+
+    private fun initializeFirebase() {
         if (FirebaseApp.getApps(this).isEmpty()) {
             FirebaseApp.initializeApp(this)
         }
-        auth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
+    }
 
+    private fun initializeViews() {
         emailEditText = findViewById(R.id.editTextEmail)
         usernameEditText = findViewById(R.id.editTextUsername)
         passwordEditText = findViewById(R.id.editTextPassword)
         confirmPasswordEditText = findViewById(R.id.editTextConfirmPassword)
         loginRedirectTextView = findViewById(R.id.textViewLoginRedirect)
         signUpButton = findViewById(R.id.buttonSignUp)
+    }
 
+    private fun initializeManagers() {
+        auth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
+    }
+
+    private fun setButtonListeners() {
         signUpButton.setOnClickListener {
-            val email = emailEditText.text.toString()
-            val username = usernameEditText.text.toString()
-            val password = passwordEditText.text.toString()
-            val confirmPassword = confirmPasswordEditText.text.toString()
-
-            if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
-                if (password == confirmPassword) {
-                    signUpUser(email, username, password)
-                } else {
-                    confirmPasswordEditText.error = "Passwords do not match"
-                }
-            } else {
-                Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
-            }
+            handleSignUp()
         }
 
         loginRedirectTextView.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            redirectToLogin()
         }
+    }
+
+    private fun handleSignUp() {
+        val email = emailEditText.text.toString()
+        val username = usernameEditText.text.toString()
+        val password = passwordEditText.text.toString()
+        val confirmPassword = confirmPasswordEditText.text.toString()
+
+        if (validateInput(email, username, password, confirmPassword)) {
+            signUpUser(email, username, password)
+        }
+    }
+
+    private fun validateInput(email: String, username: String, password: String, confirmPassword: String): Boolean {
+        return if (email.isNotEmpty() && username.isNotEmpty() && password.isNotEmpty() && confirmPassword.isNotEmpty()) {
+            if (password == confirmPassword) {
+                true
+            } else {
+                confirmPasswordEditText.error = "Passwords do not match"
+                false
+            }
+        } else {
+            Toast.makeText(this, "Please fill in all fields", Toast.LENGTH_SHORT).show()
+            false
+        }
+    }
+
+    private fun redirectToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
     }
 
     private fun signUpUser(email: String, username: String, password: String) {
@@ -104,8 +134,8 @@ class SignupActivity : AppCompatActivity() {
         )
 
         firestore.collection("Profile")
-            .document(userId)  // <-- Set the document ID to userId
-            .set(profile)      // <-- Use .set() instead of .add()
+            .document(userId)
+            .set(profile)
             .addOnSuccessListener {
                 Toast.makeText(this, "Profile created successfully", Toast.LENGTH_SHORT).show()
             }
@@ -113,5 +143,4 @@ class SignupActivity : AppCompatActivity() {
                 Toast.makeText(this, "Failed to create profile: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
-
 }

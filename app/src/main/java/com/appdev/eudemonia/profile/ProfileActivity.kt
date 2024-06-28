@@ -3,17 +3,13 @@ package com.appdev.eudemonia.profile
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.widget.ImageButton
 import android.text.InputType
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.R
+import com.appdev.eudemonia.authentication.LoginActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -25,9 +21,9 @@ class ProfileActivity : BaseActivity() {
     private lateinit var profilePicture: ImageView
     private lateinit var coverPhoto: ImageView
     private lateinit var profileName: TextView
-    private lateinit var profileDisplayData: TextView
-    private lateinit var shareButton: ImageButton
     private lateinit var profileBio: TextView
+    private lateinit var editProfileNameButton: Button
+    private lateinit var editBioButton: Button
 
     private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -37,49 +33,56 @@ class ProfileActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
+        initializeViews()
+
+        if (auth.currentUser == null) {
+            navigateToLogin()
+            return
+        }
+
+        setupClickListeners()
+
+        loadUserProfile()
+    }
+
+    private fun initializeViews() {
         profilePicture = findViewById(R.id.profilePicture)
         coverPhoto = findViewById(R.id.coverPhoto)
         profileName = findViewById(R.id.profileName)
-        profileDisplayData = findViewById(R.id.profileBio)
         profileBio = findViewById(R.id.profileBio)
+        editProfileNameButton = findViewById(R.id.editProfileNameButton)
+        editBioButton = findViewById(R.id.editBio)
+    }
 
-        loadUserProfile()
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 
-        profilePicture.setOnClickListener {
-            selectImage("profilePicture")
-        }
-
-        coverPhoto.setOnClickListener {
-            selectImage("coverPhoto")
-        }
-
-        findViewById<Button>(R.id.editProfileNameButton).setOnClickListener {
-            showEditDialog("name")
-        }
-
-        findViewById<Button>(R.id.editBio).setOnClickListener {
-            showEditDialog("bio")
-        }
+    private fun setupClickListeners() {
+        profilePicture.setOnClickListener { selectImage("profilePicture") }
+        coverPhoto.setOnClickListener { selectImage("coverPhoto") }
+        editProfileNameButton.setOnClickListener { showEditDialog("name") }
+        editBioButton.setOnClickListener { showEditDialog("bio") }
     }
 
     private fun loadUserProfile() {
         val currentUser = auth.currentUser
-        if (currentUser != null) {
-            val profilePicUrl = currentUser.photoUrl
+        currentUser?.let { user ->
+            val profilePicUrl = user.photoUrl
             profilePicUrl?.let { url ->
                 Glide.with(this)
                     .load(url)
                     .into(profilePicture)
             }
 
-            db.collection("Profile").document(currentUser.uid).get()
+            db.collection("Profile").document(user.uid).get()
                 .addOnSuccessListener { document ->
-                    if (document != null) {
-                        profileBio.text = document.getString("bio") ?: "No bio available"
-                        val username = document.getString("username") ?: "No Username"
-                        profileName.text = username
-                        // Load cover photo if available
-                        val coverPhotoUrl = document.getString("coverPhoto")
+                    document?.let {
+                        profileBio.text = it.getString("bio") ?: "No bio available"
+                        profileName.text = it.getString("username") ?: "No Username"
+                        val coverPhotoUrl = it.getString("coverPhoto")
                         coverPhotoUrl?.let { url ->
                             Glide.with(this)
                                 .load(url)
@@ -93,7 +96,6 @@ class ProfileActivity : BaseActivity() {
         }
     }
 
-
     private fun showEditDialog(field: String) {
         val builder = AlertDialog.Builder(this)
         builder.setTitle("Edit $field")
@@ -104,10 +106,9 @@ class ProfileActivity : BaseActivity() {
 
         builder.setPositiveButton("OK") { dialog, which ->
             val text = input.text.toString()
-            if (field == "name") {
-                updateProfileName(text)
-            } else if (field == "bio") {
-                updateProfileBio(text)
+            when (field) {
+                "name" -> updateProfileName(text)
+                "bio" -> updateProfileBio(text)
             }
         }
         builder.setNegativeButton("Cancel") { dialog, which -> dialog.cancel() }
@@ -117,66 +118,51 @@ class ProfileActivity : BaseActivity() {
 
     private fun updateProfileName(name: String) {
         val user = auth.currentUser
-        user?.updateProfile(UserProfileChangeRequest.Builder().setDisplayName(name).build())
-            ?.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+        user?.let { currentUser ->
+            val profileUpdates = UserProfileChangeRequest.Builder().setDisplayName(name).build()
+            currentUser.updateProfile(profileUpdates)
+                .addOnSuccessListener {
                     profileName.text = name
                     Toast.makeText(this, "Name updated successfully", Toast.LENGTH_SHORT).show()
-
-                    db.collection("Profile").document(user.uid)
-                        .update("username", name)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Name updated in Profile collection", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener { exception ->
-                            Toast.makeText(this, "Error updating name in Profile collection: ${exception.message}", Toast.LENGTH_SHORT).show()
-                        }
-
-                    db.collection("User").document(user.uid)
-                        .update("username", name)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Name updated in Users collection", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener { exception ->
-                            Toast.makeText(this, "Error updating name in Users collection: ${exception.message}", Toast.LENGTH_SHORT).show()
-                        }
-                    db.collection("Friends").document(user.uid)
-                        .update("username", name)
-                        .addOnSuccessListener {
-                            Toast.makeText(this, "Name updated in Friends collection", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener { exception ->
-                            Toast.makeText(this, "Error updating name in Friends collection: ${exception.message}", Toast.LENGTH_SHORT).show()
-                        }
-                } else {
-                    Toast.makeText(this, "Failed to update name", Toast.LENGTH_SHORT).show()
+                    updateProfileInFirestore(currentUser.uid, "username", name)
                 }
-            }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this, "Failed to update name: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
     }
 
 
     private fun updateProfileBio(bio: String) {
         val user = auth.currentUser
         user?.let {
-            db.collection("Profile").document(it.uid)
-                .update("bio", bio)
-                .addOnSuccessListener {
-                    profileBio.text = bio
-                    Toast.makeText(this, "Bio updated successfully", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(this, "Error updating bio: ${exception.message}", Toast.LENGTH_SHORT).show()
-                }
+            updateProfileInFirestore(it.uid, "bio", bio)
         }
+    }
+
+    private fun updateProfileInFirestore(userId: String, field: String, value: String) {
+        val data = hashMapOf<String, Any>(field to value) // Explicit type to resolve type mismatch
+        db.collection("Profile").document(userId)
+            .update(data) // Use explicit cast to Map<String, Any> for Firestore compatibility
+            .addOnSuccessListener {
+                if (field == "bio") {
+                    profileBio.text = value
+                    Toast.makeText(this, "Bio updated successfully", Toast.LENGTH_SHORT).show()
+                } else if (field == "username") {
+                    Toast.makeText(this, "Name updated in Firestore", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this, "Error updating $field in Firestore: ${exception.message}", Toast.LENGTH_SHORT).show()
+            }
     }
 
     private fun selectImage(imageType: String) {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        if (imageType == "profilePicture") {
-            pickProfileImage.launch(intent)
-        } else if (imageType == "coverPhoto") {
-            pickCoverImage.launch(intent)
+        when (imageType) {
+            "profilePicture" -> pickProfileImage.launch(intent)
+            "coverPhoto" -> pickCoverImage.launch(intent)
         }
     }
 
@@ -211,34 +197,10 @@ class ProfileActivity : BaseActivity() {
             imageRef.putFile(imageUri)
                 .addOnSuccessListener { taskSnapshot ->
                     imageRef.downloadUrl.addOnSuccessListener { uri ->
-                        val user = auth.currentUser
                         if (imageType == "profilePicture") {
-                            user?.updateProfile(UserProfileChangeRequest.Builder().setPhotoUri(uri).build())
-                                ?.addOnSuccessListener {
-                                    loadUserProfile()
-                                    Toast.makeText(this, "Profile image updated successfully", Toast.LENGTH_SHORT).show()
-                                    db.collection("Profile").document(uid)
-                                        .update("profilePic", uri.toString())
-                                        .addOnSuccessListener {
-                                            Toast.makeText(this, "Profile image updated in Firestore", Toast.LENGTH_SHORT).show()
-                                        }
-                                        .addOnFailureListener { exception ->
-                                            Toast.makeText(this, "Error updating profile image in Firestore: ${exception.message}", Toast.LENGTH_SHORT).show()
-                                        }
-                                }
-                                ?.addOnFailureListener { exception ->
-                                    Toast.makeText(this, "Failed to update profile image: ${exception.message}", Toast.LENGTH_SHORT).show()
-                                }
+                            updateProfilePhoto(uri)
                         } else if (imageType == "coverPhoto") {
-                            db.collection("Profile").document(uid)
-                                .update("coverPhoto", uri.toString())
-                                .addOnSuccessListener {
-                                    loadUserProfile()
-                                    Toast.makeText(this, "Cover photo updated successfully", Toast.LENGTH_SHORT).show()
-                                }
-                                .addOnFailureListener { exception ->
-                                    Toast.makeText(this, "Error updating cover photo: ${exception.message}", Toast.LENGTH_SHORT).show()
-                                }
+                            updateCoverPhoto(uri)
                         }
                     }
                 }
@@ -246,7 +208,35 @@ class ProfileActivity : BaseActivity() {
                     Toast.makeText(this, "Failed to upload image: ${exception.message}", Toast.LENGTH_SHORT).show()
                 }
         }
+    }
+
+    private fun updateProfilePhoto(uri: Uri) {
+        val user = auth.currentUser
+        user?.let { currentUser ->
+            val profileUpdates = UserProfileChangeRequest.Builder().setPhotoUri(uri).build()
+            currentUser.updateProfile(profileUpdates)
+                .addOnSuccessListener {
+                    Glide.with(this@ProfileActivity)
+                        .load(uri)
+                        .into(profilePicture)
+                    Toast.makeText(this@ProfileActivity, "Profile image updated successfully", Toast.LENGTH_SHORT).show()
+                    updateProfileInFirestore(currentUser.uid!!, "profilePic", uri.toString()) // Ensure currentUser.uid is non-null
+                }
+                .addOnFailureListener { exception ->
+                    Toast.makeText(this@ProfileActivity, "Failed to update profile image: ${exception.message}", Toast.LENGTH_SHORT).show()
+                }
+        }
+    }
 
 
+    private fun updateCoverPhoto(uri: Uri) {
+        val userId = auth.currentUser?.uid
+        userId?.let {
+            updateProfileInFirestore(it, "coverPhoto", uri.toString())
+            Glide.with(this)
+                .load(uri)
+                .into(coverPhoto)
+            Toast.makeText(this, "Cover photo updated successfully", Toast.LENGTH_SHORT).show()
+        }
     }
 }

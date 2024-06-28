@@ -23,49 +23,82 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        auth = FirebaseAuth.getInstance()
+        initializeFirebaseAuth()
+        initializeViews()
+        setButtonListeners()
+    }
 
+    private fun initializeFirebaseAuth() {
+        auth = FirebaseAuth.getInstance()
+    }
+
+    private fun initializeViews() {
         editTextUsername = findViewById(R.id.editTextUsername)
         editTextPassword = findViewById(R.id.editTextPassword)
         buttonLogin = findViewById(R.id.buttonLogin)
         textViewRegisterRedirect = findViewById(R.id.textViewRegisterRedirect)
         textViewForgotPassword = findViewById(R.id.textViewForgotPassword)
+    }
 
+    private fun setButtonListeners() {
         buttonLogin.setOnClickListener {
-            val email = editTextUsername.text.toString()
-            val password = editTextPassword.text.toString()
-
-            if (email.isNotEmpty() && password.isNotEmpty()) {
-                login(email, password)
-            } else {
-                Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
-            }
+            handleLogin()
         }
 
         textViewRegisterRedirect.setOnClickListener {
-            startActivity(Intent(this, SignupActivity::class.java))
+            redirectToSignup()
         }
 
         textViewForgotPassword.setOnClickListener {
-            startActivity(Intent(this, ResetPasswordActivity::class.java))
+            redirectToResetPassword()
         }
+    }
+
+    private fun handleLogin() {
+        val email = editTextUsername.text.toString()
+        val password = editTextPassword.text.toString()
+
+        if (validateInput(email, password)) {
+            login(email, password)
+        }
+    }
+
+    private fun validateInput(email: String, password: String): Boolean {
+        return if (email.isNotEmpty() && password.isNotEmpty()) {
+            true
+        } else {
+            Toast.makeText(this, "Please enter email and password", Toast.LENGTH_SHORT).show()
+            false
+        }
+    }
+
+    private fun redirectToSignup() {
+        startActivity(Intent(this, SignupActivity::class.java))
+    }
+
+    private fun redirectToResetPassword() {
+        startActivity(Intent(this, ResetPasswordActivity::class.java))
     }
 
     private fun login(email: String, password: String) {
         auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, HomeActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    handleLoginSuccess()
                 } else {
-                    Toast.makeText(
-                        baseContext, "Authentication failed. ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    handleLoginFailure(task.exception?.message)
                 }
             }
+    }
+
+    private fun handleLoginSuccess() {
+        Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this, HomeActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun handleLoginFailure(errorMessage: String?) {
+        Toast.makeText(this, "Authentication failed. $errorMessage", Toast.LENGTH_SHORT).show()
     }
 }
