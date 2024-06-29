@@ -119,6 +119,7 @@ class SignupActivity : AppCompatActivity() {
             .set(user)
             .addOnSuccessListener {
                 Toast.makeText(this, "User registered successfully", Toast.LENGTH_SHORT).show()
+                redirectToLogin()
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Failed to register user: ${e.message}", Toast.LENGTH_SHORT).show()
