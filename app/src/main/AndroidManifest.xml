@@ -20,21 +20,11 @@
         android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:label="@string/app_name"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@mipmap/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat"
         tools:targetApi="31">
 
-    <activity
-        android:name=".splashscreen.SplashScreenActivity"
-        android:theme="@style/SplashScreenTheme"
-        android:exported="true">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
         <!-- MainActivity -->
         <!--
         <activity
@@ -49,6 +39,16 @@
         </activity>
         -->
         <!-- SignupActivity - set as launcher activity -->
+        <activity
+            android:name=".authentication.SplashScreenActivity"
+            android:exported="true"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
         <activity
                 android:name=".authentication.SignupActivity"
                 android:exported="true"
