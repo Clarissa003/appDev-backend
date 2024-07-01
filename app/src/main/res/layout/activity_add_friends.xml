@@ -17,11 +17,12 @@
         android:id="@+id/friend_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:fontFamily="@font/gontserratregular"
+        android:layout_marginTop="10dp"
         android:text="Friend Name"
         android:textColor="#525252"
-        android:fontFamily="@font/altone"
-        android:textSize="16sp"
-        android:layout_gravity="center_vertical" />
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/add_button"
@@ -30,7 +31,7 @@
         android:layout_gravity="center_vertical"
         android:backgroundTint="@color/greenUltraDark"
         android:layout_marginLeft="150dp"
-        android:fontFamily="@font/altone"
+        android:fontFamily="@font/gontserratbold"
         android:text="Add"
         android:onClick="onAddFriendClick" />
 
@@ -41,7 +42,7 @@
         android:layout_gravity="center_vertical"
         android:backgroundTint="@color/greenUltraDark"
         android:layout_marginLeft="150dp"
-        android:fontFamily="@font/altone"
+        android:fontFamily="@font/gontserratmedium"
         android:text="Remove"
         android:visibility="gone" />
 
