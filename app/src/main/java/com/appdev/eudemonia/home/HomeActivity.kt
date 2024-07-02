@@ -16,9 +16,12 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.appdev.eudemonia.menu.BaseActivity
+import com.appdev.eudemonia.FriendsFragment
+import com.appdev.eudemonia.HomeFragment
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.HabitAdapter
 import com.appdev.eudemonia.adapters.JournalAdapter
@@ -27,6 +30,7 @@ import com.appdev.eudemonia.adapters.MoodAdapter
 import com.appdev.eudemonia.chat.FriendListActivity
 import com.appdev.eudemonia.dataclasses.Habit
 import com.appdev.eudemonia.dataclasses.JournalEntry
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,7 +38,7 @@ import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HomeActivity : BaseActivity() {
+class HomeActivity : FragmentActivity() {
 
     private lateinit var db: FirebaseFirestore
     private lateinit var mAuth: FirebaseAuth
@@ -62,6 +66,30 @@ class HomeActivity : BaseActivity() {
         initializeHabits()
         initializeJournal()
         createNotificationChannel()
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> {
+                    loadFragment(HomeFragment())
+                    true
+                }
+                R.id.navigation_friends -> {
+                    loadFragment(FriendsFragment())
+                    true
+                }
+                else -> false
+            }
+        }
+
+        // Set default selection
+        bottomNavigationView.selectedItemId = R.id.navigation_home
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.nav_host_fragment, fragment)
+            .commit()
     }
 
     private fun initializeFirebase() {
