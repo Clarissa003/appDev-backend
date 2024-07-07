@@ -11,13 +11,14 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.ListView
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendsAdapter
 import com.appdev.eudemonia.dataclasses.User
@@ -30,7 +31,7 @@ class FriendsActivity : BaseActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-    private lateinit var listView: ListView
+    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FriendsAdapter
     private lateinit var searchView: SearchView
     private val users = mutableListOf<User>()
@@ -38,11 +39,11 @@ class FriendsActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_friends)
+        setContentView(R.layout.activity_friends_list)
 
         initFirebase()
         initViews()
-        setupListView()
+        setupRecyclerView()
         setupSearchView()
 
         loadUsers()
@@ -56,13 +57,14 @@ class FriendsActivity : BaseActivity() {
     }
 
     private fun initViews() {
-        listView = findViewById(R.id.idFriends)
+        recyclerView = findViewById(R.id.idFriendsRecyclerView)
         searchView = findViewById(R.id.idSearch)
     }
 
-    private fun setupListView() {
-        adapter = FriendsAdapter(this, displayedUsers)
-        listView.adapter = adapter
+    private fun setupRecyclerView() {
+        adapter = FriendsAdapter(this, displayedUsers, ::addFriend, ::removeFriend)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
     }
 
     private fun setupSearchView() {
@@ -158,7 +160,7 @@ class FriendsActivity : BaseActivity() {
                         val userId = document.id
                         val username = document.getString("username") ?: "Unknown"
                         val profilePicUrl = document.getString("profilePicUrl")
-                        val user = User(userId, username, profilePicUrl)
+                        val user = User(userId, username, profilePicUrl ?: "")
 
                         checkIfFriend(currentUser.uid, userId) { isFriend ->
                             user.isFriend = isFriend
