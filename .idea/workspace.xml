@@ -148,7 +148,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c195014e-e33e-4c41-89b7-bc4f31e32c0c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/authentication/SignupActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/authentication/SignupActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/icon.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -158,7 +159,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\alici\.android\avd\Pixel_8_API_33_5.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=/Users/izabelarybinska/.android/avd/Pixel_8_API_35.avd)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -273,7 +274,7 @@
     &quot;RunOnceActivity.readMode.enableVisualFormatting&quot;: &quot;true&quot;,
     &quot;cf.first.check.clang-format&quot;: &quot;false&quot;,
     &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;dev&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;resit&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;
   }
 }</component>
@@ -282,11 +283,11 @@
       <recent name="com.appdev.eudemonia" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi" />
       <recent name="C:\Users\alici\OneDrive\Escritorio\Period4\appDev-backend\app\src\main\java\com\appdev\eudemonia\authentication" />
       <recent name="C:\Users\alici\OneDrive\Escritorio\Period4\appDev-backend\app\src\main\java\com\appdev\eudemonia\settings" />
       <recent name="C:\Users\alici\OneDrive\Escritorio\Period4\appDev-backend\app\src\main\java\com\appdev\eudemonia\dataclasses" />
       <recent name="C:\Users\sarar\appDev-backend\app\src\main\res\drawable" />
-      <recent name="C:\Users\clari\appDev-backend\app\src\main\res\menu" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="com.appdev.eudemonia" />
