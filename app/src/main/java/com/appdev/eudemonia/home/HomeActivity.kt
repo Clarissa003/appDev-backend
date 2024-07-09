@@ -18,9 +18,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appdev.eudemonia.FriendsFragment
@@ -48,8 +45,6 @@ class HomeActivity : FragmentActivity() {
     private lateinit var selectedDateTextView: TextView
     private lateinit var calendar: Calendar
     private val currentUserEmail = Firebase.auth.currentUser?.email
-    private lateinit var navController: NavController
-
 
     private lateinit var habitRecyclerView: RecyclerView
     private lateinit var habitAdapter: HabitAdapter
@@ -71,11 +66,6 @@ class HomeActivity : FragmentActivity() {
         initializeHabits()
         initializeJournal()
         createNotificationChannel()
-
-        setContentView(R.layout.activity_home)
-
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->

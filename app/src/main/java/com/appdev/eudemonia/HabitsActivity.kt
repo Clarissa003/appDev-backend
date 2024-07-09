@@ -17,6 +17,8 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+
+
 class HabitsActivity : BaseActivity() {
 
     private val db = Firebase.firestore

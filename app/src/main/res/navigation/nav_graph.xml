@@ -9,11 +9,7 @@
             android:id="@+id/homeFragment"
             android:name="com.appdev.eudemonia.HomeFragment"
             android:label="Home"
-            tools:layout="@layout/fragment_home">
-        <action
-                android:id="@+id/action_homeFragment_to_friendsFragment"
-                app:destination="@id/friendsFragment" />
-    </fragment>
+            tools:layout="@layout/fragment_home" />
 
     <fragment
             android:id="@+id/friendsFragment"

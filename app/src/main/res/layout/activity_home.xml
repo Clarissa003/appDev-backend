@@ -61,7 +61,7 @@
                         android:fontFamily="@font/altone"
                         android:padding="10dp"
                         android:text="CHANGE DATE"
-                        android:textColor="#FFF"
+                        android:textColor="@android:color/white"
                         android:textSize="15sp" />
             </RelativeLayout>
 
@@ -187,7 +187,7 @@
                             android:padding="10dp"
                             android:stateListAnimator="@null"
                             android:text="Add Habit"
-                            android:textColor="#FFFFFF"
+                            android:textColor="@android:color/white"
                             android:textSize="15sp" />
 
                 </LinearLayout>
