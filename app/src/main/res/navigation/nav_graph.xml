@@ -22,4 +22,10 @@
             android:name="com.appdev.eudemonia.ProfileFragment"
             android:label="Profile"
             tools:layout="@layout/fragment_profile" />
+
+    <fragment
+            android:id="@+id/soundsFragment"
+            android:name="com.appdev.eudemonia.SongsListFragment"
+            android:label="Songs"
+            tools:layout="@layout/fragment_songs_list" />
 </navigation>
