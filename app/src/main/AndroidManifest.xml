@@ -1,145 +1,119 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.appdev.eudemonia">
+        xmlns:tools="http://schemas.android.com/tools"
+        package="com.appdev.eudemonia">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+            android:name="android.permission.READ_EXTERNAL_STORAGE"
+            android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-
     <application
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:enableOnBackInvokedCallback="true"
-        android:fullBackupContent="@xml/backup_rules"
-        android:label="@string/app_name"
-        android:icon="@mipmap/icon"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.AppCompat"
-        tools:targetApi="31">
-
-        <!-- MainActivity -->
-        <!--
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
+            android:allowBackup="true"
+            android:dataExtractionRules="@xml/data_extraction_rules"
+            android:enableOnBackInvokedCallback="true"
+            android:fullBackupContent="@xml/backup_rules"
             android:label="@string/app_name"
-            android:theme="@style/Theme.AppCompat">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        -->
-        <!-- SignupActivity - set as launcher activity -->
+            android:icon="@mipmap/icon"
+            android:supportsRtl="true"
+            android:theme="@style/Theme.AppCompat"
+            tools:targetApi="31">
+
+        <!-- SplashScreenActivity as launcher -->
         <activity
-            android:name=".authentication.SplashScreenActivity"
-            android:exported="true"
-            android:theme="@style/SplashTheme">
+                android:name=".authentication.SplashScreenActivity"
+                android:exported="true"
+                android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
+        <!-- Other activities -->
         <activity
                 android:name=".authentication.SignupActivity"
                 android:exported="true"
                 android:label="Signup"
-                android:theme="@style/Theme.AppCompat">
-        </activity>
-         <!-- ProfileActivity -->
+                android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".profile.ProfileActivity"
-            android:exported="true"
-            android:label="Profile"
-            android:theme="@style/Theme.AppCompat" />
+                android:name=".profile.ProfileActivity"
+                android:exported="true"
+                android:label="Profile"
+                android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".authentication.ResetPasswordActivity"
-            android:exported="true"
-            android:label="Reset Password"
-            android:theme="@style/Theme.AppCompat" /> <!-- LoginActivity -->
+                android:name=".authentication.ResetPasswordActivity"
+                android:exported="true"
+                android:label="Reset Password"
+                android:theme="@style/Theme.AppCompat" />
         <activity
                 android:name=".authentication.LoginActivity"
                 android:exported="true"
                 android:label="Login"
                 android:theme="@style/Theme.AppCompat">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-        </activity>
-        
-        <!-- UnguidedJournalActivity -->
-        <activity
-            android:name=".journals.UnguidedJournalActivity"
-            android:exported="true"
-            android:label="Unguided Journal"
-            android:theme="@style/Theme.AppCompat" /> <!-- GuidedJournalActivity -->
-        <activity
-            android:name=".journals.GuidedJournalActivity"
-            android:exported="true"
-            android:label="Guided Journal"
-            android:theme="@style/Theme.AppCompat" /> <!-- FriendsActivity -->
-        <activity
-            android:name=".chat.FriendListActivity"
-            android:exported="true"
-            android:label="Friends"
-            android:theme="@style/Theme.AppCompat">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
-            android:name=".friends.FriendRequestDetailActivity"
-            android:exported="false">
+                android:name=".journals.UnguidedJournalActivity"
+                android:exported="true"
+                android:label="Unguided Journal"
+                android:theme="@style/Theme.AppCompat" />
+        <activity
+                android:name=".journals.GuidedJournalActivity"
+                android:exported="true"
+                android:label="Guided Journal"
+                android:theme="@style/Theme.AppCompat" />
+        <activity
+                android:name=".chat.FriendListActivity"
+                android:exported="true"
+                android:label="Friends"
+                android:theme="@style/Theme.AppCompat" />
+        <activity
+                android:name=".friends.FriendRequestDetailActivity"
+                android:exported="false">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".home.HomeActivity"
-            android:exported="true"
-            android:label="Home"
-            android:theme="@style/Theme.AppCompat">
-        </activity> <!-- FriendsActivity -->
+                android:name=".home.HomeActivity"
+                android:exported="true"
+                android:label="Home"
+                android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".friends.FriendsActivity"
-            android:exported="true"
-            android:label="Add Friends"
-            android:theme="@style/Theme.AppCompat">
-        </activity>
+                android:name=".friends.FriendsActivity"
+                android:exported="true"
+                android:label="Add Friends"
+                android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".settings.SettingsActivity"
-            android:exported="true"
-            android:label="Settings"
-            android:theme="@style/Theme.AppCompat" />
+                android:name=".settings.SettingsActivity"
+                android:exported="true"
+                android:label="Settings"
+                android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".chat.ChatActivity"
-            android:exported="true"
-            android:label="Chat"
-            android:theme="@style/Theme.AppCompat">
-        </activity>
+                android:name=".chat.ChatActivity"
+                android:exported="true"
+                android:label="Chat"
+                android:theme="@style/Theme.AppCompat" />
         <activity
-            android:name=".settings.TimeSelectorActivity"
-            android:exported="true">
-        </activity>
-
+                android:name=".settings.TimeSelectorActivity"
+                android:exported="true" />
         <service
-            android:name=".services.DeleteOldMessagesService"
-            android:enabled="true"
-            android:exported="false" />
-
+                android:name=".services.DeleteOldMessagesService"
+                android:enabled="true"
+                android:exported="false" />
         <activity
-            android:name=".songs.PlayerActivity"
-            android:exported="true" />
+                android:name=".songs.PlayerActivity"
+                android:exported="true" />
         <activity
-            android:name=".songs.SongsListActivity"
-            android:exported="true" />
+                android:name=".songs.SongsListActivity"
+                android:exported="true" />
     </application>
 
 </manifest>

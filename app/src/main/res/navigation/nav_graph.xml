@@ -12,12 +12,6 @@
             tools:layout="@layout/fragment_home" />
 
     <fragment
-            android:id="@+id/friendsFragment"
-            android:name="com.appdev.eudemonia.fragments.FriendsFragment"
-            android:label="Friends"
-            tools:layout="@layout/fragment_friends" />
-
-    <fragment
             android:id="@+id/profileFragment"
             android:name="com.appdev.eudemonia.fragments.ProfileFragment"
             android:label="Profile"
@@ -28,4 +22,24 @@
             android:name="com.appdev.eudemonia.SongsListFragment"
             android:label="Songs"
             tools:layout="@layout/fragment_songs_list" />
+
+    <fragment
+            android:id="@+id/navigation_friends"
+            android:name="com.appdev.eudemonia.fragments.FriendsFragment"
+            android:label="Friends"
+            tools:layout="@layout/fragment_friends">
+        <action
+                android:id="@+id/action_friends_to_friend_requests"
+                app:destination="@id/navigation_friend_requests" />
+    </fragment>
+    <fragment
+            android:id="@+id/navigation_friend_requests"
+            android:name="com.appdev.eudemonia.FriendRequestsFragment"
+            android:label="Requests"
+            tools:layout="@layout/fragment_friend_requests" />
+    <fragment
+            android:id="@+id/navigation_friend_list"
+            android:name="com.appdev.eudemonia.chat.FriendListFragment"
+            android:label="Friend List"
+            tools:layout="@layout/fragment_friend_list" />
 </navigation>
