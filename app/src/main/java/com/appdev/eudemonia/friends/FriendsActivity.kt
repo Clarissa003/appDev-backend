@@ -21,8 +21,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendsAdapter
+import com.appdev.eudemonia.base.BaseActivity
 import com.appdev.eudemonia.dataclasses.User
-import com.appdev.eudemonia.menu.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore

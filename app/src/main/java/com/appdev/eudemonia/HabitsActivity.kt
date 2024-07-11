@@ -8,8 +8,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appdev.eudemonia.adapters.HabitAdapter
+import com.appdev.eudemonia.base.BaseActivity
 import com.appdev.eudemonia.dataclasses.Habit
-import com.appdev.eudemonia.menu.BaseActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

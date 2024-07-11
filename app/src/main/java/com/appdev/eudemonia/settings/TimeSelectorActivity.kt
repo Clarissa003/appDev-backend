@@ -17,8 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 import java.util.concurrent.TimeUnit
 import androidx.work.WorkRequest
-import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.R
+import com.appdev.eudemonia.base.BaseActivity
 
 class TimeSelectorActivity : AppCompatActivity() {
 

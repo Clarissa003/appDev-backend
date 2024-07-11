@@ -4,9 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendListAdapter
+import com.appdev.eudemonia.base.BaseActivity
 import com.appdev.eudemonia.dataclasses.FriendList
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

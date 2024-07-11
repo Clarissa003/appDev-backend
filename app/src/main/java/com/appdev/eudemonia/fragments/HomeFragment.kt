@@ -1,10 +1,11 @@
-package com.appdev.eudemonia
+package com.appdev.eudemonia.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.appdev.eudemonia.R
 
 class HomeFragment : Fragment() {
 

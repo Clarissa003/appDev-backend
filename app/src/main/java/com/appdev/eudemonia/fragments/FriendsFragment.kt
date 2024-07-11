@@ -1,4 +1,4 @@
-package com.appdev.eudemonia
+package com.appdev.eudemonia.fragments
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendsAdapter
 import com.appdev.eudemonia.dataclasses.User
 import com.appdev.eudemonia.friends.FriendRequestDetailActivity

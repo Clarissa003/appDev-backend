@@ -1,4 +1,4 @@
-package com.appdev.eudemonia
+package com.appdev.eudemonia.fragments
 
 import android.content.Intent
 import android.net.Uri
@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.appdev.eudemonia.R
 import com.appdev.eudemonia.authentication.LoginActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth

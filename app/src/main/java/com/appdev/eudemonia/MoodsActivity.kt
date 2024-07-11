@@ -3,7 +3,7 @@ package com.appdev.eudemonia
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
-import com.appdev.eudemonia.menu.BaseActivity
+import com.appdev.eudemonia.base.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 

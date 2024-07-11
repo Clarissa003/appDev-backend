@@ -7,9 +7,9 @@ import android.text.InputType
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.authentication.LoginActivity
+import com.appdev.eudemonia.base.BaseActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
