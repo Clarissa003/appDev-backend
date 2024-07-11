@@ -45,7 +45,7 @@
 
     <fragment
             android:id="@+id/navigation_songs"
-            android:name="com.appdev.eudemonia.SongsListFragment"
+            android:name="com.appdev.eudemonia.fragments.SongsListFragment"
             android:label="Songs"
             tools:layout="@layout/fragment_songs_list">
         <action
@@ -55,7 +55,7 @@
 
     <fragment
             android:id="@+id/playerFragment"
-            android:name="com.appdev.eudemonia.PlayerFragment"
+            android:name="com.appdev.eudemonia.fragments.PlayerFragment"
             android:label="Player"
             tools:layout="@layout/fragment_player">
         <argument
@@ -63,5 +63,16 @@
                 app:argType="com.appdev.eudemonia.models.SongModel"
                 app:nullable="false" />
     </fragment>
+
+    <fragment
+            android:id="@+id/habitsFragment"
+            android:name="com.appdev.eudemonia.HabitsFragment"
+            android:label="Habits"
+            tools:layout="@layout/fragment_habits" />
+    <fragment
+            android:id="@+id/moodsFragment"
+            android:name="com.appdev.eudemonia.MoodsFragment"
+            android:label="Moods"
+            tools:layout="@layout/fragment_moods" />
 
 </navigation>

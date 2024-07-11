@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <!-- ViewModel and other data binding here -->
+    </data>
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".fragments.MoodsFragment">
+
+        <LinearLayout
+                android:id="@+id/moodImagesLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/moodRecyclerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                    android:id="@+id/happyButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:contentDescription="happy_description"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/happy"
+                    app:tint="#3F3F3F" />
+
+            <ImageView
+                    android:id="@+id/contentButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:contentDescription="content_description"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/content"
+                    app:tint="#3F3F3F" />
+
+            <ImageView
+                    android:id="@+id/neutralButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:contentDescription="neutral_description"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/neutral"
+                    app:tint="#3F3F3F" />
+
+            <ImageView
+                    android:id="@+id/unhappyButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:contentDescription="unhappy_description"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/unhappy"
+                    app:tint="#3F3F3F" />
+
+            <ImageView
+                    android:id="@+id/sadButton"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_margin="5dp"
+                    android:contentDescription="sad_description"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/sad"
+                    app:tint="#3F3F3F" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/moodRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/moodImagesLayout"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
