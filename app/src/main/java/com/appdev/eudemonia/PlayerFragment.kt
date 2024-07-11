@@ -24,17 +24,18 @@ class PlayerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializePlayer()
+        val songTitle = arguments?.getString("songTitle")
+        val songSubtitle = arguments?.getString("songSubtitle")
+
+        initializePlayer(songTitle, songSubtitle)
     }
 
-    private fun initializePlayer() {
+    private fun initializePlayer(title: String?, subtitle: String?) {
         exoPlayer = MyExoplayer.getInstance()
         binding.playerView.player = exoPlayer
 
-        MyExoplayer.getCurrentSong()?.let { song ->
-            binding.songTitleTextView.text = song.title
-            binding.songSubtitleTextView.text = song.subtitle
-        }
+        binding.songTitleTextView.text = title
+        binding.songSubtitleTextView.text = subtitle
     }
 
     override fun onPause() {

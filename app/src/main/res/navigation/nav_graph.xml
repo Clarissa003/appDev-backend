@@ -42,15 +42,26 @@
             android:name="com.appdev.eudemonia.fragments.FriendListFragment"
             android:label="Friend List"
             tools:layout="@layout/fragment_friend_list" />
-    <fragment
-            android:id="@+id/navigation_songs"
-            android:name="com.appdev.eudemonia.songs.SongsListFragment"
-            android:label="Songs"
-            tools:layout="@layout/fragment_songs_list" />
 
     <fragment
-            android:id="@+id/navigation_player"
+            android:id="@+id/navigation_songs"
+            android:name="com.appdev.eudemonia.SongsListFragment"
+            android:label="Songs"
+            tools:layout="@layout/fragment_songs_list">
+        <action
+                android:id="@+id/action_navigation_songs_to_playerFragment"
+                app:destination="@id/playerFragment" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/playerFragment"
             android:name="com.appdev.eudemonia.PlayerFragment"
             android:label="Player"
-            tools:layout="@layout/fragment_player" />
+            tools:layout="@layout/fragment_player">
+        <argument
+                android:name="song"
+                app:argType="com.appdev.eudemonia.models.SongModel"
+                app:nullable="false" />
+    </fragment>
+
 </navigation>

@@ -22,8 +22,5 @@
             android:id="@+id/navigation_songs"
             android:icon="@drawable/ic_sounds"
             android:title="Songs" />
-    <item
-            android:id="@+id/navigation_player"
-            android:icon="@drawable/ic_sounds"
-            android:title="Player" />
+
 </menu>

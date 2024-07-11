@@ -27,7 +27,7 @@
             android:id="@+id/song_title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/altone"
+            android:fontFamily="@font/gontserratbold"
             android:gravity="center"
             android:text="SONG NAME"
             android:textAlignment="center"
