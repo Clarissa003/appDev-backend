@@ -66,12 +66,12 @@
 
     <fragment
             android:id="@+id/habitsFragment"
-            android:name="com.appdev.eudemonia.HabitsFragment"
+            android:name="com.appdev.eudemonia.fragments.HabitsFragment"
             android:label="Habits"
             tools:layout="@layout/fragment_habits" />
     <fragment
             android:id="@+id/moodsFragment"
-            android:name="com.appdev.eudemonia.MoodsFragment"
+            android:name="com.appdev.eudemonia.fragments.MoodsFragment"
             android:label="Moods"
             tools:layout="@layout/fragment_moods" />
 
