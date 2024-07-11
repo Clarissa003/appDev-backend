@@ -34,12 +34,23 @@
     </fragment>
     <fragment
             android:id="@+id/navigation_friend_requests"
-            android:name="com.appdev.eudemonia.FriendRequestsFragment"
+            android:name="com.appdev.eudemonia.fragments.FriendRequestsFragment"
             android:label="Requests"
             tools:layout="@layout/fragment_friend_requests" />
     <fragment
             android:id="@+id/navigation_friend_list"
-            android:name="com.appdev.eudemonia.chat.FriendListFragment"
+            android:name="com.appdev.eudemonia.fragments.FriendListFragment"
             android:label="Friend List"
             tools:layout="@layout/fragment_friend_list" />
+    <fragment
+            android:id="@+id/navigation_songs"
+            android:name="com.appdev.eudemonia.songs.SongsListFragment"
+            android:label="Songs"
+            tools:layout="@layout/fragment_songs_list" />
+
+    <fragment
+            android:id="@+id/navigation_player"
+            android:name="com.appdev.eudemonia.PlayerFragment"
+            android:label="Player"
+            tools:layout="@layout/fragment_player" />
 </navigation>

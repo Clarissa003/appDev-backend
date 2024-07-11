@@ -1,4 +1,4 @@
-package com.appdev.eudemonia.chat
+package com.appdev.eudemonia.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendListAdapter
 import com.appdev.eudemonia.dataclasses.FriendList
 import com.appdev.eudemonia.databinding.FragmentFriendListBinding

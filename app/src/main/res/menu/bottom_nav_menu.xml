@@ -8,10 +8,7 @@
             android:id="@+id/navigation_friends"
             android:icon="@drawable/ic_friends"
             android:title="Friends" />
-    <item
-            android:id="@+id/navigation_songs"
-            android:icon="@drawable/ic_sounds"
-            android:title="Songs" />
+
     <item
             android:id="@+id/navigation_profile"
             android:icon="@drawable/ic_profile"
@@ -20,4 +17,13 @@
             android:id="@+id/navigation_journals"
             android:icon="@drawable/ic_guided_journal"
             android:title="Journals" />
+
+    <item
+            android:id="@+id/navigation_songs"
+            android:icon="@drawable/ic_sounds"
+            android:title="Songs" />
+    <item
+            android:id="@+id/navigation_player"
+            android:icon="@drawable/ic_sounds"
+            android:title="Player" />
 </menu>

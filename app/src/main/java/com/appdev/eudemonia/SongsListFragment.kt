@@ -1,59 +1,73 @@
 package com.appdev.eudemonia
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.appdev.eudemonia.adapters.SongsListAdapter
+import com.appdev.eudemonia.databinding.ActivitySongsListBinding
+import com.appdev.eudemonia.models.SongModel
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [SongsListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SongsListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: ActivitySongsListBinding
+    private lateinit var songsListAdapter: SongsListAdapter
+    private lateinit var firestore: FirebaseFirestore
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_songs_list, container, false)
+        binding = ActivitySongsListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SongsListFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            SongsListFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupUI()
+        setupEdgeToEdge()
+        setupSongsListRecyclerView()
+        fetchSongsFromFirestore()
+    }
+
+    private fun setupUI() {
+        // Any additional UI setup can go here
+    }
+
+    private fun setupEdgeToEdge() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+    }
+
+    private fun fetchSongsFromFirestore() {
+        firestore = FirebaseFirestore.getInstance()
+        firestore.collection("songs").get()
+            .addOnSuccessListener { result ->
+                val songsList = mutableListOf<SongModel>()
+                for (document in result) {
+                    val song = document.toObject(SongModel::class.java)
+                    songsList.add(song)
                 }
+                Log.d("SongsListFragment", "Fetched ${songsList.size} songs")
+                songsListAdapter.updateSongsList(songsList)
             }
+            .addOnFailureListener { exception ->
+                Log.e("SongsListFragment", "Error getting documents: ", exception)
+            }
+    }
+
+    private fun setupSongsListRecyclerView() {
+        songsListAdapter = SongsListAdapter(emptyList())
+        binding.songsListRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.songsListRecyclerView.adapter = songsListAdapter
     }
 }
