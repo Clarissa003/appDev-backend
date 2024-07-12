@@ -14,6 +14,7 @@ open class BaseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.setBackgroundColor(resources.getColor(R.color.greenUltraDark))
         val navController = findNavController(R.id.nav_host_fragment)
         bottomNavigationView.setupWithNavController(navController)
     }
