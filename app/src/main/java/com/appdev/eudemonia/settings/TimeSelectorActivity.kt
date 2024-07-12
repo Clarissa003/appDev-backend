@@ -20,7 +20,7 @@ import androidx.work.WorkRequest
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.menu.BaseActivity
 
-class TimeSelectorActivity : BaseActivity() {
+class TimeSelectorActivity : AppCompatActivity() {
 
     private lateinit var timePicker: TimePicker
     private lateinit var setTimeButton: Button

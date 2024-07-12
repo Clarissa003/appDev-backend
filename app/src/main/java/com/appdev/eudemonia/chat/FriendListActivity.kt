@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendListAdapter
+
 import com.appdev.eudemonia.dataclasses.FriendList
 import com.appdev.eudemonia.menu.BaseActivity
 import com.google.firebase.auth.FirebaseAuth

@@ -1,73 +1,72 @@
-<?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph"
-    app:startDestination="@id/homeFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav_graph"
+        app:startDestination="@id/homeFragment">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.appdev.eudemonia.fragments.HomeFragment"
-        android:label="Home"
-        tools:layout="@layout/fragment_home" />
+            android:id="@+id/homeFragment"
+            android:name="com.appdev.eudemonia.fragments.HomeFragment"
+            android:label="Home"
+            tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_friends"
-        android:name="com.appdev.eudemonia.fragments.FriendsFragment"
-        android:label="Friends"
-        tools:layout="@layout/fragment_friends">
+            android:id="@+id/navigation_friends"
+            android:name="com.appdev.eudemonia.fragments.FriendsFragment"
+            android:label="Friends"
+            tools:layout="@layout/fragment_friends">
         <action
-            android:id="@+id/action_friends_to_friend_requests"
-            app:destination="@id/navigation_friend_requests" />
+                android:id="@+id/action_friends_to_friend_requests"
+                app:destination="@id/navigation_friend_requests" />
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_friend_requests"
-        android:name="com.appdev.eudemonia.fragments.FriendRequestsFragment"
-        android:label="Requests"
-        tools:layout="@layout/fragment_friend_requests" />
+            android:id="@+id/navigation_friend_requests"
+            android:name="com.appdev.eudemonia.fragments.FriendRequestsFragment"
+            android:label="Requests"
+            tools:layout="@layout/fragment_friend_requests" />
 
     <fragment
-        android:id="@+id/profileFragment"
-        android:name="com.appdev.eudemonia.fragments.ProfileFragment"
-        android:label="Profile"
-        tools:layout="@layout/fragment_profile" />
+            android:id="@+id/profileFragment"
+            android:name="com.appdev.eudemonia.fragments.ProfileFragment"
+            android:label="Profile"
+            tools:layout="@layout/fragment_profile" />
 
     <fragment
-        android:id="@+id/journalFragment"
-        android:name="com.appdev.eudemonia.fragments.JournalFragment"
-        android:label="Journal"
-        tools:layout="@layout/fragment_journal">
+            android:id="@+id/journalFragment"
+            android:name="com.appdev.eudemonia.fragments.JournalFragment"
+            android:label="Journal"
+            tools:layout="@layout/fragment_journal">
         <action
-            android:id="@+id/action_journalFragment_to_unguidedJournalFragment"
-            app:destination="@id/unguidedJournalFragment" />
+                android:id="@+id/action_journalFragment_to_unguidedJournalFragment"
+                app:destination="@id/unguidedJournalFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/unguidedJournalFragment"
-        android:name="com.appdev.eudemonia.fragments.UnguidedJournalFragment"
-        android:label="Unguided Journal"
-        tools:layout="@layout/fragment_unguided_journal" />
+            android:id="@+id/unguidedJournalFragment"
+            android:name="com.appdev.eudemonia.fragments.UnguidedJournalFragment"
+            android:label="Unguided Journal"
+            tools:layout="@layout/fragment_unguided_journal" />
 
     <fragment
-        android:id="@+id/soundsFragment"
-        android:name="com.appdev.eudemonia.fragments.SongsListFragment"
-        android:label="Songs"
-        tools:layout="@layout/fragment_songs_list">
+            android:id="@+id/soundsFragment"
+            android:name="com.appdev.eudemonia.fragments.SongsListFragment"
+            android:label="Songs"
+            tools:layout="@layout/fragment_songs_list">
         <action
-            android:id="@+id/action_navigation_songs_to_playerFragment"
-            app:destination="@id/playerFragment" />
+                android:id="@+id/action_navigation_songs_to_playerFragment"
+                app:destination="@id/playerFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/playerFragment"
-        android:name="com.appdev.eudemonia.fragments.PlayerFragment"
-        android:label="Player"
-        tools:layout="@layout/fragment_player">
+            android:id="@+id/playerFragment"
+            android:name="com.appdev.eudemonia.fragments.PlayerFragment"
+            android:label="Player"
+            tools:layout="@layout/fragment_player">
         <argument
-            android:name="song"
-            app:argType="com.appdev.eudemonia.models.SongModel"
-            app:nullable="false" />
+                android:name="song"
+                app:argType="com.appdev.eudemonia.models.SongModel"
+                app:nullable="false" />
     </fragment>
 
 </navigation>

@@ -24,8 +24,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendsAdapter
-import com.appdev.eudemonia.dataclasses.User
 import com.appdev.eudemonia.databinding.FragmentFriendsBinding
+import com.appdev.eudemonia.dataclasses.User
 import com.appdev.eudemonia.friends.FriendRequestDetailActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
@@ -78,7 +78,8 @@ class FriendsFragment : Fragment() {
     }
 
     private fun setupSearchView() {
-        binding.idSearch.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+        binding.idSearch.setOnQueryTextListener(object :
+            android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -107,9 +108,11 @@ class FriendsFragment : Fragment() {
                                 val senderId = dc.document.getString("senderId")
                                 senderId?.let { fetchSenderDetailsAndNotify(it) }
                             }
+
                             DocumentChange.Type.MODIFIED -> {
                                 // No action needed for modified case
                             }
+
                             DocumentChange.Type.REMOVED -> {
                                 // No action needed for removed case
                             }
@@ -131,7 +134,11 @@ class FriendsFragment : Fragment() {
     }
 
     private fun sendFriendRequestNotification(username: String, senderId: String) {
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.VIBRATE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             createNotificationChannel()
 
             val intent = Intent(requireContext(), FriendRequestDetailActivity::class.java).apply {
@@ -139,7 +146,10 @@ class FriendsFragment : Fragment() {
                 putExtra("senderId", senderId)
             }
             val pendingIntent = PendingIntent.getActivity(
-                requireContext(), 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                requireContext(),
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
             val notificationBuilder = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
@@ -154,7 +164,11 @@ class FriendsFragment : Fragment() {
                 notify(NOTIFICATION_ID, notificationBuilder.build())
             }
         } else {
-            ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.VIBRATE), PERMISSION_REQUEST_CODE)
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.VIBRATE),
+                PERMISSION_REQUEST_CODE
+            )
         }
     }
 
@@ -183,13 +197,22 @@ class FriendsFragment : Fragment() {
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Failed to load users: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to load users: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
 
-    private fun checkIfFriend(currentUserId: String, friendUserId: String, callback: (Boolean) -> Unit) {
-        db.collection("Friends").whereEqualTo("userId", friendUserId).whereEqualTo("addedBy", currentUserId)
+    private fun checkIfFriend(
+        currentUserId: String,
+        friendUserId: String,
+        callback: (Boolean) -> Unit
+    ) {
+        db.collection("Friends").whereEqualTo("userId", friendUserId)
+            .whereEqualTo("addedBy", currentUserId)
             .get()
             .addOnSuccessListener { documents ->
                 callback(!documents.isEmpty)
@@ -218,7 +241,11 @@ class FriendsFragment : Fragment() {
                     adapter.notifyDataSetChanged()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Failed to load friends: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to load friends: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
@@ -247,7 +274,11 @@ class FriendsFragment : Fragment() {
 
             friendRequestsRef.add(friendRequestData)
                 .addOnSuccessListener { documentReference ->
-                    Toast.makeText(requireContext(), "Friend request sent to ${user.username}!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Friend request sent to ${user.username}!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     // Fetch usernames
                     val usernameReceiver = user.username ?: "Unknown"
                     val usernameRequester = currentUser.displayName ?: "Unknown"
@@ -275,7 +306,11 @@ class FriendsFragment : Fragment() {
 
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Failed to send friend request: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to send friend request: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
@@ -291,31 +326,51 @@ class FriendsFragment : Fragment() {
                     for (document in documents) {
                         db.collection("Friends").document(document.id).delete()
                             .addOnSuccessListener {
-                                Toast.makeText(requireContext(), "Removed ${user.username} as friend!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Removed ${user.username} as friend!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
                                 user.isFriend = false
                                 displayedUsers.remove(user)
                                 adapter.notifyDataSetChanged()
                             }
                             .addOnFailureListener { e ->
-                                Toast.makeText(requireContext(), "Failed to remove friend: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Failed to remove friend: ${e.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(requireContext(), "Failed to find friend: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to find friend: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // Permission granted
                 } else {
-                    Toast.makeText(requireContext(), "Permission denied. Cannot show notifications.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Permission denied. Cannot show notifications.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

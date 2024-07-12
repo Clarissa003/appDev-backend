@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.appdev.eudemonia.R
 import com.appdev.eudemonia.databinding.FragmentFriendRequestsBinding
 
 class FriendRequestsFragment : Fragment() {
@@ -15,14 +16,12 @@ class FriendRequestsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFriendRequestsBinding.inflate(inflater, container, false)
-        return binding.root
+    ): View? {
+        return inflater.inflate(R.layout.fragment_friend_requests, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Your fragment logic here
     }
 
     override fun onDestroyView() {

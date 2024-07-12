@@ -5,13 +5,11 @@
     android:layout_height="match_parent"
     android:background="@drawable/gradient_background">
 
-    <!-- ScrollView for scrolling content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/gradient_background">
 
-        <!-- Vertical LinearLayout to hold all content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -19,13 +17,11 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Container for Header -->
             <RelativeLayout
                 android:id="@+id/idRLContainer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Heading TextView -->
                 <TextView
                     android:id="@+id/idTVHeading"
                     android:layout_width="match_parent"
@@ -39,23 +35,21 @@
                     android:textColor="@color/greenUltraDark"
                     android:textSize="35sp" />
 
-                <!-- Selected Date TextView -->
                 <TextView
                     android:id="@+id/idTVSelectedDate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/idTVHeading"
                     android:layout_margin="20dp"
+                    android:fontFamily="@font/altone"
                     android:gravity="center"
                     android:padding="10dp"
                     android:text="Date"
                     android:textAlignment="center"
                     android:textColor="@color/greenUltraDark"
                     android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:fontFamily="@font/altone" />
+                    android:textStyle="bold" />
 
-                <!-- Button to pick date -->
                 <Button
                     android:id="@+id/idBtnPickDate"
                     android:layout_width="wrap_content"
@@ -71,12 +65,10 @@
                     android:textSize="15sp" />
             </RelativeLayout>
 
-            <!-- ConstraintLayout for mood buttons and RecyclerView -->
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <!-- Layout for mood buttons -->
                 <LinearLayout
                     android:id="@+id/moodImagesLayout"
                     android:layout_width="match_parent"
@@ -88,7 +80,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <!-- Mood Buttons (ImageViews) -->
                     <ImageView
                         android:id="@+id/happyButton"
                         android:layout_width="60dp"
@@ -140,7 +131,6 @@
                         app:tint="#3F3F3F" />
                 </LinearLayout>
 
-                <!-- RecyclerView for moods -->
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/moodRecyclerView"
                     android:layout_width="match_parent"
@@ -152,7 +142,6 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- CardView for daily habits -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -166,7 +155,6 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <!-- Title for daily habits -->
                     <TextView
                         android:id="@+id/textViewTitle"
                         android:layout_width="wrap_content"
@@ -178,14 +166,12 @@
                         android:textColor="@color/white"
                         android:textSize="24sp" />
 
-                    <!-- RecyclerView for habits -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/habitRecyclerView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp" />
 
-                    <!-- Button to add habit -->
                     <Button
                         android:id="@+id/buttonAddHabit"
                         android:layout_width="wrap_content"
@@ -194,13 +180,13 @@
                         android:background="@color/greenUltraDark"
                         android:fontFamily="@font/altone"
                         android:padding="10dp"
+                        android:stateListAnimator="@null"
                         android:text="Add Habit"
                         android:textColor="@android:color/white"
                         android:textSize="15sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <!-- CardView for daily journal entries -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -215,7 +201,6 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <!-- Title for daily journal entries -->
                     <TextView
                         android:id="@+id/textViewTitleJournal"
                         android:layout_width="wrap_content"
@@ -227,7 +212,6 @@
                         android:textColor="@color/white"
                         android:textSize="24sp" />
 
-                    <!-- RecyclerView for journal entries -->
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/JournalRecyclerView"
                         android:layout_width="match_parent"
@@ -238,27 +222,25 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Placeholder FrameLayout for habits fragment -->
     <FrameLayout
         android:id="@+id/fragment_container_habits"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- FragmentContainerView for navigation host -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_fragment"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph" />
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation" />
 
-    <!-- BottomNavigationView for navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:visibility="gone"
         app:menu="@menu/bottom_nav_menu" />
 </RelativeLayout>

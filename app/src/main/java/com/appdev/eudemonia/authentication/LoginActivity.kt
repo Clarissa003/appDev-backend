@@ -8,7 +8,6 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.appdev.eudemonia.R
-import com.appdev.eudemonia.fragments.HomeFragment
 import com.appdev.eudemonia.home.HomeActivity
 import com.google.firebase.auth.FirebaseAuth
 
@@ -94,7 +93,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun handleLoginSuccess() {
         Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this, HomeFragment::class.java)
+        val intent = Intent(this, HomeActivity::class.java)
         startActivity(intent)
         finish()
     }

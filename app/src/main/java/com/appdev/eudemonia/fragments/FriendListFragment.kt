@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import androidx.recyclerview.widget.RecyclerView
+import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.chat.ChatActivity
 
 class FriendListFragment : Fragment() {
@@ -31,9 +32,8 @@ class FriendListFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentFriendListBinding.inflate(inflater, container, false)
-        return binding.root
+    ): View? {
+        return inflater.inflate(R.layout.fragment_friend_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
