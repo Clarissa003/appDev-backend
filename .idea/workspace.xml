@@ -203,8 +203,6 @@
   <component name="ChangeListManager">
     <list default="true" id="c195014e-e33e-4c41-89b7-bc4f31e32c0c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/UnguidedJournalFragment.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/appdev/eudemonia/fragments/UnguidedJournalFragment.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/navigation/nav_graph.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -338,11 +336,11 @@
       <recent name="com.appdev.eudemonia" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sarar\appDev-backend\app\src\main\java\com\appdev\eudemonia\songs" />
       <recent name="C:\Users\sarar\appDev-backend\app\build\generated\ap_generated_sources\debug\out\com\appdev\eudemonia\databinding" />
       <recent name="C:\Users\sarar\appDev-backend\app\src\main\res\menu" />
       <recent name="C:\Users\alici\OneDrive\Escritorio\Period4\appDev-backend\app\src\main\java\com\appdev\eudemonia\authentication" />
       <recent name="C:\Users\alici\OneDrive\Escritorio\Period4\appDev-backend\app\src\main\java\com\appdev\eudemonia\settings" />
-      <recent name="C:\Users\alici\OneDrive\Escritorio\Period4\appDev-backend\app\src\main\java\com\appdev\eudemonia\dataclasses" />
     </key>
     <key name="CreateKotlinClassDialog.RecentsKey">
       <recent name="com.appdev.eudemonia" />
