@@ -1,4 +1,4 @@
-package com.appdev.eudemonia
+package com.appdev.eudemonia.fragments
 
 import android.content.Intent
 import android.os.Bundle
