@@ -17,45 +17,77 @@ class ResetPasswordActivity : AppCompatActivity() {
         binding = ActivityResetPasswordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initializeFirebaseAuth()
+        setButtonListeners()
+    }
+
+    private fun initializeFirebaseAuth() {
         auth = FirebaseAuth.getInstance()
+    }
 
+    private fun setButtonListeners() {
         binding.buttonReset.setOnClickListener {
-            val email = binding.editTextEmail.text.toString().trim()
-
-            if (email.isEmpty()) {
-                Toast.makeText(
-                    baseContext, "Please enter your email address.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            } else {
-                sendResetPasswordEmail(email)
-            }
+            handleResetPassword()
         }
 
         binding.textViewLoginRedirect.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
+            redirectToLogin()
         }
 
         binding.textViewRegisterRedirect.setOnClickListener {
-            startActivity(Intent(this, SignupActivity::class.java))
+            redirectToSignup()
         }
+    }
+
+    private fun handleResetPassword() {
+        val email = binding.editTextEmail.text.toString().trim()
+
+        if (validateEmail(email)) {
+            sendResetPasswordEmail(email)
+        }
+    }
+
+    private fun validateEmail(email: String): Boolean {
+        return if (email.isEmpty()) {
+            Toast.makeText(
+                baseContext, "Please enter your email address.",
+                Toast.LENGTH_SHORT
+            ).show()
+            false
+        } else {
+            true
+        }
+    }
+
+    private fun redirectToLogin() {
+        startActivity(Intent(this, LoginActivity::class.java))
+    }
+
+    private fun redirectToSignup() {
+        startActivity(Intent(this, SignupActivity::class.java))
     }
 
     private fun sendResetPasswordEmail(email: String) {
         auth.sendPasswordResetEmail(email)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Toast.makeText(this, "Reset email sent", Toast.LENGTH_LONG).show()
-                    startActivity(Intent(this, LoginActivity::class.java))
-                    finish()
+                    handleResetEmailSuccess()
                 } else {
-                    Toast.makeText(this, "Failed to send reset email", Toast.LENGTH_LONG).show()
+                    handleResetEmailFailure()
                 }
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(
-                    this@ResetPasswordActivity, "Error Occurred", Toast.LENGTH_LONG
-                ).show()
+            .addOnFailureListener {
+                handleResetEmailFailure()
             }
+    }
+
+    private fun handleResetEmailSuccess() {
+        Toast.makeText(this, "Reset email sent", Toast.LENGTH_LONG).show()
+        redirectToLogin()
+        finish()
+    }
+
+    private fun handleResetEmailFailure() {
+        Toast.makeText(this, "Failed to send reset email", Toast.LENGTH_LONG).show()
     }
 }

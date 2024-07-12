@@ -1,43 +1,45 @@
 package com.appdev.eudemonia.songs
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
+import android.util.Log
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appdev.eudemonia.databinding.ActivitySongsListBinding
+import com.appdev.eudemonia.adapters.SongsListAdapter
+import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.models.SongModel
 import com.google.firebase.firestore.FirebaseFirestore
-import android.util.Log
-import com.appdev.eudemonia.menu.BaseActivity
-import com.appdev.eudemonia.adapters.SongsListAdapter
 
 class SongsListActivity : BaseActivity() {
 
-    lateinit var binding: ActivitySongsListBinding
-    lateinit var songsListAdapter: SongsListAdapter
+    private lateinit var binding: ActivitySongsListBinding
+    private lateinit var songsListAdapter: SongsListAdapter
     private lateinit var firestore: FirebaseFirestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+        setupUI()
+        setupEdgeToEdge()
+        setupSongsListRecyclerView()
+        fetchSongsFromFirestore()
+    }
+
+    private fun setupUI() {
         binding = ActivitySongsListBinding.inflate(layoutInflater)
         setContentView(binding.root)
+    }
 
-        firestore = FirebaseFirestore.getInstance()
-
-        fetchSongsFromFirestore()
-
+    private fun setupEdgeToEdge() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.root) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-
-        setupSongsListRecyclerView()
     }
 
     private fun fetchSongsFromFirestore() {
+        firestore = FirebaseFirestore.getInstance()
         firestore.collection("songs").get()
             .addOnSuccessListener { result ->
                 val songsList = mutableListOf<SongModel>()
@@ -54,7 +56,8 @@ class SongsListActivity : BaseActivity() {
     }
 
     private fun setupSongsListRecyclerView() {
-        songsListAdapter = SongsListAdapter(listOf())
+        songsListAdapter = SongsListAdapter(mutableListOf()) { song ->
+        }
         binding.songsListRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.songsListRecyclerView.adapter = songsListAdapter
     }

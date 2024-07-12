@@ -1,32 +1,40 @@
-package com.appdev.eudemonia.journals
+package com.appdev.eudemonia.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import com.appdev.eudemonia.menu.BaseActivity
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.appdev.eudemonia.R
+import com.appdev.eudemonia.databinding.FragmentJournalBinding
 import com.appdev.eudemonia.services.HuggingFaceService
-import com.appdev.eudemonia.databinding.ActivityGuidedJournalBinding
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
-class GuidedJournalActivity : BaseActivity() {
-
-    private lateinit var binding: ActivityGuidedJournalBinding
-    private lateinit var firestore: FirebaseFirestore
+class JournalFragment : Fragment() {
+    private var _binding: FragmentJournalBinding? = null
+    private val binding get() = _binding!!
     private lateinit var db: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityGuidedJournalBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentJournalBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initFirebase()
         setupViews()
+        setupGoToUnguidedJournalButton()
     }
 
     private fun initFirebase() {
@@ -53,6 +61,12 @@ class GuidedJournalActivity : BaseActivity() {
         }
     }
 
+    private fun setupGoToUnguidedJournalButton() {
+        binding.gotoUnguidedJournalButton.setOnClickListener {
+            findNavController().navigate(R.id.action_journalFragment_to_unguidedJournalFragment)
+        }
+    }
+
     private fun saveJournalEntry() {
         val content = binding.enterAnswer.text.toString().trim()
         val userId = auth.currentUser?.uid
@@ -66,7 +80,7 @@ class GuidedJournalActivity : BaseActivity() {
                 "userId" to userId
             )
 
-            firestore.collection("Journal")
+            db.collection("Journal")
                 .add(journalEntry)
                 .addOnSuccessListener {
                     handleSaveSuccess()
@@ -80,20 +94,25 @@ class GuidedJournalActivity : BaseActivity() {
     }
 
     private fun handleSaveSuccess() {
-        Toast.makeText(this, "Entry saved!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Entry saved!", Toast.LENGTH_SHORT).show()
         binding.enterAnswer.text.clear()
     }
 
     private fun handleSaveFailure(errorMessage: String?) {
-        Toast.makeText(this, "Error saving entry: $errorMessage", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), "Error saving entry: $errorMessage", Toast.LENGTH_SHORT).show()
     }
 
     private fun handleValidationErrors(content: String, userId: String?) {
         if (content.isEmpty()) {
-            Toast.makeText(this, "Content cannot be empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Content cannot be empty", Toast.LENGTH_SHORT).show()
         }
         if (userId == null) {
-            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "User not authenticated", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

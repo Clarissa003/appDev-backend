@@ -24,7 +24,7 @@
         android:textSize="24sp"
         android:text="Song Name"
         android:textColor="#3F3F3F"
-        android:fontFamily="@font/gontserratmedium"
+        android:fontFamily="@font/altone"
         android:layout_marginStart="15dp"
         app:layout_constraintStart_toEndOf="@id/song_cover_image_view"
         app:layout_constraintTop_toTopOf="@id/song_cover_image_view"

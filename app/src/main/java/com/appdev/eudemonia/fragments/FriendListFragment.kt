@@ -1,32 +1,46 @@
-package com.appdev.eudemonia.chat
+package com.appdev.eudemonia.fragments
 
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendListAdapter
-
 import com.appdev.eudemonia.dataclasses.FriendList
-import com.appdev.eudemonia.friends.FriendsActivity
-import com.appdev.eudemonia.menu.BaseActivity
+import com.appdev.eudemonia.databinding.FragmentFriendListBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
+import androidx.recyclerview.widget.RecyclerView
+import com.appdev.eudemonia.menu.BaseActivity
+import com.appdev.eudemonia.chat.ChatActivity
+import com.appdev.eudemonia.databinding.FragmentFriendsBinding
 
-class FriendListActivity : BaseActivity() {
+class FriendListFragment : Fragment() {
 
-    private lateinit var recyclerView: RecyclerView
+    private var _binding: FragmentFriendListBinding? = null
+    private val binding get() = _binding!!
+
     private lateinit var adapter: FriendListAdapter
     private val friendsList = ArrayList<FriendList>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_friends_list)
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFriendListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
         setupSearchButton()
         setupChatButton()
@@ -34,27 +48,26 @@ class FriendListActivity : BaseActivity() {
     }
 
     private fun initializeRecyclerView() {
-        recyclerView = findViewById(R.id.idFriendsRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        binding.idFriendsRecyclerView.layoutManager = LinearLayoutManager(context)
         adapter = FriendListAdapter(friendsList)
-        recyclerView.adapter = adapter
+        binding.idFriendsRecyclerView.adapter = adapter
     }
 
     private fun setupSearchButton() {
-        val searchButton: Button = findViewById(R.id.searchButton)
+        val searchButton: Button = requireView().findViewById(R.id.searchButton)
         searchButton.setOnClickListener {
-            val intent = Intent(this, FriendsActivity::class.java)
-            startActivity(intent)
-        }
-    }
-    private fun setupChatButton() {
-        val chatButton: Button = findViewById(R.id.chatButton)
-        chatButton.setOnClickListener {
-            val intent = Intent(this, ChatActivity::class.java)
+            val intent = Intent(requireContext(), FriendsFragment::class.java)
             startActivity(intent)
         }
     }
 
+    private fun setupChatButton() {
+        val chatButton: Button = requireView().findViewById(R.id.chatButton)
+        chatButton.setOnClickListener {
+            val intent = Intent(requireContext(), ChatActivity::class.java)
+            startActivity(intent)
+        }
+    }
 
     private fun fetchFriends() {
         val db = FirebaseFirestore.getInstance()
@@ -64,6 +77,7 @@ class FriendListActivity : BaseActivity() {
             fetchFriendsAddedByUser(db, uid)
             fetchFriendsAddedToUser(db, uid)
         } ?: run {
+            // Handle the case where the user is not logged in
         }
     }
 
@@ -75,7 +89,7 @@ class FriendListActivity : BaseActivity() {
                 handleFriendsSnapshot(snapshot, "userId")
             }
             .addOnFailureListener { exception ->
-                Log.e("FriendListActivity", "Error fetching friends (addedBy): ", exception)
+                Log.e("FriendListFragment", "Error fetching friends (addedBy): ", exception)
             }
     }
 
@@ -87,7 +101,7 @@ class FriendListActivity : BaseActivity() {
                 handleFriendsSnapshot(snapshot, "addedBy")
             }
             .addOnFailureListener { exception ->
-                Log.e("FriendListActivity", "Error fetching friends (userId): ", exception)
+                Log.e("FriendListFragment", "Error fetching friends (userId): ", exception)
             }
     }
 
@@ -123,5 +137,10 @@ class FriendListActivity : BaseActivity() {
                 adapter.notifyDataSetChanged()
             }
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

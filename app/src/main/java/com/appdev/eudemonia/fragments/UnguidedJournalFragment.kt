@@ -1,42 +1,52 @@
-package com.appdev.eudemonia.journals
+package com.appdev.eudemonia.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
-import com.appdev.eudemonia.authentication.LoginActivity
+import androidx.fragment.app.Fragment
 import com.appdev.eudemonia.R
-import com.appdev.eudemonia.menu.BaseActivity
+import com.appdev.eudemonia.authentication.LoginActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class UnguidedJournalActivity : BaseActivity() {
+class UnguidedJournalFragment : Fragment() {
 
     private lateinit var editText: EditText
     private lateinit var saveButton: Button
-    private lateinit var goToGuidedJournalButton: Button
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_unguided_journal)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_unguided_journal, container, false)
 
-        initializeViews()
+        initializeViews(view)
         initializeFirebase()
+
+        if (auth.currentUser == null) {
+            navigateToLogin()
+            return view
+        }
+
         setupSaveButton()
-        setupGoToGuidedJournalButton()
+
+        return view
     }
 
-    private fun initializeViews() {
-        editText = findViewById(R.id.enterDailyAnswer)
-        saveButton = findViewById(R.id.saveButton)
-        goToGuidedJournalButton = findViewById(R.id.gotoGuidedJournalButton)
+    private fun initializeViews(view: View) {
+        editText = view.findViewById(R.id.enterDailyAnswer)
+        saveButton = view.findViewById(R.id.saveButton)
     }
 
     private fun initializeFirebase() {
@@ -44,15 +54,15 @@ class UnguidedJournalActivity : BaseActivity() {
         auth = FirebaseAuth.getInstance()
     }
 
+    private fun navigateToLogin() {
+        val intent = Intent(activity, LoginActivity::class.java)
+        startActivity(intent)
+        activity?.finish()
+    }
+
     private fun setupSaveButton() {
         saveButton.setOnClickListener {
             saveJournalEntry()
-        }
-    }
-    private fun setupGoToGuidedJournalButton() {
-        goToGuidedJournalButton.setOnClickListener {
-            val intent = Intent(this, GuidedJournalActivity::class.java)
-            startActivity(intent)
         }
     }
 
@@ -83,20 +93,20 @@ class UnguidedJournalActivity : BaseActivity() {
     }
 
     private fun handleSaveSuccess() {
-        Toast.makeText(this, "Entry saved!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "Entry saved!", Toast.LENGTH_SHORT).show()
         editText.text.clear()
     }
 
     private fun handleSaveFailure(errorMessage: String?) {
-        Toast.makeText(this, "Error saving entry: $errorMessage", Toast.LENGTH_SHORT).show()
+        Toast.makeText(activity, "Error saving entry: $errorMessage", Toast.LENGTH_SHORT).show()
     }
 
     private fun handleValidationErrors(content: String, userId: String?) {
         if (content.isEmpty()) {
-            Toast.makeText(this, "Content cannot be empty", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "Content cannot be empty", Toast.LENGTH_SHORT).show()
         }
         if (userId == null) {
-            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, "User not authenticated", Toast.LENGTH_SHORT).show()
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.appdev.eudemonia.friends
+package com.appdev.eudemonia.fragments
 
 import android.Manifest
 import android.app.NotificationChannel
@@ -11,44 +11,59 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.widget.SearchView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendsAdapter
-import com.appdev.eudemonia.menu.BaseActivity
+import com.appdev.eudemonia.databinding.FragmentFriendsBinding
 import com.appdev.eudemonia.dataclasses.User
+import com.appdev.eudemonia.friends.FriendRequestDetailActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 
-class FriendsActivity : BaseActivity() {
+class FriendsFragment : Fragment() {
+
+    private var _binding: FragmentFriendsBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
-    private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: FriendsAdapter
-    private lateinit var searchView: SearchView
     private val users = mutableListOf<User>()
     private val displayedUsers = mutableListOf<User>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_friends_list)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFriendsBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initFirebase()
-        initViews()
         setupRecyclerView()
         setupSearchView()
 
         loadUsers()
         loadFriends()
         listenForFriendRequests()
+
+        // Setup navigation for the Friend Requests button
+        binding.buttonFriendRequests.setOnClickListener {
+            findNavController().navigate(R.id.action_friends_to_friend_requests)
+        }
     }
 
     private fun initFirebase() {
@@ -56,19 +71,15 @@ class FriendsActivity : BaseActivity() {
         db = FirebaseFirestore.getInstance()
     }
 
-    private fun initViews() {
-        recyclerView = findViewById(R.id.idFriendsRecyclerView)
-        searchView = findViewById(R.id.idSearch)
-    }
-
     private fun setupRecyclerView() {
-        adapter = FriendsAdapter(this, displayedUsers, ::addFriend, ::removeFriend)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = adapter
+        adapter = FriendsAdapter(requireContext(), displayedUsers, ::addFriend, ::removeFriend)
+        binding.idFriendsRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.idFriendsRecyclerView.adapter = adapter
     }
 
     private fun setupSearchView() {
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        binding.idSearch.setOnQueryTextListener(object :
+            android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -97,9 +108,11 @@ class FriendsActivity : BaseActivity() {
                                 val senderId = dc.document.getString("senderId")
                                 senderId?.let { fetchSenderDetailsAndNotify(it) }
                             }
+
                             DocumentChange.Type.MODIFIED -> {
                                 // No action needed for modified case
                             }
+
                             DocumentChange.Type.REMOVED -> {
                                 // No action needed for removed case
                             }
@@ -121,18 +134,25 @@ class FriendsActivity : BaseActivity() {
     }
 
     private fun sendFriendRequestNotification(username: String, senderId: String) {
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.VIBRATE
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             createNotificationChannel()
 
-            val intent = Intent(this, FriendRequestDetailActivity::class.java).apply {
+            val intent = Intent(requireContext(), FriendRequestDetailActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 putExtra("senderId", senderId)
             }
             val pendingIntent = PendingIntent.getActivity(
-                this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                requireContext(),
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
 
-            val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+            val notificationBuilder = NotificationCompat.Builder(requireContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle("Friend Request")
                 .setContentText("$username wants to add you as a friend.")
@@ -140,11 +160,15 @@ class FriendsActivity : BaseActivity() {
                 .setContentIntent(pendingIntent)
                 .setAutoCancel(true)
 
-            with(NotificationManagerCompat.from(this)) {
+            with(NotificationManagerCompat.from(requireContext())) {
                 notify(NOTIFICATION_ID, notificationBuilder.build())
             }
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.VIBRATE), PERMISSION_REQUEST_CODE)
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.VIBRATE),
+                PERMISSION_REQUEST_CODE
+            )
         }
     }
 
@@ -173,13 +197,22 @@ class FriendsActivity : BaseActivity() {
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to load users: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to load users: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
 
-    private fun checkIfFriend(currentUserId: String, friendUserId: String, callback: (Boolean) -> Unit) {
-        db.collection("Friends").whereEqualTo("userId", friendUserId).whereEqualTo("addedBy", currentUserId)
+    private fun checkIfFriend(
+        currentUserId: String,
+        friendUserId: String,
+        callback: (Boolean) -> Unit
+    ) {
+        db.collection("Friends").whereEqualTo("userId", friendUserId)
+            .whereEqualTo("addedBy", currentUserId)
             .get()
             .addOnSuccessListener { documents ->
                 callback(!documents.isEmpty)
@@ -208,7 +241,11 @@ class FriendsActivity : BaseActivity() {
                     adapter.notifyDataSetChanged()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to load friends: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to load friends: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
@@ -237,7 +274,11 @@ class FriendsActivity : BaseActivity() {
 
             friendRequestsRef.add(friendRequestData)
                 .addOnSuccessListener { documentReference ->
-                    Toast.makeText(this, "Friend request sent to ${user.username}!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Friend request sent to ${user.username}!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     // Fetch usernames
                     val usernameReceiver = user.username ?: "Unknown"
                     val usernameRequester = currentUser.displayName ?: "Unknown"
@@ -265,7 +306,11 @@ class FriendsActivity : BaseActivity() {
 
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to send friend request: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to send friend request: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
@@ -281,31 +326,51 @@ class FriendsActivity : BaseActivity() {
                     for (document in documents) {
                         db.collection("Friends").document(document.id).delete()
                             .addOnSuccessListener {
-                                Toast.makeText(this, "Removed ${user.username} as friend!", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Removed ${user.username} as friend!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
                                 user.isFriend = false
                                 displayedUsers.remove(user)
                                 adapter.notifyDataSetChanged()
                             }
                             .addOnFailureListener { e ->
-                                Toast.makeText(this, "Failed to remove friend: ${e.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Failed to remove friend: ${e.message}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                     }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Failed to find friend: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to find friend: ${e.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         when (requestCode) {
             PERMISSION_REQUEST_CODE -> {
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // Permission granted
                 } else {
-                    Toast.makeText(this, "Permission denied. Cannot show notifications.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Permission denied. Cannot show notifications.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -323,15 +388,20 @@ class FriendsActivity : BaseActivity() {
                 enableVibration(true)
             }
             val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+                requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
     }
 
     companion object {
-        private const val TAG = "FriendsActivity"
+        private const val TAG = "FriendsFragment"
         private const val CHANNEL_ID = "friend_requests_channel"
         private const val NOTIFICATION_ID = 1
         private const val PERMISSION_REQUEST_CODE = 1001
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
