@@ -47,6 +47,9 @@ open class BaseActivity : AppCompatActivity() {
                 }
                 else -> false
             }
+            if (!handled) {
+                Log.e("BaseActivity", "Navigation to ${item.title} failed")
+            }
             handled
         }
     }
