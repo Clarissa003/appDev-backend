@@ -1,29 +1,28 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/navigation_home"
-        android:icon="@drawable/ic_home"
-        android:title="Home"
-        app:destination="@id/homeFragment" />
+            android:id="@+id/navigation_home"
+            android:icon="@drawable/ic_home"
+            android:title="Home"
+            app:destination="@id/homeFragment" />
     <item
-        android:id="@+id/navigation_friends"
-        android:icon="@drawable/ic_friends"
-        android:title="Friends"
-        app:destination="@id/navigation_friends" />
+            android:id="@+id/navigation_friends"
+            android:icon="@drawable/ic_friends"
+            android:title="Friends"
+            app:destination="@id/navigation_friends" />
     <item
-        android:id="@+id/navigation_profile"
-        android:icon="@drawable/ic_profile"
-        android:title="Profile"
-        app:destination="@id/profileFragment" />
+            android:id="@+id/navigation_profile"
+            android:icon="@drawable/ic_profile"
+            android:title="Profile"
+            app:destination="@id/profileFragment" />
     <item
-        android:id="@+id/navigation_journals"
-        android:icon="@drawable/ic_guided_journal"
-        android:title="Journals"
-        app:destination="@id/journalFragment" />
+            android:id="@+id/navigation_journals"
+            android:icon="@drawable/ic_guided_journal"
+            android:title="Journals"
+            app:destination="@id/journalFragment" />
     <item
-        android:id="@+id/navigation_songs"
-        android:icon="@drawable/ic_sounds"
-        android:title="Songs"
-        app:destination="@id/soundsFragment" />
+            android:id="@+id/navigation_songs"
+            android:icon="@drawable/ic_sounds"
+            android:title="Songs"
+            app:destination="@id/soundsFragment" />
 </menu>

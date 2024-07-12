@@ -20,6 +20,7 @@ import com.google.firebase.storage.FirebaseStorage
 import androidx.recyclerview.widget.RecyclerView
 import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.chat.ChatActivity
+import com.appdev.eudemonia.databinding.FragmentFriendsBinding
 
 class FriendListFragment : Fragment() {
 
@@ -29,11 +30,13 @@ class FriendListFragment : Fragment() {
     private lateinit var adapter: FriendListAdapter
     private val friendsList = ArrayList<FriendList>()
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_friend_list, container, false)
+    ): View {
+        _binding = FragmentFriendListBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

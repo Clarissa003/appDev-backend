@@ -12,9 +12,9 @@
 
     <fragment
             android:id="@+id/navigation_friends"
-            android:name="com.appdev.eudemonia.fragments.FriendsFragment"
+            android:name="com.appdev.eudemonia.fragments.FriendListFragment"
             android:label="Friends"
-            tools:layout="@layout/fragment_friends">
+            tools:layout="@layout/fragment_friend_list">
         <action
                 android:id="@+id/action_friends_to_friend_requests"
                 app:destination="@id/navigation_friend_requests" />
