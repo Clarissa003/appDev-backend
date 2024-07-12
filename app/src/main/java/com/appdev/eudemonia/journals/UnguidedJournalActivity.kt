@@ -29,12 +29,6 @@ class UnguidedJournalActivity : BaseActivity() {
 
         initializeViews()
         initializeFirebase()
-
-        if (auth.currentUser == null) {
-            navigateToLogin()
-            return
-        }
-
         setupSaveButton()
         setupGoToGuidedJournalButton()
     }
@@ -42,17 +36,12 @@ class UnguidedJournalActivity : BaseActivity() {
     private fun initializeViews() {
         editText = findViewById(R.id.enterDailyAnswer)
         saveButton = findViewById(R.id.saveButton)
+        goToGuidedJournalButton = findViewById(R.id.gotoGuidedJournalButton)
     }
 
     private fun initializeFirebase() {
         firestore = FirebaseFirestore.getInstance()
         auth = FirebaseAuth.getInstance()
-    }
-
-    private fun navigateToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
     private fun setupSaveButton() {
