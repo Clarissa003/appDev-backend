@@ -1,6 +1,7 @@
 package com.appdev.eudemonia.base
 
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
@@ -14,8 +15,12 @@ open class BaseActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.setBackgroundColor(resources.getColor(R.color.greenUltraDark))
         val navController = findNavController(R.id.nav_host_fragment)
+
+        Log.d("BaseActivity", "NavController: $navController")
+        Log.d("BaseActivity", "BottomNavigationView: $bottomNavigationView")
+
         bottomNavigationView.setupWithNavController(navController)
     }
 }
+
