@@ -18,9 +18,9 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import androidx.work.WorkRequest
 import com.appdev.eudemonia.R
-import com.appdev.eudemonia.base.BaseActivity
+import com.appdev.eudemonia.menu.BaseActivity
 
-class TimeSelectorActivity : AppCompatActivity() {
+class TimeSelectorActivity : BaseActivity() {
 
     private lateinit var timePicker: TimePicker
     private lateinit var setTimeButton: Button

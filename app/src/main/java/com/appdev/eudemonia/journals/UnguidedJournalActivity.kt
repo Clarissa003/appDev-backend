@@ -7,7 +7,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.appdev.eudemonia.authentication.LoginActivity
 import com.appdev.eudemonia.R
-import com.appdev.eudemonia.base.BaseActivity
+import com.appdev.eudemonia.menu.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat

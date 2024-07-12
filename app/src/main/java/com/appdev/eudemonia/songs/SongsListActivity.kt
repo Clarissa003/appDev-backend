@@ -7,7 +7,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appdev.eudemonia.databinding.ActivitySongsListBinding
 import com.appdev.eudemonia.adapters.SongsListAdapter
-import com.appdev.eudemonia.base.BaseActivity
+import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.models.SongModel
 import com.google.firebase.firestore.FirebaseFirestore
 

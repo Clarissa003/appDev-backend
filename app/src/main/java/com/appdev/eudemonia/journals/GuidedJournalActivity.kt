@@ -2,9 +2,9 @@ package com.appdev.eudemonia.journals
 
 import android.os.Bundle
 import android.widget.Toast
-import com.appdev.eudemonia.base.BaseActivity
 import com.appdev.eudemonia.services.HuggingFaceService
 import com.appdev.eudemonia.databinding.ActivityGuidedJournalBinding
+import com.appdev.eudemonia.menu.BaseActivity
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore

@@ -24,10 +24,10 @@ import com.appdev.eudemonia.adapters.HabitAdapter
 import com.appdev.eudemonia.adapters.JournalAdapter
 import com.appdev.eudemonia.adapters.Mood
 import com.appdev.eudemonia.adapters.MoodAdapter
-import com.appdev.eudemonia.base.BaseActivity
 import com.appdev.eudemonia.chat.FriendListActivity
 import com.appdev.eudemonia.dataclasses.Habit
 import com.appdev.eudemonia.dataclasses.JournalEntry
+import com.appdev.eudemonia.menu.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore

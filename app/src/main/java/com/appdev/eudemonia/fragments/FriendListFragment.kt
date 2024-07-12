@@ -18,7 +18,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
 import androidx.recyclerview.widget.RecyclerView
-import com.appdev.eudemonia.base.BaseActivity
 import com.appdev.eudemonia.chat.ChatActivity
 
 class FriendListFragment : Fragment() {

@@ -1,4 +1,4 @@
-package com.appdev.eudemonia.base
+package com.appdev.eudemonia.menu
 
 import android.os.Bundle
 import android.util.Log
