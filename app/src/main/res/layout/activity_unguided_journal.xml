@@ -49,10 +49,10 @@
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="24dp"
             android:background="@color/greenUltraDark"
+            android:fontFamily="@font/gontserratmedium"
             android:stateListAnimator="@null"
             android:text="SAVE"
-            android:fontFamily="@font/gontserratmedium"
-            android:textColor="#FFF"
+            android:textColor="#212121"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="@+id/enterDailyAnswer"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -67,7 +67,7 @@
             android:background="@color/greenUltraDark"
             android:fontFamily="@font/gontserratmedium"
             android:text="Guided Journal"
-            android:textColor="#FFF"
+            android:textColor="#212121"
             android:textSize="15sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

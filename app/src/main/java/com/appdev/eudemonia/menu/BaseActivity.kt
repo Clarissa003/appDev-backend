@@ -1,6 +1,8 @@
 package com.appdev.eudemonia.menu
 
+import android.content.ContentValues.TAG
 import android.content.Intent
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +32,7 @@ open class BaseActivity : AppCompatActivity() {
             }
 
             R.id.unguidedJournal -> {
+                Log.d(TAG, "Navigating to UnguidedJournalActivity")
                 startActivity(Intent(this, UnguidedJournalActivity::class.java))
                 return true
             }
