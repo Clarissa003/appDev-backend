@@ -1,12 +1,15 @@
 package com.appdev.eudemonia.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendListAdapter
 import com.appdev.eudemonia.dataclasses.FriendList
 import com.appdev.eudemonia.databinding.FragmentFriendListBinding
@@ -14,6 +17,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.storage.FirebaseStorage
+import androidx.recyclerview.widget.RecyclerView
+import com.appdev.eudemonia.chat.ChatActivity
 
 class FriendListFragment : Fragment() {
 
@@ -34,6 +39,8 @@ class FriendListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeRecyclerView()
+        setupSearchButton()
+        setupChatButton()
         fetchFriends()
     }
 
@@ -41,6 +48,22 @@ class FriendListFragment : Fragment() {
         binding.idFriendsRecyclerView.layoutManager = LinearLayoutManager(context)
         adapter = FriendListAdapter(friendsList)
         binding.idFriendsRecyclerView.adapter = adapter
+    }
+
+    private fun setupSearchButton() {
+        val searchButton: Button = requireView().findViewById(R.id.searchButton)
+        searchButton.setOnClickListener {
+            val intent = Intent(requireContext(), FriendsFragment::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setupChatButton() {
+        val chatButton: Button = requireView().findViewById(R.id.chatButton)
+        chatButton.setOnClickListener {
+            val intent = Intent(requireContext(), ChatActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun fetchFriends() {

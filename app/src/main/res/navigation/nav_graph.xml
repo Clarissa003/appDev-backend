@@ -19,7 +19,7 @@
 
     <fragment
             android:id="@+id/soundsFragment"
-            android:name="com.appdev.eudemonia.SongsListFragment"
+            android:name="com.appdev.eudemonia.fragments.SongsListFragment"
             android:label="Songs"
             tools:layout="@layout/fragment_songs_list" />
 
@@ -32,11 +32,13 @@
                 android:id="@+id/action_friends_to_friend_requests"
                 app:destination="@id/navigation_friend_requests" />
     </fragment>
+
     <fragment
             android:id="@+id/navigation_friend_requests"
             android:name="com.appdev.eudemonia.fragments.FriendRequestsFragment"
             android:label="Requests"
             tools:layout="@layout/fragment_friend_requests" />
+
     <fragment
             android:id="@+id/navigation_friend_list"
             android:name="com.appdev.eudemonia.fragments.FriendListFragment"
@@ -69,10 +71,26 @@
             android:name="com.appdev.eudemonia.fragments.HabitsFragment"
             android:label="Habits"
             tools:layout="@layout/fragment_habits" />
+
     <fragment
             android:id="@+id/moodsFragment"
             android:name="com.appdev.eudemonia.fragments.MoodsFragment"
             android:label="Moods"
             tools:layout="@layout/fragment_moods" />
 
+    <fragment
+            android:id="@+id/journalFragment"
+            android:name="com.appdev.eudemonia.fragments.JournalFragment"
+            android:label="Journal"
+            tools:layout="@layout/fragment_journal">
+        <action
+                android:id="@+id/action_journalFragment_to_unguidedJournalFragment"
+                app:destination="@id/unguidedJournalFragment" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/unguidedJournalFragment"
+            android:name="com.appdev.eudemonia.UnguidedJournalFragment"
+            android:label="Unguided Journal"
+            tools:layout="@layout/fragment_unguided_journal" />
 </navigation>

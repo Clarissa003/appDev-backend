@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.authentication.LoginActivity
+import com.appdev.eudemonia.settings.SettingsActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
@@ -27,6 +28,7 @@ class ProfileFragment : Fragment() {
     private lateinit var profileBio: TextView
     private lateinit var editProfileNameButton: Button
     private lateinit var editBioButton: Button
+    private lateinit var settingsButton: Button
 
     private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -59,6 +61,7 @@ class ProfileFragment : Fragment() {
         profileBio = view.findViewById(R.id.profileBio)
         editProfileNameButton = view.findViewById(R.id.editProfileNameButton)
         editBioButton = view.findViewById(R.id.editBio)
+        settingsButton = view.findViewById(R.id.settingsButton)
     }
 
     private fun navigateToLogin() {
@@ -72,7 +75,14 @@ class ProfileFragment : Fragment() {
         coverPhoto.setOnClickListener { selectImage("coverPhoto") }
         editProfileNameButton.setOnClickListener { showEditDialog("name") }
         editBioButton.setOnClickListener { showEditDialog("bio") }
+        settingsButton.setOnClickListener { navigateToSettings() }
     }
+
+    private fun navigateToSettings() {
+        val intent = Intent(requireContext(), SettingsActivity::class.java)
+        startActivity(intent)
+    }
+
 
     private fun loadUserProfile() {
         val currentUser = auth.currentUser
