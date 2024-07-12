@@ -18,6 +18,7 @@ class UnguidedJournalActivity : BaseActivity() {
 
     private lateinit var editText: EditText
     private lateinit var saveButton: Button
+    private lateinit var goToGuidedJournalButton: Button
     private lateinit var firestore: FirebaseFirestore
     private lateinit var auth: FirebaseAuth
     private val dateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
@@ -35,6 +36,7 @@ class UnguidedJournalActivity : BaseActivity() {
         }
 
         setupSaveButton()
+        setupGoToGuidedJournalButton()
     }
 
     private fun initializeViews() {
@@ -56,6 +58,12 @@ class UnguidedJournalActivity : BaseActivity() {
     private fun setupSaveButton() {
         saveButton.setOnClickListener {
             saveJournalEntry()
+        }
+    }
+    private fun setupGoToGuidedJournalButton() {
+        goToGuidedJournalButton.setOnClickListener {
+            val intent = Intent(this, GuidedJournalActivity::class.java)
+            startActivity(intent)
         }
     }
 

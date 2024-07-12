@@ -1,13 +1,16 @@
 package com.appdev.eudemonia.chat
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendListAdapter
 import com.appdev.eudemonia.dataclasses.FriendList
+import com.appdev.eudemonia.friends.FriendsActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -24,6 +27,8 @@ class FriendListActivity : BaseActivity() {
         setContentView(R.layout.activity_friends_list)
 
         initializeRecyclerView()
+        setupSearchButton()
+        setupChatButton()
         fetchFriends()
     }
 
@@ -33,6 +38,22 @@ class FriendListActivity : BaseActivity() {
         adapter = FriendListAdapter(friendsList)
         recyclerView.adapter = adapter
     }
+
+    private fun setupSearchButton() {
+        val searchButton: Button = findViewById(R.id.searchButton)
+        searchButton.setOnClickListener {
+            val intent = Intent(this, FriendsActivity::class.java)
+            startActivity(intent)
+        }
+    }
+    private fun setupChatButton() {
+        val chatButton: Button = findViewById(R.id.chatButton)
+        chatButton.setOnClickListener {
+            val intent = Intent(this, ChatActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
 
     private fun fetchFriends() {
         val db = FirebaseFirestore.getInstance()
