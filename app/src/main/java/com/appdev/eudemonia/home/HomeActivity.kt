@@ -16,9 +16,11 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.NotificationCompat
+import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.HabitAdapter
 import com.appdev.eudemonia.adapters.JournalAdapter
@@ -27,12 +29,21 @@ import com.appdev.eudemonia.adapters.MoodAdapter
 import com.appdev.eudemonia.chat.FriendListActivity
 import com.appdev.eudemonia.dataclasses.Habit
 import com.appdev.eudemonia.dataclasses.JournalEntry
+import com.appdev.eudemonia.fragments.FriendsFragment
+import com.appdev.eudemonia.fragments.HomeFragment
+import com.appdev.eudemonia.fragments.JournalFragment
+import com.appdev.eudemonia.fragments.ProfileFragment
+import com.appdev.eudemonia.fragments.SongsListFragment
+import com.appdev.eudemonia.menu.BaseActivity
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class HomeActivity : BaseActivity() {
 
@@ -54,6 +65,28 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+//setting up bottom navigation
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        Log.d("BaseActivity", "NavController: $navController")
+        Log.d("BaseActivity", "BottomNavigationView: $bottomNavigationView")
+
+        bottomNavigationView.setupWithNavController(navController)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            val fragment: Fragment = when (item.itemId) {
+                R.id.navigation_home -> HomeFragment()
+                R.id.navigation_profile -> ProfileFragment()
+                R.id.navigation_journals -> JournalFragment()
+                R.id.navigation_songs -> SongsListFragment()
+                R.id.navigation_friends -> FriendsFragment()
+                else -> HomeFragment()
+            }
+            loadFragment(fragment)
+            true
+        }
 
         initializeFirebase()
         initializeViews()
@@ -62,6 +95,14 @@ class HomeActivity : BaseActivity() {
         initializeHabits()
         initializeJournal()
         createNotificationChannel()
+    }
+
+    private fun loadFragment(fragment: Fragment) {
+        // Load the fragment
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.nav_host_fragment, fragment)
+            .commit()
     }
 
     private fun initializeFirebase() {

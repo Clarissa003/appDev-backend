@@ -4,9 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
-import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.authentication.LoginActivity
 import com.appdev.eudemonia.R
+import com.appdev.eudemonia.menu.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
 
 class SettingsActivity : BaseActivity() {

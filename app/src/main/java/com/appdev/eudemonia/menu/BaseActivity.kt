@@ -1,77 +1,65 @@
 package com.appdev.eudemonia.menu
 
-import android.content.ContentValues.TAG
-import android.content.Intent
+import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.appdev.eudemonia.R
-import com.appdev.eudemonia.chat.FriendListActivity
-import com.appdev.eudemonia.friends.FriendsActivity
-import com.appdev.eudemonia.home.HomeActivity
-import com.appdev.eudemonia.journals.GuidedJournalActivity
-import com.appdev.eudemonia.journals.UnguidedJournalActivity
-import com.appdev.eudemonia.profile.ProfileActivity
-import com.appdev.eudemonia.settings.SettingsActivity
-import com.appdev.eudemonia.songs.SongsListActivity
-
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 open class BaseActivity : AppCompatActivity() {
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.activity_menu, menu)
-        return true
-    }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.profile -> {
-                startActivity(Intent(this, ProfileActivity::class.java))
-                return true
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        // Retrieve NavHostFragment first and then get NavController from it
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
+        Log.d("BaseActivity", "NavController: $navController")
+        Log.d("BaseActivity", "BottomNavigationView: $bottomNavigationView")
+
+        bottomNavigationView.setupWithNavController(navController)
+
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            Log.d("BaseActivity", "Menu item selected: ${item.title}")
+            val handled = when (item.itemId) {
+                R.id.navigation_home -> {
+                    navController.navigate(R.id.homeFragment)
+                    true
+                }
+
+                R.id.navigation_friends -> {
+                    navController.navigate(R.id.navigation_friends)
+                    true
+                }
+
+                R.id.navigation_profile -> {
+                    navController.navigate(R.id.profileFragment)
+                    true
+                }
+
+                R.id.navigation_journals -> {
+                    navController.navigate(R.id.journalFragment)
+                    true
+                }
+
+                R.id.navigation_songs -> {
+                    navController.navigate(R.id.soundsFragment)
+                    true
+                }
+
+                else -> false
             }
-
-            R.id.unguidedJournal -> {
-                Log.d(TAG, "Navigating to UnguidedJournalActivity")
-                startActivity(Intent(this, UnguidedJournalActivity::class.java))
-                return true
+            if (!handled) {
+                Log.e("BaseActivity", "Navigation to ${item.title} failed")
             }
-
-            R.id.guidedJournal -> {
-                startActivity(Intent(this, GuidedJournalActivity::class.java))
-                return true
-            }
-            R.id.calendar -> {
-                startActivity(Intent(this, HomeActivity::class.java))
-                return true
-            }
-
-            R.id.calendar -> {
-                startActivity(Intent(this, HomeActivity::class.java))
-                return true
-            }
-
-            R.id.friendList -> {
-                startActivity(Intent(this, FriendListActivity::class.java))
-                return true
-            }
-
-            R.id.sounds -> {
-                startActivity(Intent(this, SongsListActivity::class.java))
-                return true
-            }
-
-            R.id.settings -> {
-                startActivity(Intent(this, SettingsActivity::class.java))
-                return true
-            }
-
-            R.id.addFriends -> {
-                startActivity(Intent(this, FriendsActivity::class.java))
-                return true
-            }
-
-            else -> return super.onOptionsItemSelected(item)
+            handled
         }
     }
 }

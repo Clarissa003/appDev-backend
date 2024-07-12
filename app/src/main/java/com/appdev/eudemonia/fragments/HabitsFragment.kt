@@ -1,23 +1,26 @@
-package com.appdev.eudemonia
+package com.appdev.eudemonia.fragments
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.HabitAdapter
 import com.appdev.eudemonia.dataclasses.Habit
-import com.appdev.eudemonia.menu.BaseActivity
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
-class HabitsActivity : BaseActivity() {
+class HabitsFragment : Fragment() {
 
     private val db = Firebase.firestore
     private lateinit var habitRecyclerView: RecyclerView
@@ -25,25 +28,28 @@ class HabitsActivity : BaseActivity() {
     private val habitList = mutableListOf<Habit>()
     private val currentUserEmail = Firebase.auth.currentUser?.email
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_habits, container, false)
 
-        habitRecyclerView = findViewById(R.id.habitRecyclerView)
-        habitRecyclerView.layoutManager = LinearLayoutManager(this)
+        habitRecyclerView = view.findViewById(R.id.habitRecyclerView)
+        habitRecyclerView.layoutManager = LinearLayoutManager(context)
         habitAdapter = HabitAdapter(habitList)
         habitRecyclerView.adapter = habitAdapter
 
-        val buttonAddHabit: Button = findViewById(R.id.buttonAddHabit)
+        val buttonAddHabit: Button = view.findViewById(R.id.buttonAddHabit)
         buttonAddHabit.setOnClickListener {
             showAddHabitDialog()
         }
 
         fetchHabits()
+        return view
     }
 
     private fun showAddHabitDialog() {
-        val dialog = AlertDialog.Builder(this)
+        val dialog = AlertDialog.Builder(requireContext())
         val dialogView = layoutInflater.inflate(R.layout.activity_single_habit, null)
         val habitNameEditText: EditText = dialogView.findViewById(R.id.habitNameEditText)
 
@@ -67,14 +73,14 @@ class HabitsActivity : BaseActivity() {
             .get()
             .addOnSuccessListener { documents ->
                 if (documents.isEmpty) {
-                    Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
                     return@addOnSuccessListener
                 }
                 val userId = documents.first().id
                 addHabitToFirestore(habitName, userId)
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -86,10 +92,10 @@ class HabitsActivity : BaseActivity() {
             .add(habit)
             .addOnSuccessListener {
                 fetchHabits() // Fetch the updated list after adding a new habit
-                Toast.makeText(this, "Habit added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Habit added successfully", Toast.LENGTH_SHORT).show()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Error adding habit: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Error adding habit: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -100,7 +106,7 @@ class HabitsActivity : BaseActivity() {
                 .get()
                 .addOnSuccessListener { documents ->
                     if (documents.isEmpty) {
-                        Toast.makeText(this, "User not found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "User not found", Toast.LENGTH_SHORT).show()
                         return@addOnSuccessListener
                     }
                     val userId = documents.first().id
@@ -116,16 +122,12 @@ class HabitsActivity : BaseActivity() {
                             habitAdapter.notifyDataSetChanged()
                         }
                         .addOnFailureListener { e ->
-                            Toast.makeText(this, "Error fetching habits: ${e.message}", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "Error fetching habits: ${e.message}", Toast.LENGTH_SHORT).show()
                         }
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Error fetching user: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }
 }
-
-
-
-
