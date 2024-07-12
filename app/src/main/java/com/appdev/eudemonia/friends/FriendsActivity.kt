@@ -1,8 +1,7 @@
 package com.appdev.eudemonia.friends
 
+import android.Manifest
 import android.app.NotificationChannel
-import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.FirebaseFirestore
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
@@ -15,20 +14,19 @@ import android.util.Log
 import android.widget.ListView
 import android.widget.SearchView
 import android.widget.Toast
-import android.Manifest
-import android.content.ContentValues.TAG
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.R
 import com.appdev.eudemonia.adapters.FriendsAdapter
 import com.appdev.eudemonia.dataclasses.User
+import com.appdev.eudemonia.menu.BaseActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentChange
+import com.google.firebase.firestore.FirebaseFirestore
 
 class FriendsActivity : BaseActivity() {
-
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -38,24 +36,36 @@ class FriendsActivity : BaseActivity() {
     private val users = mutableListOf<User>()
     private val displayedUsers = mutableListOf<User>()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_friends)
 
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
-
-        listView = findViewById(R.id.idFriends)
-        searchView = findViewById(R.id.idSearch)
-
-        adapter = FriendsAdapter(this, displayedUsers)
-        listView.adapter = adapter
+        initFirebase()
+        initViews()
+        setupListView()
+        setupSearchView()
 
         loadUsers()
         loadFriends()
         listenForFriendRequests()
+    }
 
+    private fun initFirebase() {
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+    }
+
+    private fun initViews() {
+        listView = findViewById(R.id.idFriends)
+        searchView = findViewById(R.id.idSearch)
+    }
+
+    private fun setupListView() {
+        adapter = FriendsAdapter(this, displayedUsers)
+        listView.adapter = adapter
+    }
+
+    private fun setupSearchView() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
@@ -75,7 +85,7 @@ class FriendsActivity : BaseActivity() {
                 .whereEqualTo("receiverId", currentUser.uid)
                 .addSnapshotListener { snapshots, e ->
                     if (e != null) {
-                        Log.w("FriendsActivity", "Listen failed.", e)
+                        Log.w(TAG, "Listen failed.", e)
                         return@addSnapshotListener
                     }
 
@@ -86,15 +96,16 @@ class FriendsActivity : BaseActivity() {
                                 senderId?.let { fetchSenderDetailsAndNotify(it) }
                             }
                             DocumentChange.Type.MODIFIED -> {
+                                // No action needed for modified case
                             }
                             DocumentChange.Type.REMOVED -> {
+                                // No action needed for removed case
                             }
                         }
                     }
                 }
         }
     }
-
 
     private fun fetchSenderDetailsAndNotify(senderId: String) {
         db.collection("Profile").document(senderId).get()
@@ -103,10 +114,9 @@ class FriendsActivity : BaseActivity() {
                 sendFriendRequestNotification(username, senderId)
             }
             .addOnFailureListener { e ->
-                Log.e("FriendsActivity", "Error fetching sender details", e)
+                Log.e(TAG, "Error fetching sender details", e)
             }
     }
-
 
     private fun sendFriendRequestNotification(username: String, senderId: String) {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.VIBRATE) == PackageManager.PERMISSION_GRANTED) {
@@ -135,8 +145,6 @@ class FriendsActivity : BaseActivity() {
             ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.VIBRATE), PERMISSION_REQUEST_CODE)
         }
     }
-
-
 
     private fun loadUsers() {
         val currentUser = auth.currentUser
@@ -172,10 +180,10 @@ class FriendsActivity : BaseActivity() {
         db.collection("Friends").whereEqualTo("userId", friendUserId).whereEqualTo("addedBy", currentUserId)
             .get()
             .addOnSuccessListener { documents ->
-                callback(documents.isEmpty.not())
+                callback(!documents.isEmpty)
             }
             .addOnFailureListener { e ->
-                Log.e("FriendsActivity", "Error checking if user is friend", e)
+                Log.e(TAG, "Error checking if user is friend", e)
                 callback(false)
             }
     }
@@ -260,38 +268,6 @@ class FriendsActivity : BaseActivity() {
         }
     }
 
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSION_REQUEST_CODE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    // Permission granted
-                } else {
-                    Toast.makeText(this, "Permission denied. Cannot show notifications.", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Friend Requests"
-            val descriptionText = "Notifications for friend requests"
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
-                enableLights(true)
-                lightColor = Color.RED
-                enableVibration(true)
-            }
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
     fun removeFriend(user: User) {
         val currentUser = auth.currentUser
         currentUser?.let { currentUser ->
@@ -320,11 +296,40 @@ class FriendsActivity : BaseActivity() {
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        when (requestCode) {
+            PERMISSION_REQUEST_CODE -> {
+                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    // Permission granted
+                } else {
+                    Toast.makeText(this, "Permission denied. Cannot show notifications.", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Friend Requests"
+            val descriptionText = "Notifications for friend requests"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+                enableLights(true)
+                lightColor = Color.RED
+                enableVibration(true)
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
 
     companion object {
+        private const val TAG = "FriendsActivity"
         private const val CHANNEL_ID = "friend_requests_channel"
         private const val NOTIFICATION_ID = 1
         private const val PERMISSION_REQUEST_CODE = 1001
     }
-
 }

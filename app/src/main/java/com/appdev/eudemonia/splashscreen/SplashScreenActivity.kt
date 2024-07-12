@@ -12,21 +12,27 @@ import com.appdev.eudemonia.R
 import com.appdev.eudemonia.authentication.SignupActivity
 
 class SplashScreenActivity : AppCompatActivity() {
+
+    private val splashScreenDuration = 3000L // 3 seconds
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
 
-        val splashImageView: View = findViewById(R.id.iv_splash)
+        startSplashAnimation()
+        navigateToNextScreenAfterDelay()
+    }
 
+    private fun startSplashAnimation() {
+        val splashImageView: View = findViewById(R.id.iv_splash)
         val alphaAnimation = AlphaAnimation(0.0f, 1.0f).apply {
             duration = 2000
             fillAfter = true
         }
-
         splashImageView.startAnimation(alphaAnimation)
+    }
 
-        val splashScreenDuration = 3000L // 3 seconds
-
+    private fun navigateToNextScreenAfterDelay() {
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, SignupActivity::class.java))
             finish()

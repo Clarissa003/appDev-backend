@@ -41,41 +41,56 @@ class ChatActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chat)
 
+        initializeViews()
+        initializeFirebase()
         startDeleteOldMessagesService()
+        fetchIntentExtras()
+        setupUserInfo()
+        setupChatAdapter()
+        setupChatInputListener()
+        fetchCurrentUserUsername()
+    }
 
-        friendUserId = intent.getStringExtra("friendUserId")
-        friendUsername = intent.getStringExtra("friendUsername")
-        friendProfilePictureUrl = intent.getStringExtra("friendProfilePictureUrl")
-
+    private fun initializeViews() {
         userNameTextView = findViewById(R.id.user_name)
-        userNameTextView.text = friendUsername
-
-        val profileImageView = findViewById<ImageView>(R.id.profile_image)
-        if (friendProfilePictureUrl != null) {
-            Glide.with(this)
-                .load(friendProfilePictureUrl)
-                .placeholder(R.drawable.default_profile_picture) // Optional placeholder image
-                .into(profileImageView)
-        }
-
-        db = FirebaseFirestore.getInstance()
-
-        chatMessages = mutableListOf()
-        chatAdapter = ChatAdapter(chatMessages)
-
         chatWindow = findViewById(R.id.chat_window)
         sendButton = findViewById(R.id.send_button)
         chatInput = findViewById(R.id.chat_input)
+    }
+
+    private fun initializeFirebase() {
+        db = FirebaseFirestore.getInstance()
+    }
+
+    private fun fetchIntentExtras() {
+        friendUserId = intent.getStringExtra("friendUserId")
+        friendUsername = intent.getStringExtra("friendUsername")
+        friendProfilePictureUrl = intent.getStringExtra("friendProfilePictureUrl")
+    }
+
+    private fun setupUserInfo() {
+        userNameTextView.text = friendUsername
+
+        val profileImageView = findViewById<ImageView>(R.id.profile_image)
+        friendProfilePictureUrl?.let {
+            Glide.with(this)
+                .load(it)
+                .placeholder(R.drawable.default_profile_picture)
+                .into(profileImageView)
+        }
+    }
+
+    private fun setupChatAdapter() {
+        chatMessages = mutableListOf()
+        chatAdapter = ChatAdapter(chatMessages)
 
         chatWindow.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity)
             adapter = chatAdapter
         }
+    }
 
-        sendButton.setOnClickListener {
-            sendMessage()
-        }
-
+    private fun setupChatInputListener() {
         chatInput.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 sendButton.isEnabled = s.toString().trim().isNotEmpty()
@@ -86,17 +101,17 @@ class ChatActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        fetchCurrentUserUsername()
+        sendButton.setOnClickListener {
+            sendMessage()
+        }
     }
 
     private fun fetchCurrentUserUsername() {
         val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
         if (currentUserUid != null) {
             db.collection("User").document(currentUserUid).get().addOnSuccessListener { document ->
-                if (document != null) {
-                    currentUserUsername = document.getString("username")
-                    listenForMessages()
-                }
+                currentUserUsername = document.getString("username")
+                listenForMessages(currentUserUid)
             }.addOnFailureListener { e ->
                 Log.e("ChatActivity", "Error fetching current user data", e)
             }
@@ -116,7 +131,6 @@ class ChatActivity : AppCompatActivity() {
                 timestamp = Timestamp.now()
             )
 
-
             db.collection("Message").add(message)
                 .addOnSuccessListener {
                     chatInput.text.clear()
@@ -129,48 +143,43 @@ class ChatActivity : AppCompatActivity() {
         }
     }
 
-    private fun listenForMessages() {
-        val currentUserUid = FirebaseAuth.getInstance().currentUser?.uid
+    private fun listenForMessages(currentUserUid: String) {
+        val currentUserMessages = mutableListOf<Message>()
+        val friendUserMessages = mutableListOf<Message>()
 
-        if (currentUserUid != null && friendUserId != null) {
-
-            val currentUserMessages = mutableListOf<Message>()
-            val friendUserMessages = mutableListOf<Message>()
-
-            db.collection("Message")
-                .whereEqualTo("senderId", currentUserUid)
-                .whereEqualTo("receiverId", friendUserId!!)
-                .orderBy("timestamp", Query.Direction.ASCENDING)
-                .addSnapshotListener { snapshot, error ->
-                    if (error != null) {
-                        return@addSnapshotListener
-                    }
-                    if (snapshot != null) {
-                        currentUserMessages.clear()
-                        currentUserMessages.addAll(snapshot.documents.mapNotNull { it.toObject(
-                            Message::class.java) })
-                        mergeAndDisplayMessages(currentUserMessages, friendUserMessages)
-                    } else {
-                        Log.d("ChatActivity", "Snapshot is null for messages sent by current user")
-                    }
+        db.collection("Message")
+            .whereEqualTo("senderId", currentUserUid)
+            .whereEqualTo("receiverId", friendUserId!!)
+            .orderBy("timestamp", Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    return@addSnapshotListener
                 }
-
-            db.collection("Message")
-                .whereEqualTo("senderId", friendUserId!!)
-                .whereEqualTo("receiverId", currentUserUid)
-                .orderBy("timestamp", Query.Direction.ASCENDING)
-                .addSnapshotListener { snapshot, error ->
-                    if (error != null) {
-                        return@addSnapshotListener
-                    }
-                    if (snapshot != null) {
-                        friendUserMessages.clear()
-                        friendUserMessages.addAll(snapshot.documents.mapNotNull { it.toObject(
-                            Message::class.java) })
-                        mergeAndDisplayMessages(currentUserMessages, friendUserMessages)
-                    }
+                if (snapshot != null) {
+                    currentUserMessages.clear()
+                    currentUserMessages.addAll(snapshot.documents.mapNotNull { it.toObject(
+                        Message::class.java) })
+                    mergeAndDisplayMessages(currentUserMessages, friendUserMessages)
+                } else {
+                    Log.d("ChatActivity", "Snapshot is null for messages sent by current user")
                 }
-        }
+            }
+
+        db.collection("Message")
+            .whereEqualTo("senderId", friendUserId!!)
+            .whereEqualTo("receiverId", currentUserUid)
+            .orderBy("timestamp", Query.Direction.ASCENDING)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    friendUserMessages.clear()
+                    friendUserMessages.addAll(snapshot.documents.mapNotNull { it.toObject(
+                        Message::class.java) })
+                    mergeAndDisplayMessages(currentUserMessages, friendUserMessages)
+                }
+            }
     }
 
     private fun mergeAndDisplayMessages(currentUserMessages: List<Message>, friendUserMessages: List<Message>) {

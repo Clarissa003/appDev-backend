@@ -2,7 +2,6 @@ package com.appdev.eudemonia.journals
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -27,18 +26,34 @@ class UnguidedJournalActivity : BaseActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_unguided_journal)
 
-        editText = findViewById(R.id.enterDailyAnswer)
-        saveButton = findViewById(R.id.saveButton)
-        firestore = FirebaseFirestore.getInstance()
-        auth = FirebaseAuth.getInstance()
+        initializeViews()
+        initializeFirebase()
 
         if (auth.currentUser == null) {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-            finish()
+            navigateToLogin()
             return
         }
 
+        setupSaveButton()
+    }
+
+    private fun initializeViews() {
+        editText = findViewById(R.id.enterDailyAnswer)
+        saveButton = findViewById(R.id.saveButton)
+    }
+
+    private fun initializeFirebase() {
+        firestore = FirebaseFirestore.getInstance()
+        auth = FirebaseAuth.getInstance()
+    }
+
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun setupSaveButton() {
         saveButton.setOnClickListener {
             saveJournalEntry()
         }
@@ -60,20 +75,31 @@ class UnguidedJournalActivity : BaseActivity() {
             firestore.collection("Journal")
                 .add(journalEntry)
                 .addOnSuccessListener {
-                    Toast.makeText(this, "Entry saved!", Toast.LENGTH_SHORT).show()
-                    editText.text.clear()
+                    handleSaveSuccess()
                 }
                 .addOnFailureListener { e ->
-                    Toast.makeText(this, "Error saving entry: ${e.message}", Toast.LENGTH_SHORT)
-                        .show()
+                    handleSaveFailure(e.message)
                 }
         } else {
-            if (content.isEmpty()) {
-                Toast.makeText(this, "Content cannot be empty", Toast.LENGTH_SHORT).show()
-            }
-            if (userId == null) {
-                Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
-            }
+            handleValidationErrors(content, userId)
+        }
+    }
+
+    private fun handleSaveSuccess() {
+        Toast.makeText(this, "Entry saved!", Toast.LENGTH_SHORT).show()
+        editText.text.clear()
+    }
+
+    private fun handleSaveFailure(errorMessage: String?) {
+        Toast.makeText(this, "Error saving entry: $errorMessage", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun handleValidationErrors(content: String, userId: String?) {
+        if (content.isEmpty()) {
+            Toast.makeText(this, "Content cannot be empty", Toast.LENGTH_SHORT).show()
+        }
+        if (userId == null) {
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
         }
     }
 }
