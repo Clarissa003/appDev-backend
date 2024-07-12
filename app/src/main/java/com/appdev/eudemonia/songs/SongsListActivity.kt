@@ -6,8 +6,8 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.appdev.eudemonia.databinding.ActivitySongsListBinding
-import com.appdev.eudemonia.menu.BaseActivity
 import com.appdev.eudemonia.adapters.SongsListAdapter
+import com.appdev.eudemonia.base.BaseActivity
 import com.appdev.eudemonia.models.SongModel
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -56,7 +56,8 @@ class SongsListActivity : BaseActivity() {
     }
 
     private fun setupSongsListRecyclerView() {
-        songsListAdapter = SongsListAdapter(emptyList())
+        songsListAdapter = SongsListAdapter(mutableListOf()) { song ->
+        }
         binding.songsListRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.songsListRecyclerView.adapter = songsListAdapter
     }
